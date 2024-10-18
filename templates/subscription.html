@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="min-h-screen flex flex-col bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 dark:from-gray-900 dark:via-indigo-900 dark:to-purple-900">
+    <main class="flex-grow flex items-center justify-center px-4 py-12">
+        <div class="max-w-lg w-full space-y-8 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-105">
+            <div class="px-8 pt-8 pb-6 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+                <svg class="mx-auto h-20 w-auto text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"></path>
+                </svg>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">Your Subscription</h2>
+                <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">View and manage your subscription details</p>
+            </div>
+
+            <div class="px-8 pb-8 space-y-6">
+                <div class="rounded-md shadow-sm bg-gray-100 dark:bg-gray-700 p-4">
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200">Current Plan: <span class="text-indigo-600 dark:text-indigo-400">{{ user.plan | capitalize }}</span></h3>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Benefits of your plan:</p>
+
+                    {% if user.plan == 'basic' %}
+                    <ul class="mt-2 list-disc list-inside text-gray-700 dark:text-gray-300">
+                        <li>Up to 20 users (addresses)</li>
+                        <li>Up to 80GB Email storage</li>
+                        <li>Up to 500Mbps server bandwidth</li>
+                        <li>User friendly Admin panel</li>
+                        <li>24/7 Support</li>
+                        <li>1-5 business day setup*</li>
+                        <li>DDOS protection</li>
+                        <li class="text-red-500">Not included: SSH Access, Domain included</li>
+                    </ul>
+                    {% elif user.plan == 'pro' %}
+                    <ul class="mt-2 list-disc list-inside text-gray-700 dark:text-gray-300">
+                        <li>Up to 150 users (addresses)</li>
+                        <li>Up to 640GB Email storage</li>
+                        <li>Up to 8GB RAM</li>
+                        <li>1GBPS Bandwidth</li>
+                        <li>Priority support</li>
+                        <li>SSH Access upon request (passworded)</li>
+                        <li>Domain of choice included</li>
+                        <li>1-5 business day setup*</li>
+                        <li>DDOS protection</li>
+                        <li class="text-red-500">Not included: Custom panel edits, 24/7 dedicated support</li>
+                    </ul>
+                    {% elif user.plan == 'enterprise' %}
+                    <ul class="mt-2 list-disc list-inside text-gray-700 dark:text-gray-300">
+                        <li>Unlimited users (addresses)</li>
+                        <li>Custom email storage</li>
+                        <li>24/7 dedicated support</li>
+                        <li>Custom panel edits upon request</li>
+                        <li>SSH Access upon request (passworded)</li>
+                        <li>Domain(s) of choice included</li>
+                        <li>Priority 1-3 business day setup*</li>
+                        <li>DDOS protection</li>
+                        <li>Customizable options: Custom bandwidth allocation, Dedicated IP addresses</li>
+                    </ul>
+                    {% else %}
+                    <p class="text-gray-600 dark:text-gray-400">No active subscription found.</p>
+                    {% endif %}
+                </div>
+
+                <p class="text-gray-600 dark:text-gray-400 text-sm">It is recommended to open a ticket before managing your subscription.</p>
+
+                <div class="space-y-4">
+                    <a href="https://billing.stripe.com/p/login/bIYaGAa8wdYO3JK5kk" target="_blank">
+                        <button class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                            Manage Subscription
+                        </button>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<style>
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.bg-gradient-to-br {
+    background-size: 200% 200%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+.float {
+    animation: float 6s ease-in-out infinite;
+}
+</style>
+{% endblock %}

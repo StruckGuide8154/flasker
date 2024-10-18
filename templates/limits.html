@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-8">Your Account Overview</h1>
+
+    <!-- Ticket Statistics -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Total Tickets</h2>
+                <p class="text-3xl font-bold text-blue-600">{{ ticket_stats.total }}</p>
+            </div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Open Tickets</h2>
+                <p class="text-3xl font-bold text-green-600">{{ ticket_stats.open }}</p>
+            </div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Closed Tickets</h2>
+                <p class="text-3xl font-bold text-red-600">{{ ticket_stats.closed }}</p>
+            </div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">In Progress</h2>
+                <p class="text-3xl font-bold text-yellow-600">{{ ticket_stats.in_progress }}</p>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Resource Usage</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Email Users Card -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Email Users</h2>
+                    <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                </div>
+                <div class="mb-4">
+                    <div class="flex justify-between text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">
+                        <span>Current Usage</span>
+                        <span>{{ user.current_users }} / {% if user.user_limit %}{{ user.user_limit }}{% else %}Unlimited{% endif %}</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                        <div class="bg-blue-600 h-2.5 rounded-full" style="width: {% if user.user_limit %}{{ (user.current_users / user.user_limit * 100)|float|round|int }}{% else %}100{% endif %}%"></div>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                    {% if user.user_limit %}
+                        You can create up to {{ user.user_limit }} email users.
+                    {% else %}
+                        You have no limit on the number of email users you can create.
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <!-- Storage Card -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Storage</h2>
+                    <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                    </svg>
+                </div>
+                <div class="mb-4">
+                    <div class="flex justify-between text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">
+                        <span>Used Space</span>
+                        <span>Avalable upon request</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                        <div class="bg-green-600 h-2.5 rounded-full" style="width: {{ (user.storage_used / user.storage_limit * 100)|float|round|int }}%"></div>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                </p>
+                <button onclick="openStorageModal()" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                    Request Storage Use
+                </button>
+            </div>
+        </div>
+
+        <!-- Bandwidth Card -->
+
+    </div>
+
+    <div class="mt-12">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Need More Resources?</h2>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="p-6">
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                    If you're approaching your limits or need additional resources, you can easily upgrade your plan or request a custom quota increase.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="{{ url_for('subscription') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Upgrade Plan
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Storage Increase Modal -->
+<div id="storageModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white" id="modal-title">
+                        Request Storage Increase
+                    </h3>
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                            Please provide details about why you need additional storage. Our team will review your request and get back to you shortly.
+                        </p>
+                        <textarea id="storageRequestReason" rows="4" class="mt-4 shadow-sm block w-full focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Explain why you need more storage..."></textarea>
+                    </div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" onclick="submitStorageRequest()" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        Submit Request
+                    </button>
+                    <button type="button" onclick="closeStorageModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700">
+                        Cancel
+                    </button>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+
+                    <script>
+                    function openStorageModal() {
+                    document.getElementById('storageModal').classList.remove('hidden');
+                    }
+
+                    function closeStorageModal() {
+                    document.getElementById('storageModal').classList.add('hidden');
+                    }
+
+                    function submitStorageRequest() {
+                    const reason = document.getElementById('storageRequestReason').value;
+                    if (reason.trim() === '') {
+                    alert('Please provide a reason for your storage increase request.');
+                    return;
+                    }
+
+                    // Redirect to create_ticket page with pre-filled information
+                    const encodedReason = encodeURIComponent(reason);
+                    window.location.href = `/create_ticket?title=${encodeURIComponent('Storage Increase Request')}&description=${encodedReason}`;
+                    }
+
+                    // Close modal if user clicks outside of it
+                    window.onclick = function(event) {
+                    const modal = document.getElementById('storageModal');
+                    if (event.target == modal) {
+                    closeStorageModal();
+                    }
+                    }
+                    </script>
+                    {% endblock %}

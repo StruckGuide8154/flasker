@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="min-h-screen flex flex-col bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 dark:from-gray-900 dark:via-indigo-900 dark:to-purple-900">
+    <main class="flex-grow flex items-center justify-center px-4 py-12">
+        <div class="max-w-5xl w-full space-y-8 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-105">
+            <div class="px-8 pt-8 pb-6 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+                <svg class="mx-auto h-24 w-auto text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"></path>
+                </svg>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">Welcome, {{ current_user.email }}!</h2>
+                {% if session.get('demo_logged_in') %}
+                <div class="px-8 pb-8 space-y-6">
+                    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4" role="alert">
+                        <p class="font-bold">Demo Mode</p>
+                        <p>You are currently logged in as a demo user. Some features may be limited or unavailable.</p>
+                    </div>
+                </div>
+                {% endif %}
+                {% if not current_user.is_system_user %}
+                <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">Your assigned Email Panel URL: 
+                    <a href="{{ current_user.miab_url }}/mail" target="_blank" class="text-indigo-500 hover:text-indigo-700 transition duration-300">{{ current_user.miab_url }}/mail</a>
+                </p>
+                {% endif %}
+            </div>
+
+
+            <div class="px-8 pb-8 space-y-6">
+                <div class="rounded-md shadow-sm bg-gray-100 dark:bg-gray-700 p-4">
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200">Quick Stats</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-4">
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                            <p class="text-3xl font-bold text-indigo-600">{{ tickets|length }}</p>
+                            <p class="text-gray-600 mt-2">Open Tickets</p>
+                        </div>
+                        {% if not current_user.is_system_user %}
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                            <p class="text-3xl font-bold text-indigo-600">{{ miab_users|length }}</p>
+                            <p class="text-gray-600 mt-2">Email Accounts</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
+                            <p class="text-3xl font-bold text-indigo-600" id="diskUsage">-</p>
+                            <p class="text-gray-600 mt-2">Disk Usage</p>
+                            <button onclick="requestDiskUsage()" class="mt-4 px-4 py-2 text-sm font-medium text-white bg-indigo-500 rounded-md hover:bg-indigo-700 transition duration-300">
+                                Request Update
+                            </button>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="rounded-md shadow-sm bg-gray-100 dark:bg-gray-700 p-4">
+                    <h3 class="text-xl font-bold text-gray-100 dark:text-gray-200">Recent Tickets</h3>
+                    {% if tickets %}
+                    <ul class="border border-gray-200 rounded-lg divide-y divide-gray-200 mt-4">
+                        {% for ticket in tickets[:5] %}
+                        <li class="pl-4 pr-6 py-4 flex items-center justify-between text-sm">
+                            <div class="w-0 flex-1 flex items-center">
+                                <svg class="flex-shrink-0 h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-3 flex-1 w-0 truncate text-gray-100">{{ ticket.title }}</span>
+                            </div>
+                            <div class="ml-4 flex-shrink-0">
+                                <a href="{{ url_for('ticket_details', ticket_id=ticket.id) }}" class="font-medium text-indigo-500 hover:text-indigo-600 transition duration-300">View</a>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="text-sm text-gray-500">No recent tickets.</p>
+                    {% endif %}
+                </div>
+
+                <div class="rounded-md shadow-sm bg-gray-100 dark:bg-gray-700 p-4">
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200">Quick Actions</h3>
+                    <div class="space-y-3 mt-4">
+                        <a href="{{ url_for('create_ticket') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 transition duration-300">
+                            Create New Ticket
+                        </a>
+                        {% if not current_user.is_system_user %}
+                        <a href="{{ url_for('miab_users') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400 transition duration-300">
+                            Manage Email Accounts
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Modal for Disk Usage -->
+<div id="diskUsageModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-sm w-full">
+        <h2 class="text-xl font-bold text-center text-gray-900 dark:text-white">Disk Usage Status</h2>
+        <p id="diskUsageText" class="mt-4 text-center text-gray-700 dark:text-gray-300"></p>
+        <div class="mt-6 flex justify-center">
+            <button onclick="closeModal()" class="px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition duration-300">
+                Close
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+function requestDiskUsage() {
+    fetch('/get_disk_usage')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('diskUsageText').textContent = 'Current Disk Usage: ' + data.usage + '%';
+            document.getElementById('diskUsageModal').classList.remove('hidden');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('diskUsageText').textContent = 'Please open a ticket to request disk usage.';
+            document.getElementById('diskUsageModal').classList.remove('hidden');
+        });
+}
+
+function closeModal() {
+    document.getElementById('diskUsageModal').classList.add('hidden');
+}
+</script>
+
+<style>
+/* Optional styling for modal */
+#diskUsageModal {
+    transition: opacity 0.3s ease;
+}
+</style>
+{% endblock %}

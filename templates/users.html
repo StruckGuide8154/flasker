@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Users - Dashboard{% endblock %}
+{% block content %}
+<h1 class="mb-4">Users</h1>
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span>User List</span>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+            Add User
+        </button>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <form action="{{ url_for('remove_miab_user') }}" method="POST" class="d-inline">
+                            <input type="hidden" name="email" value="{{ user.email }}">
+                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to remove this user?')">Remove</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Modal for adding MiaB user -->
+                            <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="{{ url_for('add_miab_user') }}" method="POST">
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="email" class="form-label">Email</label>
+                                                    <input type="email" class="form-control" id="email" name="email" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="password" class="form-label">Password</label>
+                                                    <input type="password" class="form-control" id="password" name="password" required>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Add User</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endblock %}

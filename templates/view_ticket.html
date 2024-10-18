@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block header %}Ticket Details{% endblock %}
+
+{% block content %}
+<div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">{{ ticket.title }}</h3>
+        <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Ticket #{{ ticket.id }}</p>
+    </div>
+    <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:px-6">
+        <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+            <div class="sm:col-span-1">
+                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Status</dt>
+                <dd class="mt-1 text-sm text-gray-900 dark:text-white">{{ ticket.status }}</dd>
+            </div>
+            <div class="sm:col-span-1">
+                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Created</dt>
+                <dd class="mt-1 text-sm text-gray-900 dark:text-white">{{ ticket.created_at.strftime('%b %d, %Y %H:%M:%S') }}</dd>
+            </div>
+            <div class="sm:col-span-2">
+                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Description</dt>
+                <dd class="mt-1 text-sm text-gray-900 dark:text-white">{{ ticket.description }}</dd>
+            </div>
+        </dl>
+    </div>
+    
+    <!-- Chat Section -->
+    <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:px-6">
+        <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Conversation</h4>
+        <div id="chat-messages" class="space-y-4 mb-4 h-64 overflow-y-auto">
+            {% for message in ticket.messages %}
+            <div class="flex {% if message.is_admin %}justify-end{% endif %}">
+                <div class="bg-{% if message.is_admin %}blue-100{% else %}gray-100{% endif %} dark:bg-{% if message.is_admin %}blue-800{% else %}gray-700{% endif %} rounded-lg px-4 py-2 max-w-md">
+                    <p class="text-sm {% if message.is_admin %}text-blue-600{% else %}text-gray-900{% endif %} dark:text-white">{{ message.content }}</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ message.created_at.strftime('%b %d, %Y %H:%M') }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <form id="chat-form" class="mt-4">
+            <div class="flex">
+                <input type="text" id="message-input" name="message" required
+                    class="flex-grow shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                    placeholder="Type your message...">
+                <button type="submit"
+                    class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-600">
+                    Send
+                </button>
+            </div>
+        </form>
+    </div>
+
+    {% if current_user.is_system_user %}
+    <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:px-6">
+        <form method="POST" action="{{ url_for('update_ticket', ticket_id=ticket.id) }}">
+            <div class="flex items-center">
+                <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mr-2">Update Status:</label>
+                <select id="status" name="status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                    <option value="Open" {% if ticket.status == 'Open' %}selected{% endif %}>Open</option>
+                    <option value="In Progress" {% if ticket.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                    <option value="Closed" {% if ticket.status == 'Closed' %}selected{% endif %}>Closed</option>
+                </select>
+                <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-600">
+                    Update
+                </button>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    const chatForm = document.getElementById('chat-form');
+    const messageInput = document.getElementById('message-input');
+    const chatMessages = document.getElementById('chat-messages');
+
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const message = messageInput.value.trim();
+        if (message) {
+            try {
+                const response = await fetch("/ticket/{{ ticket.id }}/add_message", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message }),
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    addMessageToChat(data);
+                    messageInput.value = '';
+                } else {
+                    console.error('Failed to send message');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    });
+
+    function addMessageToChat(message) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `flex ${message.is_admin ? 'justify-end' : ''}`;
+        messageDiv.innerHTML = `
+            <div class="bg-${message.is_admin ? 'blue-100' : 'gray-100'} dark:bg-${message.is_admin ? 'blue-800' : 'gray-700'} rounded-lg px-4 py-2 max-w-md">
+                <p class="text-sm ${message.is_admin ? 'text-blue-600' : 'text-gray-900'} dark:text-white">${message.content}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">${new Date(message.created_at).toLocaleString()}</p>
+            </div>
+        `;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Function to periodically check for new messages
+    async function checkForNewMessages() {
+        try {
+            const response = await fetch("/ticket/{{ ticket.id }}/get_messages");
+            if (response.ok) {
+                const messages = await response.json();
+                updateChatMessages(messages);
+            }
+        } catch (error) {
+            console.error('Error fetching messages:', error);
+        }
+    }
+
+    function updateChatMessages(messages) {
+        const currentMessageCount = chatMessages.children.length;
+        if (messages.length > currentMessageCount) {
+            for (let i = currentMessageCount; i < messages.length; i++) {
+                addMessageToChat(messages[i]);
+            }
+        }
+    }
+
+    // Check for new messages every 5 seconds
+    setInterval(checkForNewMessages, 5000);
+</script>
+{% endblock %}

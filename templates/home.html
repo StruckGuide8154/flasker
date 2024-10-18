@@ -1,0 +1,1662 @@
+      {% extends "base.html" %}
+      {% block content %}
+      <link rel="icon" type="image/png" href="/favicon.ico">
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const galleryItems = document.querySelectorAll('.gallery-item');
+          const fullscreenOverlay = document.getElementById('fullscreenOverlay');
+          const fullscreenImage = document.getElementById('fullscreenImage');
+
+          galleryItems.forEach(item => {
+              item.addEventListener('click', function() {
+                  const imgSrc = this.querySelector('img').src;
+                  fullscreenImage.src = imgSrc;
+                  fullscreenOverlay.classList.remove('hidden');
+                  document.body.style.overflow = 'hidden'; // Prevent scrolling
+              });
+          });
+
+          fullscreenOverlay.addEventListener('click', function() {
+              this.classList.add('hidden');
+              document.body.style.overflow = ''; // Re-enable scrolling
+          });
+      });
+      </script>
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              const contactForm = document.getElementById('contactForm');
+              const sendMessageBtn = document.getElementById('sendMessageBtn');
+              const tempTicketLoginBtn = document.getElementById('tempTicketLoginBtn');
+              const tempTicketLoginModal = document.getElementById('tempTicketLoginModal');
+              const closeTempLoginModalBtn = document.getElementById('closeTempLoginModal');
+              const tempTicketLoginForm = document.getElementById('tempTicketLoginForm');
+
+              function showSuccessModal(username, password) {
+                  const existingModal = document.getElementById('successModal');
+                  if (existingModal) {
+                      existingModal.remove();
+                  }
+
+                  const modalHtml = `
+                      <div id="successModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                          <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                              <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                              <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                              <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                  <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                      <div class="sm:flex sm:items-start">
+                                          <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+                                              <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                              </svg>
+                                          </div>
+                                          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                              <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                                  Thank you for contacting us!
+                                              </h3>
+                                              <div class="mt-2">
+                                                  <p class="text-sm text-gray-500">
+                                                      Your ticket has been created successfully. Here are your temporary login credentials:
+                                                  </p>
+                                                  <p class="text-sm text-gray-900 mt-2">
+                                                      <strong>Username:</strong> ${username}<br>
+                                                      <strong>Password:</strong> ${password}
+                                                  </p>
+                                                  <p class="text-sm text-gray-500 mt-2">
+                                                      Please save these credentials. We will be in contact with you soon.
+                                                  </p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                      <button type="button" id="closeModal" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                                          Close
+                                      </button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  `;
+
+                  document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+                  const successModal = document.getElementById('successModal');
+                  const closeModalBtn = document.getElementById('closeModal');
+
+                  successModal.classList.remove('hidden');
+
+                  closeModalBtn.addEventListener('click', function() {
+                      successModal.remove();
+                  });
+              }
+
+              if (contactForm) {
+                  contactForm.addEventListener('submit', async function(e) {
+                      e.preventDefault();
+                      sendMessageBtn.disabled = true;
+                      sendMessageBtn.textContent = 'Sending...';
+
+                      const formData = new FormData(this);
+
+                      try {
+                          const response = await fetch('/create_home_ticket', {
+                              method: 'POST',
+                              body: formData
+                          });
+
+                          const data = await response.json();
+
+                          if (data.username && data.password) {
+                              showSuccessModal(data.username, data.password);
+                          } else {
+                              console.log("Failed to get username/password from server response.");
+                              alert("An error occurred while creating your ticket. Please try again.");
+                          }
+                      } catch (error) {
+                          console.error("Error sending request:", error);
+                          alert("An error occurred while creating your ticket. Please try again.");
+                      } finally {
+                          sendMessageBtn.disabled = false;
+                          sendMessageBtn.textContent = 'Send Message';
+                      }
+                  });
+              }
+
+              // Temporary ticket login functionality
+              if (tempTicketLoginBtn && tempTicketLoginModal && closeTempLoginModalBtn && tempTicketLoginForm) {
+                  tempTicketLoginBtn.addEventListener('click', function() {
+                      tempTicketLoginModal.classList.remove('hidden');
+                  });
+
+                  closeTempLoginModalBtn.addEventListener('click', function() {
+                      tempTicketLoginModal.classList.add('hidden');
+                  });
+
+                  tempTicketLoginForm.addEventListener('submit', async function(e) {
+                      e.preventDefault();
+                      const username = document.getElementById('tempUsername').value;
+                      const password = document.getElementById('tempPassword').value;
+
+                      try {
+                          const response = await fetch('/temp_ticket_login', {
+                              method: 'POST',
+                              headers: {
+                                  'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({ username, password }),
+                          });
+
+                          const data = await response.json();
+
+                          if (response.ok) {
+                              window.location.href = `/view_ticket/${data.ticket_id}`;
+                          } else {
+                              alert(data.error || 'Login failed. Please try again.');
+                          }
+                      } catch (error) {
+                          console.error('Error:', error);
+                          alert('An error occurred during login. Please try again.');
+                      }
+                  });
+
+                  tempTicketLoginModal.addEventListener('click', function(e) {
+                      if (e.target === tempTicketLoginModal) {
+                          tempTicketLoginModal.classList.add('hidden');
+                      }
+                  });
+              }
+          });
+
+      </script>
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              // ... existing code ...
+
+              // Add smooth scrolling functionality
+              document.querySelectorAll('a.scroll-smooth').forEach(anchor => {
+                  anchor.addEventListener('click', function (e) {
+                      e.preventDefault();
+
+                      const targetId = this.getAttribute('href').substring(1);
+                      const targetElement = document.getElementById(targetId);
+
+                      if (targetElement) {
+                          targetElement.scrollIntoView({
+                              behavior: 'smooth'
+                          });
+                      }
+                  });
+              });
+
+              // Function to scroll to a section
+              window.scrollToSection = function(sectionId) {
+                  const targetElement = document.getElementById(sectionId);
+                  if (targetElement) {
+                      targetElement.scrollIntoView({
+                          behavior: 'smooth'
+                      });
+                  }
+              }
+
+              // ... rest of the existing code ...
+          });
+
+      </script>
+        <div class="bg-gradient-to-b from-gray-100 via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+          <!-- Hero Section -->
+        <!-- Hero Section -->
+            <section class="relative flex flex-col items-center justify-center min-h-screen overflow-hidden bg-gradient-to-b from-blue-100 via-purple-100 to-white dark:from-gray-900 dark:via-gray-800 dark:to-blue-900">
+          <!-- Background animation -->
+            <div class="absolute inset-0 z-0">
+              <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48L2RlZnM+PHJlY3Qgd2lkdGg9IjUwMCIgaGVpZ2h0PSI1MDAiIGZpbHRlcj0idXJsKCNub2lzZSkiIG9wYWNpdHk9IjAuMTUiLz48L3N2Zz4=')]"></div>
+            </div>
+
+
+          <!-- Content -->
+          <div class="relative z-10 w-full max-w-5xl px-4 py-8 mx-auto text-center">
+            <h1 class="mb-6 text-5xl font-extrabold leading-tight tracking-tight text-gray-900 md:text-6xl lg:text-7xl dark:text-white">
+              Welcome to <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Expansion</span>
+            </h1>
+            <p class="mb-10 text-xl font-normal text-gray-600 lg:text-2xl sm:px-16 dark:text-gray-300">
+              Streamline your email management with our powerful and intuitive admin panel. Access advanced features, monitor performance, and take control of your email infrastructure.
+            </p>
+            <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+              <a href="/login" class="inline-flex justify-center items-center py-3 px-8 text-base font-medium text-white rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900 transition duration-300 ease-in-out">
+                Log In
+                <svg aria-hidden="true" class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+              </a>
+              <a href="#" onclick="scrollToSection('features'); return false;" class="inline-flex justify-center items-center py-3 px-8 text-base font-medium text-gray-900 rounded-full border-2 border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 transition duration-300 ease-in-out">
+                Learn more
+              </a>
+            </div>
+          </div>
+
+          <!-- Decorative elements -->
+          <div class="absolute top-10 left-10 w-20 h-20 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
+          <div class="absolute top-10 right-10 w-20 h-20 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
+          <div class="absolute bottom-10 left-20 w-20 h-20 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
+
+          <!-- Scroll indicator -->
+          <div class="absolute bottom-10">
+            <svg class="w-8 h-8 text-gray-700 dark:text-gray-300" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </div>
+        </section>
+
+
+
+          <!-- Features Section -->
+            <section id="features" class="relative py-24 overflow-hidden bg-gradient-to-b from-white via-blue-50 to-purple-50 dark:from-blue-900 dark:via-gray-800 dark:to-gray-900">
+            <!-- Background animation -->
+
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 class="mb-12 text-4xl font-extrabold text-center text-gray-900 dark:text-white">
+                Key <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Features</span>
+              </h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card">
+                  <div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 opacity-75"></div>
+                    <div class="relative p-8">
+                      <div class="text-white mb-4">
+                        <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                      </div>
+                      <h3 class="mb-3 text-2xl font-bold text-white">Secure Access</h3>
+                      <p class="text-blue-100">Advanced encryption and authentication protocols to keep your data safe.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="feature-card">
+                  <div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-500 opacity-75"></div>
+                    <div class="relative p-8">
+                      <div class="text-white mb-4">
+                        <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path></svg>
+                      </div>
+                      <h3 class="mb-3 text-2xl font-bold text-white">User Management</h3>
+                      <p class="text-purple-100">Easily manage users, permissions, and access levels from a central dashboard.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="feature-card">
+                  <div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-br from-pink-400 to-red-500 opacity-75"></div>
+                    <div class="relative p-8">
+                      <div class="text-white mb-4">
+                        <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                      </div>
+                      <h3 class="mb-3 text-2xl font-bold text-white">24/7 Support</h3>
+                      <p class="text-red-100">Get assistance anytime with our round-the-clock support and efficient ticket system.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Decorative elements -->
+            <div class="hidden lg:block absolute top-10 left-10 w-32 h-32 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div class="hidden lg:block absolute top-10 right-10 w-32 h-32 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div class="hidden lg:block absolute bottom-10 left-20 w-32 h-32 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+          </section>
+
+          <style>
+          @keyframes blob {
+            0% {
+              transform: translate(0px, 0px) scale(1);
+            }
+            33% {
+              transform: translate(30px, -50px) scale(1.1);
+            }
+            66% {
+              transform: translate(-20px, 20px) scale(0.9);
+            }
+            100% {
+              transform: translate(0px, 0px) scale(1);
+            }
+          }
+          .animate-blob {
+            animation: blob 7s infinite;
+          }
+          .animation-delay-2000 {
+            animation-delay: 2s;
+          }
+          .animation-delay-4000 {
+            animation-delay: 4s;
+          }
+          .feature-card {
+            transition: all 0.3s ease-in-out;
+          }
+          .feature-card:hover {
+            transform: translateY(-10px);
+          }
+          </style>
+
+          <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.feature-card');
+
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('animate-fade-in-up');
+                }
+              });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+              observer.observe(card);
+            });
+          });
+          </script>
+
+            <section id="how-it-works" class="relative py-24 overflow-hidden bg-gradient-to-b from-purple-50 via-blue-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-purple-900">
+            <!-- Background animation -->
+
+
+              <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 class="mb-12 text-4xl font-extrabold text-center text-gray-900 dark:text-white">
+                How It <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">Works</span>
+              </h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="step-card" data-step="1">
+                  <div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-500 to-blue-500"></div>
+                    <div class="p-8">
+                      <div class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600 mb-4">1</div>
+                      <h3 class="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Pick a Domain</h3>
+                      <p class="text-gray-600 dark:text-gray-400">Choose your desired email domain for your organization.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="step-card" data-step="2">
+                  <div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-green-500"></div>
+                    <div class="p-8">
+                      <div class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600 mb-4">2</div>
+                      <h3 class="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Contact Us</h3>
+                      <p class="text-gray-600 dark:text-gray-400">Reach out to our team for assistance, pricing, and to complete the payment process.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="step-card" data-step="3">
+                  <div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-500 to-yellow-500"></div>
+                    <div class="p-8">
+                      <div class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-yellow-600 mb-4">3</div>
+                      <h3 class="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Use</h3>
+                      <p class="text-gray-600 dark:text-gray-400">Start using your new email infrastructure and services.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="step-card" data-step="4">
+                  <div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-yellow-500 to-red-500"></div>
+                    <div class="p-8">
+                      <div class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-600 to-red-600 mb-4">4</div>
+                      <h3 class="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Manage</h3>
+                      <p class="text-gray-600 dark:text-gray-400">Utilize our dashboard to manage your email setup and users.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Decorative elements -->
+            <div class="hidden lg:block absolute top-10 left-10 w-32 h-32 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div class="hidden lg:block absolute top-10 right-10 w-32 h-32 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div class="hidden lg:block absolute bottom-10 left-20 w-32 h-32 bg-green-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+          </section>
+
+          <style>
+          @keyframes blob {
+            0% {
+              transform: translate(0px, 0px) scale(1);
+            }
+            33% {
+              transform: translate(30px, -50px) scale(1.1);
+            }
+            66% {
+              transform: translate(-20px, 20px) scale(0.9);
+            }
+            100% {
+              transform: translate(0px, 0px) scale(1);
+            }
+          }
+          .animate-blob {
+            animation: blob 7s infinite;
+          }
+          .animation-delay-2000 {
+            animation-delay: 2s;
+          }
+          .animation-delay-4000 {
+            animation-delay: 4s;
+          }
+          .step-card {
+            transition: all 0.3s ease-in-out;
+          }
+          .step-card:hover {
+            transform: translateY(-10px);
+          }
+          </style>
+
+          <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.step-card');
+
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('animate-fade-in-up');
+                }
+              });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+              observer.observe(card);
+            });
+          });
+          </script>
+
+
+          <!-- Testimonials Section -->
+            <section class="relative py-24 overflow-hidden bg-gradient-to-b from-white via-purple-50 to-blue-50 dark:from-purple-900 dark:via-gray-800 dark:to-gray-900">
+            <!-- Background animation -->
+
+
+              <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 class="mb-12 text-4xl font-extrabold text-center text-gray-900 dark:text-white">
+                What Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">Customers Say</span>
+              </h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="testimonial-card">
+                  <div class="relative bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                    <div class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-purple-400 to-blue-500 opacity-10 rounded-br-full"></div>
+                    <svg class="w-12 h-12 text-purple-400 mb-4" fill="currentColor" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 8c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4zm12 0c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4z"/>
+                    </svg>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">"This email admin panel cut our IT support tickets by 40% and tripled our onboarding speed. We're saving over 100 hours monthly, and the ROI is undeniable. It's not just a tool; it's a cornerstone of our IT strategy."</p>
+                    <div class="flex items-center">
+                      <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-blue-500 rounded-full mr-4"></div>
+                      <div>
+                        <p class="font-semibold text-gray-900 dark:text-white">Sarah Chen</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">CTO of Nexus Innovations</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="testimonial-card">
+                  <div class="relative bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                    <div class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-blue-400 to-green-500 opacity-10 rounded-br-full"></div>
+                    <svg class="w-12 h-12 text-blue-400 mb-4" fill="currentColor" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 8c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4zm12 0c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4z"/>
+                    </svg>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">"Within a month, our email open rates jumped 25% and click-throughs 35%. We've achieved a 98% inbox placement rate, up from 82%. For serious email marketers, this platform is indispensable."</p>
+                    <div class="flex items-center">
+                      <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-green-500 rounded-full mr-4"></div>
+                      <div>
+                        <p class="font-semibold text-gray-900 dark:text-white">Michael O'Brien</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Director of Digital Marketing at GlobalReach Inc.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="testimonial-card">
+                  <div class="relative bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                    <div class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-green-400 to-yellow-500 opacity-10 rounded-br-full"></div>
+                    <svg class="w-12 h-12 text-green-400 mb-4" fill="currentColor" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 8c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4zm12 0c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4z"/>
+                    </svg>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">"In 15 years, I've never seen a solution balance user-friendliness and security so well. Uptime from 95% to 99.99%, and streamlined compliance. It's a game-changer for IT security and reliability."</p>
+                    <div class="flex items-center">
+                      <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-yellow-500 rounded-full mr-4"></div>
+                      <div>
+                        <p class="font-semibold text-gray-900 dark:text-white">Priya Patel</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Head of IT Security at SecureFlow Systems</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Decorative elements -->
+            <div class="hidden lg:block absolute top-10 right-10 w-32 h-32 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div class="hidden lg:block absolute bottom-10 left-10 w-32 h-32 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+          </section>
+
+          <style>
+          @keyframes blob {
+            0% {
+              transform: translate(0px, 0px) scale(1);
+            }
+            33% {
+              transform: translate(30px, -50px) scale(1.1);
+            }
+            66% {
+              transform: translate(-20px, 20px) scale(0.9);
+            }
+            100% {
+              transform: translate(0px, 0px) scale(1);
+            }
+          }
+          .animate-blob {
+            animation: blob 7s infinite;
+          }
+          .animation-delay-2000 {
+            animation-delay: 2s;
+          }
+          .testimonial-card {
+            transition: all 0.3s ease-in-out;
+          }
+          .testimonial-card:hover {
+            transform: translateY(-10px);
+          }
+          </style>
+
+          <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.testimonial-card');
+
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('animate-fade-in-up');
+                }
+              });
+            }, { threshold: 0.1 });
+
+            cards.forEach(card => {
+              observer.observe(card);
+            });
+          });
+          </script>
+            <section class="relative py-24 overflow-hidden bg-gradient-to-b from-blue-50 via-purple-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-blue-900">
+            <!-- Background animation -->
+
+
+              <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 class="mb-12 text-4xl font-extrabold text-center text-gray-900 dark:text-white">
+                Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Gallery</span>
+              </h2>
+              <div class="relative">
+                <div class="flex animate-scroll">
+                  <!-- Gallery items -->
+                  <div class="gallery-item">
+                    <img src="gallery1.png" alt="Admin dashboard" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Admin dashboard</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery2.png" alt="Admin tickets system" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Admin tickets system</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery3.png" alt="Compose Email" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Compose Email</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery4.png" alt="Receive emails" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Receive emails</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery5.png" alt="Light/dark mode" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Light/dark mode</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery6.png" alt="Admin panel" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Admin panel</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery1.png" alt="Admin dashboard" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Admin dashboard</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery2.png" alt="Admin tickets system" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Admin tickets system</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery3.png" alt="Compose Email" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Compose Email</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery4.png" alt="Receive emails" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Receive emails</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery5.png" alt="Light/dark mode" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Light/dark mode</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery6.png" alt="Admin panel" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Admin panel</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery1.png" alt="Admin dashboard" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Admin dashboard</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery2.png" alt="Admin tickets system" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Admin tickets system</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery3.png" alt="Compose Email" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Compose Email</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery4.png" alt="Receive emails" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Receive emails</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery5.png" alt="Light/dark mode" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Light/dark mode</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery6.png" alt="Admin panel" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Admin panel</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery1.png" alt="Admin dashboard" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Admin dashboard</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery2.png" alt="Admin tickets system" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Admin tickets system</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery3.png" alt="Compose Email" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Compose Email</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery4.png" alt="Receive emails" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Receive emails</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery5.png" alt="Light/dark mode" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Light/dark mode</span>
+                    </div>
+                  </div>
+                  <div class="gallery-item">
+                    <img src="gallery6.png" alt="Admin panel" class="gallery-image">
+                    <div class="gallery-overlay">
+                      <span class="gallery-title">Admin panel</span>
+                    </div>
+                  </div>
+                  
+                  <!-- Repeat the above items to create a seamless loop -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Decorative elements -->
+            <div class="hidden lg:block absolute top-10 left-10 w-32 h-32 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+            <div class="hidden lg:block absolute bottom-10 right-10 w-32 h-32 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+          </section>
+
+          <style>
+          @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-336px * 6)); }
+          }
+          .animate-scroll {
+            animation: scroll 60s linear infinite;
+          }
+          @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+          }
+          .animate-blob {
+            animation: blob 7s infinite;
+          }
+          .animation-delay-2000 {
+            animation-delay: 2s;
+          }
+          .gallery-item {
+            flex: 0 0 320px;
+            height: 240px;
+            margin: 8px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+          }
+          .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+          }
+          .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+          }
+          .gallery-item:hover .gallery-image {
+            transform: scale(1.1);
+          }
+          .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+          }
+          .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+          }
+          .gallery-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 1rem;
+            transform: translateY(20px);
+            transition: transform 0.3s ease-in-out;
+          }
+          .gallery-item:hover .gallery-title {
+            transform: translateY(0);
+          }
+          </style>
+
+          <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const gallery = document.querySelector('.animate-scroll');
+            gallery.addEventListener('mouseenter', () => {
+              gallery.style.animationPlayState = 'paused';
+            });
+            gallery.addEventListener('mouseleave', () => {
+              gallery.style.animationPlayState = 'running';
+            });
+          });
+          </script>
+          <!-- Full-screen overlay -->
+          <div id="fullscreenOverlay" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center">
+              <div class="max-w-4xl w-full mx-4">
+                  <img id="fullscreenImage" src="" alt="Fullscreen Image" class="w-full h-auto">
+              </div>
+          </div>
+          <style>
+              @keyframes scroll {
+                  0% { transform: translateX(0); }
+                  100% { transform: translateX(calc(-400px * 6)); }
+              }
+              .animate-scroll {
+                  animation: scroll 20s linear infinite;
+              }
+              .group:hover .group-hover\:opacity-100 {
+                  opacity: 1;
+              }
+              .group:hover .group-hover\:scale-105 {
+                  transform: scale(1.05);
+              }
+              #fullscreenOverlay {
+                  transition: opacity 0.3s ease-in-out;
+              }
+              #fullscreenImage {
+                  max-height: 90vh;
+                  object-fit: contain;
+              }
+          </style>
+
+          <!-- pricing -->
+            <section id="pricing" class="relative py-24 overflow-hidden bg-gradient-to-b from-white via-blue-50 to-purple-50 dark:from-blue-900 dark:via-gray-800 dark:to-gray-900">
+            <!-- Background animation -->
+
+
+              <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 class="mb-12 text-4xl font-extrabold text-center text-gray-900 dark:text-white">
+                Choose Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Perfect Plan</span>
+              </h2>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Basic Plan -->
+                <div class="pricing-card" data-plan="basic">
+                  <div class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                    <div class="p-8">
+                      <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Basic</h3>
+                      <p class="text-4xl font-bold mb-6 text-blue-600 dark:text-blue-400">$19<span class="text-lg font-normal text-gray-600 dark:text-gray-400">/month</span></p>
+                      <ul class="mb-8 space-y-3">
+                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                          Up to 20 users (addresses)
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                          Up to 80GB Email storage
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                          Up to 500Mbps server bandwidth
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                          User friendly Admin panel
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                          24/7 Support
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                          1-5 business day setup*
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                          DDOS protection
+                        </li>
+                      </ul>
+                      <div class="mb-8 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                        <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Not included:</h4>
+                        <ul class="space-y-2">
+                          <li class="flex items-center text-gray-500 dark:text-gray-400">
+                            <svg class="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            SSH Access
+                          </li>
+                          <li class="flex items-center text-gray-500 dark:text-gray-400">
+                            <svg class="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            Domain included
+                          </li>
+                        </ul>
+                      </div>
+                      <a href="pricing" class="block w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg text-center transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">Choose Basic Plan</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="pricing-card" data-plan="pro">
+                  <div class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl border-2 border-blue-500 dark:border-blue-400">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                    <div class="absolute top-4 right-4 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Popular</div>
+                    <div class="p-8">
+                      <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Pro</h3>
+                      <p class="text-4xl font-bold mb-6 text-blue-600 dark:text-blue-400">$49<span class="text-lg font-normal text-gray-600 dark:text-gray-400">/month</span></p>
+                      <ul class="mb-8 space-y-3">
+                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                          Up to 150 users (addresses)
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                          Up to 640GB Email storage
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                          Up to 8GB RAM
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                          1GBPS Bandwidth
+                        </li>
+                          <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                          Priority support
+                                        </li>
+                                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                          SSH Access upon request (passworded)
+                                        </li>
+                                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                          Domain of choice included
+                                        </li>
+                                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                          1-5 business day setup*
+                                        </li>
+                                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                          DDOS protection
+                                        </li>
+                                      </ul>
+                                      <div class="mb-8 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Not included:</h4>
+                                        <ul class="space-y-2">
+                                          <li class="flex items-center text-gray-500 dark:text-gray-400">
+                                            <svg class="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                            Custom panel edits
+                                          </li>
+                                          <li class="flex items-center text-gray-500 dark:text-gray-400">
+                                            <svg class="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                            24/7 dedicated support
+                                          </li>
+                                        </ul>
+                                      </div>
+                                      <a href="pricing-pro" class="block w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg text-center transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">Choose Pro Plan</a>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <!-- Enterprise Plan -->
+                                <div class="pricing-card" data-plan="enterprise">
+                                  <div class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                                    <div class="p-8">
+                                      <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Enterprise</h3>
+                                      <p class="text-4xl font-bold mb-6 text-purple-600 dark:text-purple-400">Custom</p>
+                                      <ul class="mb-8 space-y-3">
+                                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                          Unlimited users (addresses)
+                                        </li>
+                                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                          Custom email storage
+                                        </li>
+                                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                          24/7 dedicated support
+                                        </li>
+                                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                          Custom panel edits upon request
+                                        </li>
+                                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                          SSH Access upon request (passworded)
+                                        </li>
+                                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                          Domain(s) of choice included
+                                        </li>
+                                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                          Priority 1-3 business day setup*
+                                        </li>
+                                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                          <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                          DDOS protection
+                                        </li>
+                                      </ul>
+                                      <div class="mb-8 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Customizable options:</h4>
+                                        <ul class="space-y-2">
+                                          <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                            <svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                            Custom bandwidth allocation
+                                          </li>
+                                          <li class="flex items-center text-gray-600 dark:text-gray-300">
+                                            <svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                            Dedicated IP addresses
+                                          </li>
+                                        </ul>
+                                      </div>
+                                      <a href="#contact" class="block w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg text-center transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg smooth-scroll">Contact Sales</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+              <section class="py-6 px-4 sm:px-6 lg:px-8 mb-10">
+                <div class="max-w-7xl mx-auto">
+                  <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-0.5 shadow-lg transform transition-all hover:scale-105 duration-300">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl">
+                      <div class="flex items-center justify-between flex-wrap gap-4 py-4 px-6">
+                        <div class="flex items-center space-x-3">
+                          <div class="flex-shrink-0">
+                            <svg class="h-8 w-8 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                            </svg>
+                          </div>
+                          <div>
+                            <p class="text-sm sm:text-base font-medium text-gray-900 dark:text-gray-100">
+                              Already subscribed?
+                            </p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">
+                              View or manage your current plan
+                            </p>
+                          </div>
+                        </div>
+                        <a href="https://billing.stripe.com/p/login/bIYaGAa8wdYO3JK5kk" class="inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                          View Plan
+                          <svg class="ml-2 -mr-1 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+                <section class="relative py-24 overflow-hidden bg-gradient-to-b from-purple-50 via-blue-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-purple-900">
+                <div class="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white to-transparent dark:from-gray-900 dark:to-transparent"></div>
+                  <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                  <h2 class="mb-12 text-4xl font-extrabold text-center text-gray-900 dark:text-white">
+                    Frequently Asked <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Questions</span>
+                  </h2>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="faq-container">
+                    <!-- FAQ items will be dynamically inserted here -->
+                  </div>
+                </div>
+
+                <!-- Decorative elements -->
+                <div class="hidden lg:block absolute top-10 left-10 w-32 h-32 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+                <div class="hidden lg:block absolute top-10 right-10 w-32 h-32 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+                <div class="hidden lg:block absolute bottom-10 left-20 w-32 h-32 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+              </section>
+
+          <script>
+          const faqs = [
+            {
+              question: "How secure is your email admin panel?",
+              answer: "Our email admin panel employs industry-leading encryption and robust security protocols, ensuring your data remains protected at all times. We continuously update our security measures to stay ahead of potential threats, providing you with a secure and reliable platform."
+            },
+            {
+              question: "What kind of support do you offer?",
+              answer: "We provide tiered support based on your plan:<br><br>• Basic users: Comprehensive email support<br>• Pro users: Priority support with faster response times<br>• Enterprise customers: 24/7 dedicated support for immediate assistance<br><br>Our expert team is always ready to assist you with any questions or issues, ensuring a smooth experience with our platform."
+            },
+            {
+              question: "Can I upgrade or downgrade my plan?",
+              answer: "Plan changes should be discussed via a support ticket first. Upgrades or downgrades typically involve moving to a new server, and all data on the previous server will be lost. We recommend backing up your data before initiating any plan changes. Our support team will guide you through the process to ensure a smooth transition."
+            },
+            {
+              question: "Is there a limit to the number of email accounts I can create?",
+              answer: "The number of email accounts you can create depends on your plan. Basic plans typically have a limit, while higher-tier plans offer more flexibility. Check your specific plan details for exact numbers, or contact our support team for more information."
+            },
+            {
+              question: "Do you offer email migration services?",
+              answer: "Currently, we do not offer email migration services. When setting up your account with us, you'll need to manually transfer your emails, contacts, and calendars. We recommend using IMAP to sync your emails from your old provider to your new account with us. For assistance with this process, please refer to our knowledge base or contact our support team."
+            },
+            {
+              question: "What is your uptime guarantee?",
+              answer: "We strive for 99.9% uptime for all our services. In the rare event of downtime, we work diligently to resolve issues quickly. Our status page provides real-time updates on our system performance, and we offer compensation in line with our Service Level Agreement for extended outages."
+            }
+          ];
+
+              document.addEventListener('DOMContentLoaded', () => {
+                const container = document.getElementById('faq-container');
+
+                faqs.forEach((faq, index) => {
+                  const faqItem = document.createElement('div');
+                  faqItem.className = 'bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl';
+                  faqItem.innerHTML = `
+                    <button class="w-full text-left p-6 focus:outline-none" id="faq-btn-${index}">
+                      <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">${faq.question}</h3>
+                        <svg class="w-6 h-6 text-blue-500 dark:text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                      </div>
+                    </button>
+                    <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-gray-50 dark:bg-gray-700" id="faq-answer-${index}">
+                      <p class="p-6 text-gray-600 dark:text-gray-300">${faq.answer}</p>
+                    </div>
+                  `;
+                  container.appendChild(faqItem);
+
+                  const btn = faqItem.querySelector(`#faq-btn-${index}`);
+                  const answer = faqItem.querySelector(`#faq-answer-${index}`);
+                  const arrow = btn.querySelector('svg');
+
+                  btn.addEventListener('click', () => {
+                    const isOpen = answer.style.maxHeight;
+
+                    // Close all other answers
+                    document.querySelectorAll('#faq-container > div > div[id^="faq-answer-"]').forEach((el) => {
+                      if (el !== answer) {
+                        el.style.maxHeight = null;
+                        el.previousElementSibling.classList.remove('bg-gray-50', 'dark:bg-gray-700');
+                      }
+                    });
+                    document.querySelectorAll('#faq-container > div > button > div > svg').forEach((el) => {
+                      if (el !== arrow) {
+                        el.classList.remove('rotate-180');
+                      }
+                    });
+
+                    // Toggle current answer
+                    if (isOpen) {
+                      answer.style.maxHeight = null;
+                      arrow.classList.remove('rotate-180');
+                      btn.classList.remove('bg-gray-50', 'dark:bg-gray-700');
+                    } else {
+                      answer.style.maxHeight = answer.scrollHeight + "px";
+                      arrow.classList.add('rotate-180');
+                      btn.classList.add('bg-gray-50', 'dark:bg-gray-700');
+                    }
+                  });
+                });
+              });
+              </script>
+
+              <style>
+
+              .animate-blob {
+                animation: blob 7s infinite;
+              }
+              .animation-delay-2000 {
+                animation-delay: 2s;
+              }
+              .animation-delay-4000 {
+                animation-delay: 4s;
+              }
+              </style>
+              <!-- Demo Panel Section -->
+            <!-- Contact Us Section -->
+              <section id="contact" class="relative py-24 overflow-hidden bg-gradient-to-b from-white via-blue-50 to-purple-50 dark:from-purple-900 dark:via-gray-800 dark:to-gray-900">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-100 to-purple-100 dark:from-transparent dark:via-blue-900 dark:to-purple-900 opacity-50"></div>
+                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                  <div class="text-center mb-16">
+                    <h2 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                      Let's Create Something Amazing Together
+                    </h2>
+                    <p class="mt-4 text-xl text-gray-600 dark:text-gray-300">
+                      Tell us about your vision, and we'll help bring it to life.
+                    </p>
+                  </div>
+
+                  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Contact Form -->
+                    <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+                      <form id="contactForm" class="space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                          <div>
+                            <label for="nickname" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nickname</label>
+                            <input type="text" id="nickname" name="nickname" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600" required>
+                          </div>
+                          <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email (optional)</label>
+                            <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600">
+                          </div>
+                        </div>
+
+                        <div>
+                          <label for="project_type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">What type of project are you interested in?</label>
+                          <select id="project_type" name="project_type" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600">
+                            <option value="">Select a project type</option>
+                            <option value="email_hosting">Email Hosting</option>
+                            <option value="custom_domain">Custom Domain Setup</option>
+                            <option value="enterprise_solution">Enterprise Email Solution</option>
+                            <option value="migration">Email Migration</option>
+                            <option value="security">Enhanced Email Security</option>
+                            <option value="other">Other</option>
+                          </select>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                          <div>
+                            <label for="budget" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Estimated Budget</label>
+                            <select id="budget" name="budget" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600">
+                              <option value="">Select a budget range</option>
+                              <option value="under_1000">Under $1,000</option>
+                              <option value="1000_5000">$1,000 - $5,000</option>
+                              <option value="5000_10000">$5,000 - $10,000</option>
+                              <option value="10000_plus">$10,000+</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label for="timeline" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Desired Timeline</label>
+                            <select id="timeline" name="timeline" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600">
+                              <option value="">Select a timeline</option>
+                              <option value="asap">As soon as possible</option>
+                              <option value="1_month">Within 1 month</option>
+                              <option value="3_months">Within 3 months</option>
+                              <option value="6_months">Within 6 months</option>
+                              <option value="flexible">Flexible</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div>
+                          <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tell us more about your project</label>
+                          <textarea id="message" name="message" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600" placeholder="Describe your goals, challenges, and any specific requirements..."></textarea>
+                        </div>
+
+                        <div>
+                          <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
+                            <span class="mr-2">Send Message</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+
+                    <!-- Additional Information -->
+                    <div class="space-y-8">
+                      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Other Ways to Reach Us</h3>
+                        <div class="space-y-4">
+                          <p class="text-gray-600 dark:text-gray-400">Have questions or need assistance? Our team is here to help. Feel free to reach out to us using the contact form or through the following methods:</p>
+                          <div class="flex items-center space-x-3">
+                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            <a href="mailto:support@expansion.com" class="text-blue-600 dark:text-blue-400 hover:underline">support@expansion.com</a>
+                          </div>
+                          <div class="flex items-center space-x-3">
+                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <span class="text-gray-600 dark:text-gray-400">Somewhere, Somehow</span>
+                          </div>
+                          <div class="flex items-center space-x-3">
+                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span class="text-gray-600 dark:text-gray-400">Mon - Fri, 9am - 5pm</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Why Choose Us?</h3>
+                        <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                          <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Industry-leading email security
+                          </li>
+                          <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            24/7 dedicated support
+                          </li>
+                          <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Customizable solutions for any scale
+                          </li>
+                          <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            99.9% uptime guarantee
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Follow Us</h3>
+                        <div class="flex space-x-4">
+                          <a href="#" class="text-gray-400 hover:text-blue-500 transition-colors duration-300">
+                            <span class="sr-only">Facebook</span>
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                          </a>
+                          <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">
+                            <span class="sr-only">Twitter</span>
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
+                          </a>
+                          <a href="#" class="text-gray-400 hover:text-blue-500 transition-colors duration-300">
+                            <span class="sr-only">LinkedIn</span>
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                              <path fill-rule="evenodd" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" clip-rule="evenodd" />
+                            </svg>
+                            </a>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+
+                            <!-- Decorative elements -->
+                            <div class="hidden lg:block absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+                            <div class="hidden lg:block absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+                            <div class="hidden lg:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+                            </section>
+
+                            <style>
+                            @keyframes blob {
+                            0% { transform: translate(0px, 0px) scale(1); }
+                            33% { transform: translate(30px, -50px) scale(1.1); }
+                            66% { transform: translate(-20px, 20px) scale(0.9); }
+                            100% { transform: translate(0px, 0px) scale(1); }
+                            }
+                            .animate-blob {
+                            animation: blob 7s infinite;
+                            }
+                            .animation-delay-2000 {
+                            animation-delay: 2s;
+                            }
+                            .animation-delay-4000 {
+                            animation-delay: 4s;
+                            }
+                            </style>
+                                                                                 
+                                                                                                              
+            <!-- Temporary Ticket Login Modal -->
+            <div id="tempTicketLoginModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+              <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                  <form id="tempTicketLoginForm">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                      <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                          <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                          </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                          <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                            Temporary Ticket Login
+                          </h3>
+                          <div class="mt-2 space-y-4">
+                            <div>
+                              <label for="tempUsername" class="block text-sm font-medium text-gray-700">Username</label>
+                              <input type="text" name="username" id="tempUsername" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            </div>
+                            <div>
+                              <label for="tempPassword" class="block text-sm font-medium text-gray-700">Password</label>
+                              <input type="password" name="password" id="tempPassword" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                      <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        Login
+                      </button>
+                      <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" id="closeTempLoginModal">
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+      <!-- Footer -->
+              <footer class="relative bg-gradient-to-b from-white via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900 overflow-hidden">
+                <div class="footer-bg absolute inset-0">
+                  <svg class="hidden dark:block absolute left-0 top-0 w-full h-full text-gray-900 opacity-5" width="100%" height="100%" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <pattern id="pattern" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                        <rect class="text-gray-900" width="20" height="5"></rect>
+                        <rect class="text-gray-900" x="20" y="20" width="20" height="5"></rect>
+                        <rect class="text-gray-900" x="40" y="40" width="20" height="5"></rect>
+                        <rect class="text-gray-900" x="60" y="60" width="20" height="5"></rect>
+                      </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#pattern)"></rect>
+                  </svg>
+                  <svg class="hidden dark:block absolute right-0 bottom-0 w-full h-full text-gray-900 opacity-5" width="100%" height="100%" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <pattern id="pattern2" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+                        <circle class="text-gray-900" cx="30" cy="30" r="20"></circle>
+                        <circle class="text-gray-900" cx="90" cy="90" r="20"></circle>
+                      </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#pattern2)"></rect>
+                  </svg>
+                  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white to-white dark:from-transparent dark:via-gray-900 dark:to-gray-900 opacity-75"></div>
+                </div>
+
+                <div class="relative z-10 max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+                  <div class="grid grid-cols-1 md:grid-cols-4 gap-16">
+                    <div class="col-span-1 md:col-span-4 lg:col-span-1">
+                      <div class="flex items-center mb-6">
+                        <div class="bg-gradient-to-br from-blue-600 to-purple-600 rounded-full p-3 mr-4">
+                          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                          </svg>
+                        </div>
+                        <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white">
+                          Expansion
+                        </h2>
+                      </div>
+                      <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
+                        Empowering businesses with advanced email management solutions. Secure, efficient, and user-friendly.
+                      </p>
+                      <div class="mt-8">
+                        <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                          Get Started
+                          <svg class="ml-3 -mr-1 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+
+                    <div class="col-span-1 md:col-span-2 lg:col-span-3">
+                      <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+                        <div>
+                          <h3 class="text-lg font-semibold text-gray-900 tracking-wider uppercase dark:text-white mb-4">
+                            Product
+                          </h3>
+                          <ul class="mt-4 space-y-4">
+                            <li>
+                              <a href="#features" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150">
+                                Features
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#pricing" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150">
+                                Pricing
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150">
+                                Documentation
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150">
+                                Guides
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+
+
+                        <div>
+                          <h3 class="text-lg font-semibold text-gray-900 tracking-wider uppercase dark:text-white mb-4">
+                            Connect
+                          </h3>
+                          <ul class="mt-4 space-y-4">
+                            <li>
+                              <a href="#" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150 flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3 8h-1.35c-.538 0-.65.221-.65.778v1.222h2l-.209 2h-1.791v7h-3v-7h-2v-2h2v-2.308c0-1.769.931-2.692 3.029-2.692h1.971v3z"/>
+                                </svg>
+                                Facebook
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150 flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"/>
+                                </svg>
+                                Twitter
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150 flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"/>
+                                </svg>
+                                LinkedIn
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150 flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.441 16.892c-2.102.144-6.784.144-8.883 0-2.276-.156-2.541-1.27-2.558-4.892.017-3.629.285-4.736 2.558-4.892 2.099-.144 6.782-.144 8.883 0 2.277.156 2.541 1.27 2.559 4.892-.018 3.629-.285 4.736-2.559 4.892zm-6.441-7.234l4.917 2.338-4.917 2.346v-4.684z"/>
+                                </svg>
+                                YouTube
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mt-16 border-t border-gray-200 dark:border-gray-700 pt-8 md:flex md:items-center md:justify-between">
+                    <div class="flex space-x-6 md:order-2">
+                      <a href="#" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                        <span class="sr-only">Facebook</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                        </svg>
+                        </a>
+                                <a href="#" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                                  <span class="sr-only">GitHub</span>
+                                  <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                                  </svg>
+                                </a>
+                                <a href="#" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                                  <span class="sr-only">Twitter</span>
+                                  <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                                  </svg>
+                                </a>
+                              </div>
+                              <p class="mt-8 text-base text-gray-600 dark:text-gray-400 md:mt-0 md:order-1">
+                                &copy; 2022 Expansion. All rights reserved.
+                              </p>
+                            </div>
+                          </div>
+                          <!-- Decorative Elements -->
+                          <div class="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-br from-blue-600 to-purple-600 opacity-20 mix-blend-multiply dark:opacity-10"></div>
+                          <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-bl from-purple-600 to-blue-600 opacity-20 mix-blend-multiply dark:opacity-10"></div>
+                          <div class="hidden md:block absolute top-0 left-0 w-1/4 h-full bg-gradient-to-b from-white via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900 transform -skew-x-12 origin-top-left"></div>
+                          <div class="hidden md:block absolute bottom-0 right-0 w-1/4 h-full bg-gradient-to-t from-white via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900 transform skew-x-12 origin-bottom-right"></div>
+                          <div class="hidden lg:block absolute top-0 left-1/4 w-1/2 h-full bg-white dark:bg-gray-900 transform skew-x-12 origin-top-left"></div>
+                          <div class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white dark:from-gray-900"></div>
+                          <div class="absolute top-0 right-0 w-full h-24 bg-gradient-to-b from-white dark:from-gray-900"></div>
+                          <div class="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-blue-600 to-purple-600 opacity-50"></div>
+                          <div class="absolute inset-0 pointer-events-none overflow-hidden">
+                            <div class="absolute top-0 left-1/2 w-1/2 h-full bg-gradient-to-b from-transparent to-white dark:to-gray-900"></div>
+                            <div class="absolute top-0 right-1/2 w-1/2 h-full bg-gradient-to-b from-transparent to-white dark:to-gray-900"></div>
+                          </div>
+                        </footer>
+                        <script>
+                          // Toggle dark mode
+                          const toggleDarkMode = () => {
+                            document.documentElement.classList.toggle('dark');
+                            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+                          };
+
+                          // Check for stored theme preference
+                          if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                            document.documentElement.classList.add('dark');
+                          } else {
+                            document.documentElement.classList.remove('dark');
+                          }
+
+                          // Smooth scroll to section on click
+                          document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                            anchor.addEventListener('click', function (e) {
+                              e.preventDefault();
+
+                              document.querySelector(this.getAttribute('href')).scrollIntoView({
+                                behavior: 'smooth'
+                              });
+                            });
+                          });
+
+                          // Animate on scroll
+                          const callback = (entries, observer) => {
+                            entries.forEach(entry => {
+                              if (entry.isIntersecting) {
+                                entry.target.classList.add('animate-fade-in-up');
+                              }
+                            });
+                          };
+
+                          const observer = new IntersectionObserver(callback);
+
+                          const targets = document.querySelectorAll('.js-show-on-scroll');
+                          targets.forEach(target => observer.observe(target));
+                        </script>
+                        </antArtifact>
+            </section>
+        </div>
+
+
+
+<!-- Success Modal -->
+<div id="successModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+        <div class="sm:flex sm:items-start">
+          <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+            <!-- Heroicon name: outline/check -->
+            <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+              Thank you for contacting us!
+            </h3>
+            <div class="mt-2">
+              <p class="text-sm text-gray-500">
+                Your ticket has been created successfully. Here are your temporary login credentials:
+              </p>
+              <p class="text-sm text-gray-900 mt-2">
+                <strong>Username:</strong> <span id="tempUsername"></span><br>
+                <strong>Password:</strong> <span id="tempPassword"></span>
+              </p>
+              <p class="text-sm text-gray-500 mt-2">
+                Please save these credentials. We will be in contact with you soon.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+        <button type="button" id="closeModal" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+          Close
+        </button>
+        <a href="#" id="openStripeLink" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm hidden">
+          Open Payment Link
+        </a>
+      </div>
+    </div>
+  </div>
+</div> 
+    <script>
+    </script>
+
+
+
+                                  {% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}System Users{% endblock %}
+{% block content %}
+<h2>System Users</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>MiaB Email</th>
+            <th>Is Admin</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.email }}</td>
+            <td>{{ user.miab_email }}</td>
+            <td>{{ "Yes" if user.is_admin else "No" }}</td>
+            <td>
+                <!-- Add edit and delete buttons here if needed -->
+                <button class="btn btn-warning btn-sm">Edit</button>
+                <button class="btn btn-danger btn-sm">Delete</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('add_user') }}" class="btn btn-primary">Add New System User</a>
+{% endblock %}
