@@ -1185,176 +1185,448 @@
               }
               </style>
               <!-- Demo Panel Section -->
-            <!-- Contact Us Section -->
-              <section id="contact" class="relative py-24 overflow-hidden bg-gradient-to-b from-white via-blue-50 to-purple-50 dark:from-purple-900 dark:via-gray-800 dark:to-gray-900">
-                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-100 to-purple-100 dark:from-transparent dark:via-blue-900 dark:to-purple-900 opacity-50"></div>
-                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  <div class="text-center mb-16">
-                    <h2 class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                      Let's Create Something Amazing Together
-                    </h2>
-                    <p class="mt-4 text-xl text-gray-600 dark:text-gray-300">
-                      Tell us about your vision, and we'll help bring it to life.
-                    </p>
+              <div class="section-separator relative">
+                <div class="pixel-gradient h-24"></div>
+
+                <!-- Dashed line -->
+                <div class="absolute inset-x-0 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                  <div class="container mx-auto px-4">
+                    <div class="border-t-2 border-dashed border-white border-opacity-20"></div>
                   </div>
+                </div>
+              </div>
 
-                  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Contact Form -->
-                    <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                      <form id="contactForm" class="space-y-6">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                          <div>
-                            <label for="nickname" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nickname</label>
-                            <input type="text" id="nickname" name="nickname" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600" required>
+              <style>
+              .section-separator {
+                --color-section-above: rgb(30, 58, 138); /* Adjust this to match your top section color */
+                --color-section-below: rgb(88, 28, 135); /* Adjust this to match your bottom section color */
+              }
+
+              .pixel-gradient {
+                position: relative;
+                overflow: hidden;
+              }
+
+              .pixel-gradient::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-image: linear-gradient(
+                  to top,
+                  var(--color-section-above) 0%,
+                  var(--color-section-above) 20%,
+                  color-mix(in srgb, var(--color-section-above) 80%, var(--color-section-below) 20%) 20%,
+                  color-mix(in srgb, var(--color-section-above) 60%, var(--color-section-below) 40%) 40%,
+                  color-mix(in srgb, var(--color-section-above) 40%, var(--color-section-below) 60%) 60%,
+                  color-mix(in srgb, var(--color-section-above) 20%, var(--color-section-below) 80%) 80%,
+                  var(--color-section-below) 80%,
+                  var(--color-section-below) 100%
+                );
+              }
+
+              /* Apply a subtle blur for even smoother transition */
+              .pixel-gradient::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                backdrop-filter: blur(4px);
+              }
+              </style>
+              <!-- Enhanced Contact Section -->
+                    <section id="contact" class="relative py-24 overflow-hidden bg-gray-900">
+                      <!-- Gradient Background with Triangles and Fragments -->
+                      <div class="absolute inset-0 overflow-hidden">
+                        <!-- Base gradient -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-gray-900 opacity-50"></div>
+
+                        <!-- Triangles and fragments -->
+                        <svg class="absolute bottom-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                          <path fill="rgba(59, 130, 246, 0.1)" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,213.3C1248,235,1344,213,1392,202.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                          <path fill="rgba(167, 139, 250, 0.1)" d="M0,160L48,170.7C96,181,192,203,288,213.3C384,224,480,224,576,192C672,160,768,96,864,101.3C960,107,1056,181,1152,197.3C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                        </svg>
+
+                        <!-- Floating fragments -->
+                        <div class="absolute inset-0">
+                          <div class="absolute top-1/4 left-1/4 w-12 h-12 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+                          <div class="absolute top-1/3 right-1/3 w-16 h-16 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+                          <div class="absolute bottom-1/4 right-1/4 w-14 h-14 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+                        </div>
+                      </div>
+
+                      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                          <!-- Refined Contact Form -->
+                          <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                            <div class="p-8">
+                              <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Reach Out to Us</h2>
+                              <form class="space-y-6">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                  <div class="relative">
+                                    <label for="firstName" class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-800 px-1 text-xs font-medium text-gray-600 dark:text-gray-400">
+                                      First Name
+                                    </label>
+                                    <input type="text" id="firstName" name="firstName" class="block w-full px-4 py-3 rounded-md border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" placeholder="John">
+                                  </div>
+                                  <div class="relative">
+                                    <label for="lastName" class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-800 px-1 text-xs font-medium text-gray-600 dark:text-gray-400">
+                                      Last Name
+                                    </label>
+                                    <input type="text" id="lastName" name="lastName" class="block w-full px-4 py-3 rounded-md border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" placeholder="Doe">
+                                  </div>
+                                </div>
+                                <div class="relative">
+                                  <label for="email" class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-800 px-1 text-xs font-medium text-gray-600 dark:text-gray-400">
+                                    Email
+                                  </label>
+                                  <input type="email" id="email" name="email" class="block w-full px-4 py-3 rounded-md border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" placeholder="you@example.com">
+                                </div>
+                                <div class="relative">
+                                  <label for="company" class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-800 px-1 text-xs font-medium text-gray-600 dark:text-gray-400">
+                                    Company (Optional)
+                                  </label>
+                                  <input type="text" id="company" name="company" class="block w-full px-4 py-3 rounded-md border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" placeholder="Acme Inc.">
+                                </div>
+                                <div class="relative">
+                                  <label for="projectType" class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-800 px-1 text-xs font-medium text-gray-600 dark:text-gray-400">
+                                    What can we help you with?
+                                  </label>
+                                  <select id="projectType" name="projectType" class="block w-full px-4 py-3 rounded-md border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+                                    <option value="">Select an option</option>
+                                    <option value="email_hosting">Email Hosting</option>
+                                    <option value="security">Enhanced Security</option>
+                                    <option value="migration">Email Migration</option>
+                                    <option value="custom_solution">Custom Solution</option>
+                                    <option value="consultation">Consultation</option>
+                                    <option value="other">Other</option>
+                                  </select>
+                                </div>
+                                <div class="relative">
+                                  <label for="message" class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-800 px-1 text-xs font-medium text-gray-600 dark:text-gray-400">
+                                    Message
+                                  </label>
+                                  <textarea id="message" name="message" rows="4" class="block w-full px-4 py-3 rounded-md border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" placeholder="Tell us about your project or question..."></textarea>
+                                </div>
+                                <div class="flex items-center">
+                                  <input id="newsletter" name="newsletter" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                  <label for="newsletter" class="ml-2 block text-sm text-gray-900 dark:text-gray-300">
+                                    Subscribe to our newsletter for updates
+                                  </label>
+                                </div>
+                                <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+                                  Send Message
+                                </button>
+                              </form>
+                            </div>
                           </div>
-                          <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email (optional)</label>
-                            <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600">
-                          </div>
-                        </div>
 
-                        <div>
-                          <label for="project_type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">What type of project are you interested in?</label>
-                          <select id="project_type" name="project_type" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600">
-                            <option value="">Select a project type</option>
-                            <option value="email_hosting">Email Hosting</option>
-                            <option value="custom_domain">Custom Domain Setup</option>
-                            <option value="enterprise_solution">Enterprise Email Solution</option>
-                            <option value="migration">Email Migration</option>
-                            <option value="security">Enhanced Email Security</option>
-                            <option value="other">Other</option>
-                          </select>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                          <div>
-                            <label for="budget" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Estimated Budget</label>
-                            <select id="budget" name="budget" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600">
-                              <option value="">Select a budget range</option>
-                              <option value="under_1000">Under $1,000</option>
-                              <option value="1000_5000">$1,000 - $5,000</option>
-                              <option value="5000_10000">$5,000 - $10,000</option>
-                              <option value="10000_plus">$10,000+</option>
-                            </select>
-                          </div>
-                          <div>
-                            <label for="timeline" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Desired Timeline</label>
-                            <select id="timeline" name="timeline" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600">
-                              <option value="">Select a timeline</option>
-                              <option value="asap">As soon as possible</option>
-                              <option value="1_month">Within 1 month</option>
-                              <option value="3_months">Within 3 months</option>
-                              <option value="6_months">Within 6 months</option>
-                              <option value="flexible">Flexible</option>
-                            </select>
-                          </div>
-                        </div>
-
-                        <div>
-                          <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tell us more about your project</label>
-                          <textarea id="message" name="message" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600" placeholder="Describe your goals, challenges, and any specific requirements..."></textarea>
-                        </div>
-
-                        <div>
-                          <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
-                            <span class="mr-2">Send Message</span>
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-
-                    <!-- Additional Information -->
+                    <!-- Enhanced Information Panel -->
                     <div class="space-y-8">
-                      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Other Ways to Reach Us</h3>
-                        <div class="space-y-4">
-                          <p class="text-gray-600 dark:text-gray-400">Have questions or need assistance? Our team is here to help. Feel free to reach out to us using the contact form or through the following methods:</p>
-                          <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                            <a href="mailto:support@expansion.com" class="text-blue-600 dark:text-blue-400 hover:underline">support@expansion.com</a>
-                          </div>
-                          <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            <span class="text-gray-600 dark:text-gray-400">Somewhere, Somehow</span>
-                          </div>
-                          <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span class="text-gray-600 dark:text-gray-400">Mon - Fri, 9am - 5pm</span>
-                          </div>
-                        </div>
-                      </div>
+                      <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                        <div class="p-8">
+                          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Why Choose Expansion?</h3>
+                          <ul class="space-y-4">
+                            <li class="flex items-start">
+                              <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                              <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-white">Unparalleled Security</h4>
+                                <p class="text-gray-600 dark:text-gray-300">State-of-the-art encryption and advanced threat protection to keep your emails safe.</p>
+                              </div>
+                            </li>
+                            <li class="flex items-start">
+                              <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                              <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-white">24/7 Expert Support</h4>
+                                <p class="text-gray-600 dark:text-gray-300">Our dedicated team is always ready to assist you, ensuring smooth operations around the clock.</p>
+                              </div>
+                            </li>
+                            <li class="flex items-start">
+                              <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><div>
+                                <h4 class="font-semibold text-gray-900 dark:text-white">Scalable Solutions</h4>
+                                <p class="text-gray-600 dark:text-gray-300">From startups to enterprises, our flexible platform grows with your business needs.</p>
+                              </div>
+                              </li>
+                              <li class="flex items-start">
+                              <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                              <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-white">99.99% Uptime Guarantee</h4>
+                                <p class="text-gray-600 dark:text-gray-300">Experience uninterrupted email services with our robust infrastructure.</p>
+                              </div>
+                              </li>
+                              </ul>
+                              </div>
+                              </div>
 
-                      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Why Choose Us?</h3>
-                        <ul class="space-y-3 text-gray-600 dark:text-gray-400">
-                          <li class="flex items-center">
-                            <svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            Industry-leading email security
-                          </li>
-                          <li class="flex items-center">
-                            <svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            24/7 dedicated support
-                          </li>
-                          <li class="flex items-center">
-                            <svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            Customizable solutions for any scale
-                          </li>
-                          <li class="flex items-center">
-                            <svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            99.9% uptime guarantee
-                          </li>
-                        </ul>
-                      </div>
+                              <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                              <div class="p-8">
+                              <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Get in Touch</h3>
+                              <div class="space-y-6">
+                              <div class="flex items-center space-x-4">
+                              <div class="flex-shrink-0 w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                              </div>
+                              <div>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">Email Us</p>
+                                <a href="mailto:support@expansion.com" class="text-lg font-semibold text-blue-600 dark:text-blue-400 hover:underline">support@expansion.com</a>
+                              </div>
+                              </div>
+                              <div class="flex items-center space-x-4">
+                              <div class="flex-shrink-0 w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                              </div>
+                              <div>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">Call Us</p>
+                                <a href="tel:+1234567890" class="text-lg font-semibold text-green-600 dark:text-green-400 hover:underline">+1 (234) 567-890</a>
+                              </div>
+                              </div>
+                              <div class="flex items-center space-x-4">
+                              <div class="flex-shrink-0 w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                              </div>
+                              <div>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">Visit Us</p>
+                                <p class="text-lg font-semibold text-purple-600 dark:text-purple-400">123 Tech Avenue, Silicon Valley, CA 94000</p>
+                              </div>
+                              </div>
+                              </div>
+                              </div>
+                              </div>
 
-                      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Follow Us</h3>
-                        <div class="flex space-x-4">
-                          <a href="#" class="text-gray-400 hover:text-blue-500 transition-colors duration-300">
-                            <span class="sr-only">Facebook</span>
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
-                          </a>
-                          <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">
-                            <span class="sr-only">Twitter</span>
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
-                          </a>
-                          <a href="#" class="text-gray-400 hover:text-blue-500 transition-colors duration-300">
-                            <span class="sr-only">LinkedIn</span>
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                              <path fill-rule="evenodd" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" clip-rule="evenodd" />
-                            </svg>
-                            </a>
-                            </div>
-                            </div>
-                            </div>
-                            </div>
-                            </div>
+                              <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                              <div class="p-8">
+                              <h3 class="text-2xl font-bold text-white mb-4">Stay Connected</h3>
+                              <p class="text-white mb-6">Follow us on social media for the latest updates, tips, and industry insights.</p>
+                              <div class="flex space-x-4">
+                              <a href="https://facebook.com/people/Success-synergy/61566979164547" class="text-white hover:text-blue-200 transition-colors duration-300">
+                              <span class="sr-only">Facebook</span>
+                              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                              </svg>
+                              </a>
+                              <a href="https://x.com/bdish84152" class="text-white hover:text-blue-200 transition-colors duration-300">
+                              <span class="sr-only">Twitter</span>
+                              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                              </svg>
+                              </a>
+                              <a href="https://www.linkedin.com/in/expansion-ltd-ab6773331" class="text-white hover:text-blue-200 transition-colors duration-300">
+                              <span class="sr-only">LinkedIn</span>
+                              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd" />
+                              </svg>
+                              </a>
+                              </div>
+                              </div>
+                              </div>
+                              </div>
+                              </div>
 
-                            <!-- Decorative elements -->
-                            <div class="hidden lg:block absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-                            <div class="hidden lg:block absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-                            <div class="hidden lg:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-                            </section>
+                              <!-- FAQ Section -->
 
-                            <style>
-                            @keyframes blob {
-                            0% { transform: translate(0px, 0px) scale(1); }
-                            33% { transform: translate(30px, -50px) scale(1.1); }
-                            66% { transform: translate(-20px, 20px) scale(0.9); }
-                            100% { transform: translate(0px, 0px) scale(1); }
-                            }
-                            .animate-blob {
-                            animation: blob 7s infinite;
-                            }
-                            .animation-delay-2000 {
-                            animation-delay: 2s;
-                            }
-                            .animation-delay-4000 {
-                            animation-delay: 4s;
-                            }
-                            </style>
-                                                                                 
-                                                                                                              
+
+                              <!-- Decorative Elements -->
+                              <div class="hidden lg:block absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+                              <div class="hidden lg:block absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+                              <div class="hidden lg:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+                              </section>
+
+                              <style>
+                              @keyframes blob {
+                              0% { transform: translate(0px, 0px) scale(1); }
+                              33% { transform: translate(30px, -50px) scale(1.1); }
+                              66% { transform: translate(-20px, 20px) scale(0.9); }
+                              100% { transform: translate(0px, 0px) scale(1); }
+                              }
+                              .animate-blob {
+                              animation: blob 7s infinite;
+                              }
+                              .animation-delay-2000 {
+                              animation-delay: 2s;
+                              }
+                              .animation-delay-4000 {
+                              animation-delay: 4s;
+                              }
+                              </style>
+              <style>
+              @keyframes blob {
+                0% { transform: translate(0px, 0px) scale(1); }
+                33% { transform: translate(30px, -50px) scale(1.1); }
+                66% { transform: translate(-20px, 20px) scale(0.9); }
+                100% { transform: translate(0px, 0px) scale(1); }
+              }
+              .animate-blob {
+                animation: blob 7s infinite;
+              }
+              .animation-delay-2000 {
+                animation-delay: 2s;
+              }
+              .animation-delay-4000 {
+                animation-delay: 4s;
+              }
+              </style>
+
+              <script>
+                querySelector(this.getAttribute('href')).scrollIntoView({
+                  behavior: 'smooth'
+                });
+              });
+              });
+
+              // Add animation on scroll
+              const animateOnScroll = (entries, observer) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('animate-fade-in-up');
+                  observer.unobserve(entry.target);
+                }
+              });
+              };
+
+              const observer = new IntersectionObserver(animateOnScroll, {
+              root: null,
+              threshold: 0.1
+              });
+
+              document.querySelectorAll('.animate-on-scroll').forEach(element => {
+              observer.observe(element);
+              });
+
+              // Form validation
+              const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+              inputs.forEach(input => {
+              input.addEventListener('invalid', function(e) {
+                e.preventDefault();
+                this.classList.add('border-red-500');
+              });
+
+              input.addEventListener('input', function() {
+                this.classList.remove('border-red-500');
+              });
+              });
+
+              // Dark mode toggle
+              const darkModeToggle = document.getElementById('darkModeToggle');
+              const html = document.documentElement;
+
+              darkModeToggle.addEventListener('click', () => {
+              html.classList.toggle('dark');
+              localStorage.setItem('darkMode', html.classList.contains('dark'));
+              });
+
+              // Check for saved dark mode preference
+              if (localStorage.getItem('darkMode') === 'true') {
+              html.classList.add('dark');
+              }
+
+              // Floating labels
+              const floatingLabels = document.querySelectorAll('.floating-label');
+              floatingLabels.forEach(label => {
+              const input = label.nextElementSibling;
+              input.addEventListener('focus', () => {
+                label.classList.add('transform', '-translate-y-6', 'scale-75', 'text-blue-500');
+              });
+              input.addEventListener('blur', () => {
+                if (input.value === '') {
+                  label.classList.remove('transform', '-translate-y-6', 'scale-75', 'text-blue-500');
+                }
+              });
+              });
+
+              // Animated background
+              const bg = document.querySelector('.animated-bg');
+              let x = 0;
+              let y = 0;
+
+              window.addEventListener('mousemove', (e) => {
+              x = e.clientX / window.innerWidth;
+              y = e.clientY / window.innerHeight;
+
+              bg.style.transform = `translate(-${x * 50}px, -${y * 50}px)`;
+              });
+
+              // Lazy loading images
+              const lazyImages = document.querySelectorAll('img[data-src]');
+              const lazyLoadObserver = new IntersectionObserver((entries, observer) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  const img = entry.target;
+                  img.src = img.dataset.src;
+                  img.removeAttribute('data-src');
+                  lazyLoadObserver.unobserve(img);
+                }
+              });
+              });
+
+              lazyImages.forEach(img => {
+              lazyLoadObserver.observe(img);
+              });
+
+              // Tooltip initialization
+              const tooltips = document.querySelectorAll('[data-tooltip]');
+              tooltips.forEach(tooltip => {
+              tippy(tooltip, {
+                content: tooltip.getAttribute('data-tooltip'),
+                placement: 'top',
+                arrow: true,
+                animation: 'scale'
+              });
+              });
+
+              // Custom select styling
+              const customSelects = document.querySelectorAll('.custom-select');
+              customSelects.forEach(select => {
+              const selected = select.querySelector('.selected');
+              const optionsContainer = select.querySelector('.options-container');
+              const optionsList = select.querySelectorAll('.option');
+
+              selected.addEventListener('click', () => {
+                optionsContainer.classList.toggle('active');
+                selected.classList.toggle('active');
+              });
+
+              optionsList.forEach(option => {
+                option.addEventListener('click', () => {
+                  selected.innerHTML = option.querySelector('label').innerHTML;
+                  optionsContainer.classList.remove('active');
+                  selected.classList.remove('active');
+                });
+              });
+              });
+
+              // Animated counters
+              const counters = document.querySelectorAll('.counter');
+              const counterObserver = new IntersectionObserver((entries, observer) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  const counter = entry.target;
+                  const target = parseInt(counter.getAttribute('data-target'));
+                  let count = 0;
+                  const updateCounter = () => {
+                    const increment = target / 200;
+                    if (count < target) {
+                      count += increment;
+                      counter.innerText = Math.ceil(count);
+                      setTimeout(updateCounter, 1);
+                    } else {
+                      counter.innerText = target;
+                    }
+                  };
+                  updateCounter();
+                  counterObserver.unobserve(counter);
+                }
+              });
+              });
+
+              counters.forEach(counter => {
+              counterObserver.observe(counter);
+              });
+              });
+              </script>
             <!-- Temporary Ticket Login Modal -->
             <div id="tempTicketLoginModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
               <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -1488,7 +1760,7 @@
                           </h3>
                           <ul class="mt-4 space-y-4">
                             <li>
-                              <a href="#" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150 flex items-center">
+                              <a href="https://facebook.com/people/Success-synergy/61566979164547" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150 flex items-center">
                                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                   <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3 8h-1.35c-.538 0-.65.221-.65.778v1.222h2l-.209 2h-1.791v7h-3v-7h-2v-2h2v-2.308c0-1.769.931-2.692 3.029-2.692h1.971v3z"/>
                                 </svg>
@@ -1496,7 +1768,7 @@
                               </a>
                             </li>
                             <li>
-                              <a href="#" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150 flex items-center">
+                              <a href="https://x.com/bdish84152" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150 flex items-center">
                                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                   <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"/>
                                 </svg>
@@ -1504,21 +1776,14 @@
                               </a>
                             </li>
                             <li>
-                              <a href="#" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150 flex items-center">
+                              <a href="https://www.linkedin.com/in/expansion-ltd-ab6773331" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150 flex items-center">
                                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                   <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"/>
                                 </svg>
                                 LinkedIn
                               </a>
                             </li>
-                            <li>
-                              <a href="#" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150 flex items-center">
-                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                  <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.441 16.892c-2.102.144-6.784.144-8.883 0-2.276-.156-2.541-1.27-2.558-4.892.017-3.629.285-4.736 2.558-4.892 2.099-.144 6.782-.144 8.883 0 2.277.156 2.541 1.27 2.559 4.892-.018 3.629-.285 4.736-2.559 4.892zm-6.441-7.234l4.917 2.338-4.917 2.346v-4.684z"/>
-                                </svg>
-                                YouTube
-                              </a>
-                            </li>
+                          
                           </ul>
                         </div>
                       </div>
@@ -1527,24 +1792,24 @@
 
                   <div class="mt-16 border-t border-gray-200 dark:border-gray-700 pt-8 md:flex md:items-center md:justify-between">
                     <div class="flex space-x-6 md:order-2">
-                      <a href="#" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                      <a href="https://facebook.com/people/Success-synergy/61566979164547" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                         <span class="sr-only">Facebook</span>
                         <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                           <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
                         </svg>
                         </a>
-                                <a href="#" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                                  <span class="sr-only">GitHub</span>
-                                  <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
-                                  </svg>
-                                </a>
-                                <a href="#" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+
+                                <a href="https://x.com/bdish84152" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                                   <span class="sr-only">Twitter</span>
                                   <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                                   </svg>
                                 </a>
+                        <a href="https://www.linkedin.com/in/expansion-ltd-ab6773331" class="text-base text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition ease-in-out duration-150 flex items-center">
+                          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"/>
+                          </svg>
+                        </a>
                               </div>
                               <p class="mt-8 text-base text-gray-600 dark:text-gray-400 md:mt-0 md:order-1">
                                 &copy; 2022 Expansion. All rights reserved.
@@ -1653,10 +1918,7 @@
       </div>
     </div>
   </div>
-</div> 
-    <script>
-    </script>
-
+</div>
 
 
                                   {% endblock %}
