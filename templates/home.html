@@ -2018,6 +2018,8 @@ updatePricingTables()
             const form = document.getElementById('contactForm');
             const modal = document.getElementById('credentialsModal');
             const closeModalButton = document.getElementById('closeModal');
+            const tempUsernameSpan = document.getElementById('tempUsername');
+            const tempPasswordSpan = document.getElementById('tempPassword');
 
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -2034,9 +2036,13 @@ updatePricingTables()
                 })
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('tempUsername').textContent = data.username;
-                    document.getElementById('tempPassword').textContent = data.password;
-                    modal.classList.remove('hidden');
+                    if (data.username && data.password) {
+                        tempUsernameSpan.textContent = data.username;
+                        tempPasswordSpan.textContent = data.password;
+                        modal.classList.remove('hidden');
+                    } else {
+                        throw new Error('Credentials are missing from the response');
+                    }
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -2047,6 +2053,9 @@ updatePricingTables()
             closeModalButton.addEventListener('click', function() {
                 modal.classList.add('hidden');
                 form.reset();
+                // Clear the credential spans
+                tempUsernameSpan.textContent = '';
+                tempPasswordSpan.textContent = '';
             });
         });
     </script>
