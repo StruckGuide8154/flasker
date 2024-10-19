@@ -456,7 +456,7 @@ def handle_file():
         return jsonify({'message': 'File saved successfully'})
 
 @app.route('/')
-def home():
+def homer():
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
     return render_template('home.html')
