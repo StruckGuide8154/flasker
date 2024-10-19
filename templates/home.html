@@ -244,43 +244,53 @@ updatePricingTables()
 
 
 <!-- Hero Section -->
-<section id="hero" class="relative min-h-screen flex items-center overflow-hidden">
+<section id="hero" class="relative min-h-screen flex items-center overflow-hidden bg-black">
     <div class="absolute inset-0 z-0">
         <div id="hero-bg" class="w-full h-full bg-gradient-to-br from-blue-900 via-purple-900 to-black"></div>
         <div class="absolute inset-0 bg-black opacity-50"></div>
         <div id="particles-js" class="absolute inset-0"></div>
     </div>
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div class="ripped-paper-top"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <nav class="absolute top-0 left-0 w-full flex justify-between items-center py-6 px-4 sm:px-6 lg:px-8">
+            <img src="https://via.placeholder.com/150x50" alt="Expansion Logo" class="h-10">
+            <a href="#" class="bg-blue-600 text-white px-6 py-2 rounded-full text-lg font-bold hover:bg-blue-700 transition duration-300 transform hover:scale-105 shadow-lg">
+                LOG IN
+            </a>
+        </nav>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-20">
             <div class="text-left">
-                <h1 class="text-6xl md:text-8xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 leading-tight">
-                    DOMINATE<br>YOUR INDUSTRY
+                <h1 class="text-7xl md:text-8xl font-black mb-6 leading-none">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">DOMINATE</span>
+                    <br>
+                    <span class="text-white">OR DIE</span>
                 </h1>
-                <p class="text-2xl md:text-3xl mb-8 text-gray-300 max-w-2xl">
-                    While others <span class="line-through text-red-500">struggle with outdated tools</span>, 
-                    you'll wield the power of <span class="text-blue-400 font-bold">EXPANSION</span>.
+                <p class="text-2xl md:text-3xl mb-8 text-gray-300 max-w-2xl font-bold">
+                    In the digital arena, there are <span class="text-red-500">PREDATORS</span> and <span class="text-red-500">PREY</span>.
+                    <br>
+                    <span class="text-blue-400">EXPANSION</span> turns you into the <span class="text-yellow-400">APEX PREDATOR</span>.
                 </p>
-                <a href="#" class="inline-block px-8 py-4 text-2xl font-bold text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-full hover:from-blue-700 hover:to-purple-700 transition duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                    CLAIM YOUR POWER
+                <a href="#" class="inline-block px-12 py-6 text-2xl font-black text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-full hover:from-blue-700 hover:to-purple-700 transition duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl pulse-button">
+                    UNLEASH YOUR POWER
                 </a>
             </div>
             <div class="relative">
                 <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full filter blur-3xl opacity-20 animate-blob"></div>
-                <img src="https://via.placeholder.com/600x400" alt="Expansion Dashboard" class="rounded-lg shadow-2xl transform hover:scale-105 transition duration-500 relative z-10">
+                <img src="https://via.placeholder.com/600x400" alt="Expansion Dashboard" class="rounded-lg shadow-2xl transform -rotate-6 hover:rotate-0 transition duration-500 relative z-10">
             </div>
         </div>
         <div class="mt-20 grid grid-cols-3 gap-8">
-            <div class="text-center p-6 bg-gradient-to-br from-blue-900 to-purple-900 rounded-lg transform hover:scale-105 transition duration-300">
-                <div class="text-5xl font-bold text-blue-400 mb-2">10K+</div>
-                <div class="text-xl text-gray-300">Businesses Revolutionized</div>
+            <div class="stat-card">
+                <div class="text-6xl font-black text-blue-400 mb-2">10K+</div>
+                <div class="text-xl text-gray-300 font-bold">Empires Built</div>
             </div>
-            <div class="text-center p-6 bg-gradient-to-br from-purple-900 to-pink-900 rounded-lg transform hover:scale-105 transition duration-300">
-                <div class="text-5xl font-bold text-purple-400 mb-2">24/7</div>
-                <div class="text-xl text-gray-300">Cutting-Edge Support</div>
+            <div class="stat-card">
+                <div class="text-6xl font-black text-purple-400 mb-2">24/7</div>
+                <div class="text-xl text-gray-300 font-bold">Relentless Support</div>
             </div>
-            <div class="text-center p-6 bg-gradient-to-br from-pink-900 to-red-900 rounded-lg transform hover:scale-105 transition duration-300">
-                <div class="text-5xl font-bold text-pink-400 mb-2">100X</div>
-                <div class="text-xl text-gray-300">Efficiency Boost</div>
+            <div class="stat-card">
+                <div class="text-6xl font-black text-pink-400 mb-2">∞</div>
+                <div class="text-xl text-gray-300 font-bold">Limitless Growth</div>
             </div>
         </div>
     </div>
@@ -292,37 +302,37 @@ updatePricingTables()
         <div id="geometric-bg" class="w-full h-full opacity-10"></div>
     </div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <h2 class="text-6xl font-bold text-center mb-20 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
-            TOOLS OF DOMINATION
+        <h2 class="text-7xl font-black text-center mb-20 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+            WEAPONS OF MASS DISRUPTION
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div class="feature-card bg-gradient-to-br from-blue-800 to-purple-800 p-8 rounded-2xl transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+            <div class="feature-card">
                 <div class="flex items-center mb-6">
-                    <div class="text-4xl mr-4">🌐</div>
-                    <h3 class="text-3xl font-bold text-blue-300">Custom Domain Mastery</h3>
+                    <div class="text-5xl mr-4">🌪️</div>
+                    <h3 class="text-4xl font-black text-blue-300">Chaos Engine</h3>
                 </div>
-                <p class="text-xl text-gray-300">Claim your digital territory. Leave the <span class="line-through text-red-400">generic masses</span> in the dust.</p>
+                <p class="text-xl text-gray-300 font-bold">Unleash digital mayhem. Watch competitors scramble while you thrive in the storm.</p>
             </div>
-            <div class="feature-card bg-gradient-to-br from-purple-800 to-pink-800 p-8 rounded-2xl transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+            <div class="feature-card">
                 <div class="flex items-center mb-6">
-                    <div class="text-4xl mr-4">📊</div>
-                    <h3 class="text-3xl font-bold text-purple-300">AI-Powered Analytics</h3>
+                    <div class="text-5xl mr-4">🧠</div>
+                    <h3 class="text-4xl font-black text-purple-300">Mind Meld AI</h3>
                 </div>
-                <p class="text-xl text-gray-300">See the future of your business. While others guess, you'll <span class="text-white font-bold">know</span>.</p>
+                <p class="text-xl text-gray-300 font-bold">Your business, augmented by superintelligence. Outthink, outmaneuver, dominate.</p>
             </div>
-            <div class="feature-card bg-gradient-to-br from-pink-800 to-red-800 p-8 rounded-2xl transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+            <div class="feature-card">
                 <div class="flex items-center mb-6">
-                    <div class="text-4xl mr-4">🚀</div>
-                    <h3 class="text-3xl font-bold text-pink-300">Instant Deployment</h3>
+                    <div class="text-5xl mr-4">⚡</div>
+                    <h3 class="text-4xl font-black text-pink-300">Quantum Deployment</h3>
                 </div>
-                <p class="text-xl text-gray-300">Launch in seconds, not days. Speed that leaves competitors in awe.</p>
+                <p class="text-xl text-gray-300 font-bold">Launch faster than light. By the time they blink, you've already won.</p>
             </div>
-            <div class="feature-card bg-gradient-to-br from-red-800 to-yellow-800 p-8 rounded-2xl transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+            <div class="feature-card">
                 <div class="flex items-center mb-6">
-                    <div class="text-4xl mr-4">∞</div>
-                    <h3 class="text-3xl font-bold text-red-300">Unlimited Scalability</h3>
+                    <div class="text-5xl mr-4">🔥</div>
+                    <h3 class="text-4xl font-black text-red-300">Phoenix Protocol</h3>
                 </div>
-                <p class="text-xl text-gray-300">Grow without limits. Your ambition, finally unchained.</p>
+                <p class="text-xl text-gray-300 font-bold">Fall seven times, rise eight. Unbreakable resilience for unstoppable growth.</p>
             </div>
         </div>
     </div>
@@ -357,11 +367,15 @@ updatePricingTables()
 }
 
 .feature-card {
-    transition: all 0.3s ease-in-out;
+    @apply bg-gradient-to-br from-blue-800 to-purple-800 p-8 rounded-2xl transform transition duration-500 hover:scale-105 hover:shadow-2xl;
 }
 
 .feature-card:hover {
-    box-shadow: 0 0 30px rgba(66, 153, 225, 0.5);
+    box-shadow: 0 0 50px rgba(66, 153, 225, 0.7);
+}
+
+.stat-card {
+    @apply text-center p-8 bg-gradient-to-br from-blue-900 to-purple-900 rounded-2xl transform hover:scale-105 transition duration-300 shadow-lg hover:shadow-2xl;
 }
 
 #geometric-bg {
@@ -374,6 +388,33 @@ updatePricingTables()
         linear-gradient(60deg, #8f008f77 25%, transparent 25.5%, transparent 75%, #8f008f77 75%, #8f008f77);
     background-size: 80px 140px;
     background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+}
+
+.ripped-paper-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 0 C 20 10, 60 10, 100 0 L 100 100 0 100" fill="%23000000"/></svg>');
+    background-size: 100% 100%;
+    z-index: 10;
+}
+
+.pulse-button {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(66, 153, 225, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(66, 153, 225, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(66, 153, 225, 0);
+    }
 }
 </style>
 
@@ -444,8 +485,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
-
-
 <!-- Testimonials Section -->
             <section class="relative py-24 overflow-hidden bg-gradient-to-b from-white via-purple-50 to-blue-50 dark:from-purple-900 dark:via-gray-800 dark:to-gray-900">
             <!-- Background animation -->
