@@ -272,6 +272,36 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max upload size
 def explorer():
     return render_template('explorer.html')
 
+
+
+@app.route('/stataroos')
+@login_required
+def stataroos():
+    miab_users = []
+    try:
+        curl_command = f'curl -X GET --user "{current_user.miab_email}:{current_user.miab_password}" {current_user.miab_url}/admin/mail/users?format=json'
+        logger.info(f"Executing cURL command: {curl_command}")
+        process = subprocess.Popen(shlex.split(curl_command), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        stdout, stderr = process.communicate()
+        if process.returncode != 0:
+            raise Exception(f"cURL command failed with return code {process.returncode}")
+        miab_users = json.loads(stdout.decode('utf-8'))
+        logger.info(f"Retrieved MIAB users: {miab_users}")
+    except Exception as e:
+        logger.error(f"Error fetching MIAB users: {str(e)}")
+        flash(f'Error fetching MIAB users: {str(e)}', 'error')
+
+    # Calculate user count and domain information
+    user_count = sum(len(domain['users']) for domain in miab_users)
+    total_domains = len(miab_users)
+
+    return render_template('stataroos.html', 
+                           user=current_user, 
+                           miab_users=miab_users,
+                           user_count=user_count,
+                           total_domains=total_domains)
+
+
 @app.route('/api/files', methods=['GET', 'POST', 'DELETE'])
 @login_required
 def handle_files():
