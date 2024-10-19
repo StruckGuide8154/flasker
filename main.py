@@ -146,15 +146,24 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+from werkzeug.urls import url_parse, url_encode
+
 @app.before_request
-def remove_trailing_slash_before_query():
+def handle_trailing_slash_and_query():
     rurl = request.url
-    if rurl.endswith('/?') or '/?' in rurl:
-        parts = rurl.split('?', 1)
-        if len(parts) == 2:
-            path, query = parts
-            path = path.rstrip('/')
-            return redirect(f"{path}?{query}", code=301)
+    parsed_url = url_parse(rurl)
+    path = parsed_url.path
+    query = parsed_url.query
+    
+    if path.endswith('/') and query:
+        # Remove the trailing slash
+        path = path.rstrip('/')
+        # Reconstruct the URL
+        new_url = parsed_url._replace(path=path).to_url()
+        return redirect(new_url, code=301)
+    
+    # If there's no query string but there's a trailing slash, let Flask handle it
+    return None
 
 
 # New route to handle file uploads
