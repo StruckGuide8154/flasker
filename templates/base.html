@@ -2,12 +2,16 @@
 <html lang="en">
 <head><script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Add this part to handle the dropdown toggle
-    const dropdownToggle = document.querySelector('[data-collapse-toggle="dropdown-other"]');
-    const dropdownContent = document.getElementById('dropdown-other');
-
-    dropdownToggle.addEventListener('click', function() {
-        dropdownContent.classList.toggle('hidden');
+    const dropdownToggles = document.querySelectorAll('[data-collapse-toggle]');
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('data-collapse-toggle');
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.classList.toggle('hidden');
+            }
+        });
     });
 });
 </script>
