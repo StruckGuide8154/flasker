@@ -887,7 +887,7 @@ def tickets():
 @temp_login_required
 def view_ticket(ticket_id):
     ticket = Ticket.query.get_or_404(ticket_id)
-
+    
     if current_user.is_authenticated:
         if not current_user.is_system_user and ticket.user_id != current_user.id:
             flash('You do not have permission to view this ticket.', 'error')
@@ -900,8 +900,11 @@ def view_ticket(ticket_id):
             flash('You do not have permission to view this ticket.', 'error')
             return redirect(url_for('home'))
         can_send_message = False
-
-    return render_template('view_ticket.html', ticket=ticket, can_send_message=can_send_message)
+    
+    return render_template('view_ticket.html', 
+                           ticket=ticket, 
+                           can_send_message=can_send_message, 
+                           get_affiliate=get_affiliate)
 
 @app.route('/create_ticket', methods=['GET', 'POST'])
 @login_required
