@@ -356,8 +356,38 @@ def get_ticket_stats(user):
     }
 
 
+def get_sales_stats(affiliate_id):
+    basic_sales = Sale.query.filter_by(affiliate_id=affiliate_id, plan_type='basic').count()
+    pro_sales = Sale.query.filter_by(affiliate_id=affiliate_id, plan_type='pro').count()
+    enterprise_sales = Sale.query.filter_by(affiliate_id=affiliate_id, plan_type='enterprise').count()
+    total_earnings = db.session.query(db.func.sum(Sale.amount)).filter_by(affiliate_id=affiliate_id).scalar() or 0
+    total_paid = db.session.query(db.func.sum(Payment.amount)).filter_by(affiliate_id=affiliate_id).scalar() or 0
+    
+    return {
+        'basic_sales': basic_sales,
+        'pro_sales': pro_sales,
+        'enterprise_sales': enterprise_sales,
+        'total_earnings': total_earnings,
+        'total_paid': total_paid,
+        'balance_due': total_earnings - total_paid
+    }
 
 
+@app.route('/affiliate/claim_earnings/<int:affiliate_id>', methods=['POST'])
+@login_required
+def claim_earnings(affiliate_id):
+    affiliate = Affiliate.query.get_or_404(affiliate_id)
+    if current_user.id != affiliate.user_id and not current_user.is_system_user:
+        flash('You do not have permission to perform this action.', 'error')
+        return redirect(url_for('affiliate'))
+
+    description = f"Earnings claim request from affiliate {affiliate.email}"
+    new_ticket = Ticket(title="Affiliate Earnings Claim", description=description, user_id=affiliate.user_id, status='Open')
+    db.session.add(new_ticket)
+    db.session.commit()
+
+    flash('Your earnings claim request has been submitted. We will process it shortly.', 'success')
+    return redirect(url_for('affiliate'))
 
 
 
@@ -450,6 +480,7 @@ def track_affiliate():
             
             # Reset the session start time
             session['session_start_time'] = current_time
+
 
 @app.route('/affiliate/edit/<int:affiliate_id>', methods=['GET', 'POST'])
 @login_required
