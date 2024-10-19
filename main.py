@@ -467,10 +467,10 @@ def dashboard():
     if current_user.is_system_user:
         tickets = Ticket.query.all()
         affiliates = Affiliate.query.all()
-        return render_template('system_user_dashboard.html', tickets=tickets, affiliates=affiliates)
+        return render_template('dashboard.html', tickets=tickets, affiliates=affiliates)
     else:
         tickets = Ticket.query.filter_by(user_id=current_user.id).all()
-        return render_template('user_dashboard.html', tickets=tickets)
+        return render_template('dashboard.html', tickets=tickets)
 
 from urllib.parse import urlparse, urlunparse, parse_qs
 
