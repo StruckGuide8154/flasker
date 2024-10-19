@@ -97,7 +97,18 @@ def send_thank_you_email(to_email):
               "subject": "Thank you for your purchase!",
               "text": "We appreciate your business and hope you enjoy your product.",
               "html": "<strong>We appreciate your business and hope you enjoy your product.</strong>"})
+def add_csp_headers(response):
+    csp = "default-src 'self'; " \
+          "script-src 'self' 'unsafe-inline' https://cdn.tolt.io https://js.stripe.com https://www.googletagmanager.com https://cdn.tailwindcss.com; " \
+          "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " \
+          "img-src 'self' data:; " \
+          "frame-src 'self' https://affiliate.expansion.ltd https://docs.expansion.ltd https://js.stripe.com; " \
+          "connect-src 'self' https://api.stripe.com;"
+    
+    response.headers['Content-Security-Policy'] = csp
+    return response
 
+app.after_request(add_csp_headers)
 @login_manager.unauthorized_handler
 def unauthorized():
     flash('You must be logged in to view this page.', 'warning')
