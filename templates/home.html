@@ -1216,25 +1216,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 <section class="relative py-24 overflow-hidden bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900 text-white">
-    <div class="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-gray-900 to-transparent"></div>
-    
-    <!-- Tear effect at the top -->
+    <!-- Top tear effect -->
     <div class="absolute top-0 left-0 right-0">
-        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0L60 10C120 20 240 40 360 45C480 50 600 40 720 35C840 30 960 30 1080 35C1200 40 1320 50 1380 55L1440 60V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="#1a202c"/>
+        <svg class="w-full h-20" viewBox="0 0 1440 120" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 120L60 110C120 100 240 80 360 75C480 70 600 80 720 85C840 90 960 90 1080 85C1200 80 1320 70 1380 65L1440 60V0H0V120Z" fill="#1a202c"/>
         </svg>
-    </div>
-
-    <!-- Background trails -->
-    <div class="absolute inset-0 overflow-hidden">
-        <div class="trail trail-1"></div>
-        <div class="trail trail-2"></div>
-        <div class="trail trail-3"></div>
     </div>
 
     <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="mb-12 text-5xl font-extrabold text-center">
-            Unveiling the <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Mysteries</span>
+            Frequently Asked <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Questions</span>
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="faq-container">
             <!-- FAQ items will be dynamically inserted here -->
@@ -1242,14 +1233,14 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 
     <!-- Decorative elements -->
-    <div class="hidden lg:block absolute top-10 left-10 w-32 h-32 bg-blue-500 rounded-full mix-blend-screen filter blur-xl opacity-70 animate-blob"></div>
-    <div class="hidden lg:block absolute top-10 right-10 w-32 h-32 bg-purple-500 rounded-full mix-blend-screen filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-    <div class="hidden lg:block absolute bottom-10 left-20 w-32 h-32 bg-pink-500 rounded-full mix-blend-screen filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+    <div class="hidden lg:block absolute top-40 left-10 w-32 h-32 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+    <div class="hidden lg:block absolute top-40 right-10 w-32 h-32 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+    <div class="hidden lg:block absolute bottom-20 left-20 w-32 h-32 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
 
-    <!-- Tear effect at the bottom -->
+    <!-- Bottom tear effect -->
     <div class="absolute bottom-0 left-0 right-0 transform rotate-180">
-        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0L60 10C120 20 240 40 360 45C480 50 600 40 720 35C840 30 960 30 1080 35C1200 40 1320 50 1380 55L1440 60V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="#4C1D95"/>
+        <svg class="w-full h-20" viewBox="0 0 1440 120" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 120L60 110C120 100 240 80 360 75C480 70 600 80 720 85C840 90 960 90 1080 85C1200 80 1320 70 1380 65L1440 60V0H0V120Z" fill="#4C1D95"/>
         </svg>
     </div>
 </section>
@@ -1259,24 +1250,6 @@ document.addEventListener('DOMContentLoaded', () => {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-20px); }
 }
-
-@keyframes trail {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    50% { opacity: 0.5; }
-    100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
-}
-
-.trail {
-    position: absolute;
-    width: 2px;
-    height: 100px;
-    background: linear-gradient(to bottom, transparent, #4C1D95);
-    animation: trail 10s linear infinite;
-}
-
-.trail-1 { left: 10%; animation-delay: 0s; }
-.trail-2 { left: 50%; animation-delay: 3s; }
-.trail-3 { left: 80%; animation-delay: 6s; }
 
 .animate-blob {
     animation: float 7s ease-in-out infinite;
@@ -1297,11 +1270,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const faqItems = [
         {
             question: "How does Expansion revolutionize email management?",
-            answer: "Expansion redefines email management by offering unparalleled control, AI-powered analytics, and lightning-fast deployment. While others struggle with outdated systems, you'll command a digital empire."
+            answer: "Expansion redefines email management with unparalleled control, AI-powered analytics, and lightning-fast deployment. Leave outdated systems behind and command your digital empire."
         },
         {
             question: "Can I migrate my existing email setup to Expansion?",
-            answer: "Absolutely! Our expert team ensures a seamless transition, preserving your data and enhancing your capabilities. Why settle for less when greatness is just a migration away?"
+            answer: "Absolutely! Our expert team ensures a seamless transition, preserving your data while enhancing your capabilities. Upgrade to greatness with ease."
         },
         {
             question: "How secure is the Expansion platform?",
@@ -1309,13 +1282,13 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             question: "What kind of support can I expect?",
-            answer: "Our elite support team is available 24/7. While others make you wait, we respond at the speed of your ambition. Your success is our mission."
+            answer: "Our elite support team is available 24/7. We respond at the speed of your ambition, ensuring your success is our top priority."
         }
     ];
 
     faqItems.forEach(item => {
         const faqItem = document.createElement('div');
-        faqItem.classList.add('bg-gray-800', 'p-6', 'rounded-lg', 'shadow-lg', 'transition-all', 'duration-300', 'hover:shadow-2xl', 'hover:scale-105');
+        faqItem.classList.add('bg-gray-800', 'p-6', 'rounded-lg', 'shadow-lg', 'transition-all', 'duration-300', 'hover:shadow-2xl', 'hover:scale-105', 'opacity-0', 'transform', 'translate-y-4');
         faqItem.innerHTML = `
             <h3 class="text-xl font-bold mb-2">${item.question}</h3>
             <p class="text-gray-300">${item.answer}</p>
@@ -1324,17 +1297,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Scroll effect
-    window.addEventListener('scroll', () => {
-        const scrollPosition = window.scrollY;
-        const faqItems = document.querySelectorAll('#faq-container > div');
-        
-        faqItems.forEach((item, index) => {
-            const itemPosition = item.offsetTop;
-            if (scrollPosition > itemPosition - window.innerHeight + 100) {
-                item.style.opacity = '1';
-                item.style.transform = 'translateY(0)';
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.remove('opacity-0', 'translate-y-4');
+                entry.target.classList.add('opacity-100', 'translate-y-0');
             }
         });
+    }, observerOptions);
+
+    document.querySelectorAll('#faq-container > div').forEach(item => {
+        observer.observe(item);
     });
 });
 </script>
