@@ -89,7 +89,7 @@
             <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:px-6">
                     <h2 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Your Affiliate Information</h2>
-                    <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Share your unique referral code to earn rewards.</p>
+                    <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Share your unique referral link to earn rewards.</p>
                 </div>
                 <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:p-6">
                     {% if user_affiliate %}
@@ -101,9 +101,10 @@
                         <div class="sm:col-span-1">
                             <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Referral Link</dt>
                             <dd class="mt-1 text-sm text-gray-900 dark:text-white">
-                                <a href="{{ url_for('home', referral=user_affiliate.referral_code, _external=True) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300" id="referral-link">
-                                    {{ url_for('home', referral=user_affiliate.referral_code, _external=True) }}
+                                <a href="{{ url_for('affiliate_redirect', referral_code=user_affiliate.referral_code, _external=True) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300" id="referral-link">
+                                    {{ url_for('affiliate_redirect', referral_code=user_affiliate.referral_code, _external=True) }}
                                 </a>
+                                <button onclick="copyToClipboard('{{ url_for('affiliate_redirect', referral_code=user_affiliate.referral_code, _external=True) }}')" class="ml-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200">Copy</button>
                             </dd>
                         </div>
                     </dl>
@@ -138,7 +139,7 @@
                             <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Avg Time on Page</dt>
                             <dd class="mt-1 text-3xl font-semibold text-gray-900 dark:text-white">
                                 {% if referral_stats.clicks > 0 %}
-                                    {{ referral_stats.avg_time_on_page | round(2) }} seconds
+                                    {{ (referral_stats.total_time_on_page / referral_stats.clicks) | round(2) }} seconds
                                 {% else %}
                                     N/A
                                 {% endif %}
@@ -183,59 +184,12 @@ function updateUserCount(affiliateId, change) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const referralLink = document.getElementById('referral-link');
-    if (referralLink) {
-        referralLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            const referralCode = new URL(this.href).searchParams.get('referral');
-            fetch('/track_click', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    referral_code: referralCode
-                }),
-            })
-            .then(() => {
-                window.open(this.href, '_blank');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                window.open(this.href, '_blank');
-            });
-        });
-    }
-
-    // Time on page tracking
-    let startTime = Date.now();
-    let referralCode = new URLSearchParams(window.location.search).get('referral');
-    
-    function trackTimeOnPage() {
-        if (referralCode) {
-            let timeSpent = Math.floor((Date.now() - startTime) / 1000); // Convert to seconds
-            fetch('/track_time', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    referral_code: referralCode,
-                    time_spent: timeSpent
-                }),
-            })
-            .catch((error) => {
-                console.error('Error tracking time:', error);
-            });
-        }
-    }
-
-    // Track time every minute
-    setInterval(trackTimeOnPage, 60000);
-
-    // Track time when leaving the page
-    window.addEventListener('beforeunload', trackTimeOnPage);
-});
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        alert('Referral link copied to clipboard!');
+    }, function(err) {
+        console.error('Could not copy text: ', err);
+    });
+}
 </script>
 {% endblock %}
