@@ -303,9 +303,9 @@ updatePricingTables()
             While others <span class="line-through text-red-500">struggle with outdated tools</span>, 
             you'll wield the power of EXPANSION.
         </p>
-<button class="enroll-button" id="dajwno">
-  ENROLL TODAY
-</button>
+<a href="#contact-us" class="enroll-button scroll-to-contact">
+  CLAIM YOUR POWER
+</a>
         <div class="mt-12 flex justify-center space-x-12">
             <div class="text-center">
                 <div class="text-5xl font-bold text-blue-400">10K+</div>
@@ -646,6 +646,91 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p class="gallery-description">Unlimited power at your fingertips. Manage with the precision of a maestro.</p>
                     </div>
                 </div>
+                                  <div class="gallery-item group">
+                    <img src="gallery1.png" alt="Admin dashboard" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span class="gallery-title">Command Center</span>
+                        <p class="gallery-description">Where CEOs become visionaries. One glance, infinite insights.</p>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <img src="gallery2.png" alt="Admin tickets system" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span class="gallery-title">Issue Annihilator</span>
+                        <p class="gallery-description">Problems vanish, solutions materialize. Your support team's secret weapon.</p>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <img src="gallery3.png" alt="Compose Email" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span class="gallery-title">Message Architect</span>
+                        <p class="gallery-description">Craft communications that command attention. Every word, a stepping stone to success.</p>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <img src="gallery4.png" alt="Receive emails" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span class="gallery-title">Inbox Dominator</span>
+                        <p class="gallery-description">Where chaos bows to order. Reclaim hours of your day, effortlessly.</p>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <img src="gallery5.png" alt="Light/dark mode" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span class="gallery-title">Visual Mastery</span>
+                        <p class="gallery-description">Day or night, your eyes will thank you. Productivity knows no hour.</p>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <img src="gallery6.png" alt="Admin panel" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span class="gallery-title">Control Nexus</span>
+                        <p class="gallery-description">Unlimited power at your fingertips. Manage with the precision of a maestro.</p>
+                    </div>
+                </div>
+                                  <div class="gallery-item group">
+                    <img src="gallery1.png" alt="Admin dashboard" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span class="gallery-title">Command Center</span>
+                        <p class="gallery-description">Where CEOs become visionaries. One glance, infinite insights.</p>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <img src="gallery2.png" alt="Admin tickets system" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span class="gallery-title">Issue Annihilator</span>
+                        <p class="gallery-description">Problems vanish, solutions materialize. Your support team's secret weapon.</p>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <img src="gallery3.png" alt="Compose Email" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span class="gallery-title">Message Architect</span>
+                        <p class="gallery-description">Craft communications that command attention. Every word, a stepping stone to success.</p>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <img src="gallery4.png" alt="Receive emails" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span class="gallery-title">Inbox Dominator</span>
+                        <p class="gallery-description">Where chaos bows to order. Reclaim hours of your day, effortlessly.</p>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <img src="gallery5.png" alt="Light/dark mode" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span class="gallery-title">Visual Mastery</span>
+                        <p class="gallery-description">Day or night, your eyes will thank you. Productivity knows no hour.</p>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <img src="gallery6.png" alt="Admin panel" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <span class="gallery-title">Control Nexus</span>
+                        <p class="gallery-description">Unlimited power at your fingertips. Manage with the precision of a maestro.</p>
+                    </div>
+                </div>
+                  
 
                 <!-- Repeat the above items to create a seamless loop -->
             </div>
@@ -1906,5 +1991,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         });
-    </script>
+    </script><script>
+document.addEventListener('DOMContentLoaded', () => {
+  const scrollButtons = document.querySelectorAll('.scroll-to-contact');
+  
+  scrollButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      const targetId = this.getAttribute('href');
+      const targetElement = document.querySelector(targetId);
+      
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+});
+</script>
                                   {% endblock %}
