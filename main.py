@@ -239,6 +239,66 @@ def system_user_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def get_miab_users(user):
+    try:
+        response = requests.get(
+            f"{user.miab_url}/admin/mail/users?format=json",
+            auth=(user.miab_email, user.miab_password)
+        )
+        response.raise_for_status()
+        return response.json()
+    except requests.RequestException as e:
+        app.logger.error(f"Error fetching MIAB users: {str(e)}")
+        return []
+
+def get_miab_usage_data(user):
+    try:
+        response = requests.get(
+            f"{user.miab_url}/admin/system/status",
+            auth=(user.miab_email, user.miab_password)
+        )
+        response.raise_for_status()
+        status_data = response.json()
+
+        # Extract storage and bandwidth data
+        storage_used = status_data['disk']['used'] / (1024 ** 3)  # Convert to GB
+        storage_limit = status_data['disk']['total'] / (1024 ** 3)  # Convert to GB
+        bandwidth_used = status_data['network']['sent'] / (1024 ** 3)  # Convert to GB
+        bandwidth_limit = 1000  # Assuming a 1TB bandwidth limit, adjust as needed
+
+        return storage_used, storage_limit, bandwidth_used, bandwidth_limit
+    except requests.RequestException as e:
+        app.logger.error(f"Error fetching MIAB usage data: {str(e)}")
+        return 0, 100, 0, 1000  # Default values
+
+def get_ticket_stats(user):
+    total_tickets = Ticket.query.filter_by(user_id=user.id).count()
+    open_tickets = Ticket.query.filter_by(user_id=user.id, status='Open').count()
+    closed_tickets = Ticket.query.filter_by(user_id=user.id, status='Closed').count()
+    in_progress_tickets = Ticket.query.filter_by(user_id=user.id, status='In Progress').count()
+
+    return {
+        'total': total_tickets,
+        'open': open_tickets,
+        'closed': closed_tickets,
+        'in_progress': in_progress_tickets
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @app.route('/subscription')
 @login_required
 def subscription():
@@ -637,6 +697,7 @@ def miab_users():
                                limit_message="Unable to fetch user data",
                                current_user_count=0,
                                user_limit=current_user.user_limit)
+
 
 
 @app.route('/remove_miab_user', methods=['POST'])
