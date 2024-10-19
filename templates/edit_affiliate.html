@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Affiliate{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="px-4 py-6 sm:px-0">
+        <div class="flex items-center justify-between">
+            <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
+                    Edit Affiliate: {{ affiliate.email }}
+                </span>
+            </h1>
+            <svg class="h-12 w-12 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+        </div>
+        
+        <!-- Affiliate Statistics -->
+        <div class="mt-8 bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
+            <div class="px-4 py-5 sm:px-6 bg-gradient-to-r from-blue-500 to-indigo-600">
+                <h2 class="text-lg leading-6 font-medium text-white">Affiliate Statistics</h2>
+            </div>
+            <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:p-0">
+                <dl class="sm:divide-y sm:divide-gray-200 dark:sm:divide-gray-700">
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Referrals</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                {{ stats.total }}
+                            </span>
+                        </dd>
+                    </div>
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">This Month</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                {{ stats.this_month }}
+                            </span>
+                        </dd>
+                    </div>
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Last Month</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                {{ stats.last_month }}
+                            </span>
+                        </dd>
+                    </div>
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Clicks</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
+                                {{ stats.clicks }}
+                            </span>
+                        </dd>
+                    </div>
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Avg Time on Page</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+                            {% if stats.clicks > 0 %}
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-pink-100 text-pink-800">
+                                    {{ (stats.total_time_on_page / stats.clicks) | round(2) }} seconds
+                                </span>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+
+        <!-- Sales Statistics -->
+        <div class="mt-8 bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
+            <div class="px-4 py-5 sm:px-6 bg-gradient-to-r from-green-500 to-teal-600">
+                <h2 class="text-lg leading-6 font-medium text-white">Sales Statistics</h2>
+            </div>
+            <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:p-0">
+                <dl class="sm:divide-y sm:divide-gray-200 dark:sm:divide-gray-700">
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Basic Plan Sales</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                {{ sales_stats.basic_sales }}
+                            </span>
+                        </dd>
+                    </div>
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Pro Plan Sales</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                {{ sales_stats.pro_sales }}
+                            </span>
+                        </dd>
+                    </div>
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Enterprise Plan Sales</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
+                                {{ sales_stats.enterprise_sales }}
+                            </span>
+                        </dd>
+                    </div>
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Earnings</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                ${{ sales_stats.total_earnings | round(2) }}
+                            </span>
+                        </dd>
+                    </div>
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Paid</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                ${{ sales_stats.total_paid | round(2) }}
+                            </span>
+                        </dd>
+                    </div>
+                    <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Balance Due</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">
+                                ${{ sales_stats.balance_due | round(2) }}
+                            </span>
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+
+        <!-- Add Payment Form -->
+        <div class="mt-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+            <div class="px-4 py-5 sm:p-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Add Payment</h3>
+                <div class="mt-5">
+                    <form action="{{ url_for('edit_affiliate', affiliate_id=affiliate.id) }}" method="POST" class="space-y-6">
+                        <div>
+                            <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Amount</label>
+                            <div class="mt-1">
+                                <input type="number" step="0.01" name="amount" id="amount" required class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+                            <div class="mt-1">
+                                <input type="text" name="description" id="description" required class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" name="add_payment" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-600">
+                                Add Payment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Update Sale Form -->
+        <div class="mt-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+            <div class="px-4 py-5 sm:p-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Update Sale</h3>
+                <div class="mt-5">
+                    <form action="{{ url_for('edit_affiliate', affiliate_id=affiliate.id) }}" method="POST" class="space-y-6">
+                        <div>
+                            <label for="plan_type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Plan Type</label>
+                            <div class="mt-1">
+                                <select name="plan_type" id="plan_type" required class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                                    <option value="basic">Basic</option>
+                                    <option value="pro">Pro</option>
+                                    <option value="enterprise">Enterprise</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Amount</label>
+                            <div class="mt-1">
