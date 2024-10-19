@@ -388,11 +388,22 @@ def affiliate():
         if request.method == 'POST':
             email = request.form.get('email')
             referral_code = request.form.get('referral_code')
-            new_affiliate = Affiliate(email=email, referral_code=referral_code)
-            db.session.add(new_affiliate)
-            db.session.commit()
-            flash('Affiliate added successfully', 'success')
+            
+            existing_affiliate = Affiliate.query.filter_by(email=email).first()
+            if existing_affiliate:
+                flash('An affiliate with this email already exists.', 'error')
+            else:
+                new_affiliate = Affiliate(email=email, referral_code=referral_code)
+                db.session.add(new_affiliate)
+                db.session.commit()
+                flash('Affiliate added successfully', 'success')
+            
             return redirect(url_for('affiliate'))
+        
+        # Calculate statistics for each affiliate
+        for affiliate in affiliates:
+            affiliate.stats = get_referral_stats(affiliate.referral_code)
+        
         return render_template('affiliate.html', affiliates=affiliates)
     else:
         user_affiliate = Affiliate.query.filter_by(email=current_user.email).first()
@@ -461,8 +472,9 @@ def update_user_count():
     if not current_user.is_system_user:
         return jsonify({'error': 'Unauthorized'}), 403
 
-    affiliate_id = request.json.get('affiliate_id')
-    change = request.json.get('change')  # 1 for increase, -1 for decrease
+    data = request.json
+    affiliate_id = data.get('affiliate_id')
+    change = data.get('change')  # 1 for increase, -1 for decrease
 
     affiliate = Affiliate.query.get(affiliate_id)
     if not affiliate:
@@ -498,6 +510,9 @@ def get_referral_stats(referral_code):
     first_day_of_last_month = (first_day_of_current_month - timedelta(days=1)).replace(day=1)
 
     affiliate = Affiliate.query.filter_by(referral_code=referral_code).first()
+    if not affiliate:
+        return None
+
     total = Ticket.query.filter_by(referral=referral_code).count()
     this_month = Ticket.query.filter_by(referral=referral_code).filter(Ticket.created_at >= first_day_of_current_month).count()
     last_month = Ticket.query.filter_by(referral=referral_code).filter(
@@ -511,7 +526,7 @@ def get_referral_stats(referral_code):
         'last_month': last_month,
         'user_count': affiliate.user_count,
         'clicks': affiliate.clicks,
-        'avg_time_on_page': affiliate.total_time_on_page // affiliate.clicks if affiliate.clicks > 0 else 0
+        'total_time_on_page': affiliate.total_time_on_page
     }
 
 
