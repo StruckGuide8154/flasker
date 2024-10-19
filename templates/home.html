@@ -241,168 +241,147 @@ updatePricingTables()
 
       </script>
 
-<!-- Hero Section -->
-<section id="hero" class="relative min-h-screen overflow-hidden bg-gray-900 text-white">
-  <div class="absolute inset-0 z-0">
-    <div id="stars"></div>
-    <div id="mineshaft"></div>
-  </div>
-  <div class="relative z-10 flex flex-col items-center justify-center w-full h-screen px-4 text-center">
-    <h1 class="mb-4 text-5xl font-extrabold md:text-6xl lg:text-7xl">
-      Discover the <span class="text-yellow-400">Gold Standard</span> in Business Tools
-    </h1>
-    <p class="mb-8 text-xl max-w-3xl">
-      While others scratch the surface, Expansion takes you deep into a mine of powerful features. Don't leave your business potential untapped.
-    </p>
-    <a href="#features" class="px-8 py-3 text-lg font-bold text-gray-900 bg-yellow-400 rounded-full hover:bg-yellow-300 transition duration-300">
-      Start Mining
-    </a>
-  </div>
-  <div id="pickaxe" class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
-    <img src="https://cdn-icons-png.flaticon.com/512/3097/3097491.png" alt="Pickaxe" class="w-16 h-16">
-  </div>
-</section>
-
-<!-- Features Section -->
-<section id="features" class="py-20 bg-gray-800 text-white">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-4xl font-bold text-center mb-12">Unearth Powerful Features</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-      <div class="feature-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" alt="Gem" class="w-16 h-16 mb-4">
-        <h3 class="text-2xl font-bold mb-2">Custom Domain Integration</h3>
-        <p>Stake your claim in the digital landscape with a personalized domain that sets you apart from the competition.</p>
-      </div>
-      <div class="feature-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/2972/2972471.png" alt="Analytics" class="w-16 h-16 mb-4">
-        <h3 class="text-2xl font-bold mb-2">Advanced Analytics</h3>
-        <p>Uncover hidden insights with our powerful analytics tools, guiding your business decisions with data-driven precision.</p>
-      </div>
-      <div class="feature-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/6977/6977079.png" alt="Speed" class="w-16 h-16 mb-4">
-        <h3 class="text-2xl font-bold mb-2">Rapid Updates</h3>
-        <p>Stay ahead of the curve with lightning-fast updates, ensuring you're always working with cutting-edge tools.</p>
-      </div>
-      <div class="feature-card">
-        <img src="https://cdn-icons-png.flaticon.com/512/1067/1067566.png" alt="Support" class="w-16 h-16 mb-4">
-        <h3 class="text-2xl font-bold mb-2">24/7 Expert Support</h3>
-        <p>Never feel lost in the dark. Our round-the-clock support team is always ready to light the way.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<style>
-  @keyframes twinkle {
-    0% { opacity: 0; }
-    50% { opacity: 1; }
-    100% { opacity: 0; }
-  }
-  
-  @keyframes sway {
-    0% { transform: translateX(-50%) rotate(-5deg); }
-    50% { transform: translateX(-50%) rotate(5deg); }
-    100% { transform: translateX(-50%) rotate(-5deg); }
-  }
-  
-  #stars {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: 
-      radial-gradient(white 1px, transparent 1px),
-      radial-gradient(white 1px, transparent 1px);
-    background-size: 50px 50px;
-    background-position: 0 0, 25px 25px;
-    animation: twinkle 4s infinite;
-  }
-  
-  #mineshaft {
-    position: absolute;
-    width: 100%;
-    height: 200%;
-    background-image: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 40px,
-      rgba(255, 255, 255, 0.1) 40px,
-      rgba(255, 255, 255, 0.1) 80px
-    );
-    animation: descend 20s linear infinite;
-  }
-  
-  @keyframes descend {
-    from { transform: translateY(-50%); }
-    to { transform: translateY(0); }
-  }
-  
-  #pickaxe {
-    animation: sway 2s ease-in-out infinite;
-  }
-  
-  .feature-card {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    padding: 2rem;
-    transition: all 0.3s ease;
-  }
-  
-  .feature-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  }
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const hero = document.getElementById('hero');
-  const features = document.getElementById('features');
-  const featureCards = document.querySelectorAll('.feature-card');
-  
-  const heroObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = 1;
-        } else {
-          entry.target.style.opacity = 0;
+    <style>
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-      });
-    },
-    { threshold: 0.1 }
-  );
-  
-  heroObserver.observe(hero);
-  
-  const featureObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-fade-in-up');
+        .animate-fade-in-up {
+            animation: fadeInUp 0.5s ease-out;
         }
-      });
-    },
-    { threshold: 0.1 }
-  );
-  
-  featureCards.forEach(card => {
-    featureObserver.observe(card);
-  });
-  
-  window.addEventListener('scroll', () => {
-    const scrollPosition = window.scrollY;
-    const heroHeight = hero.offsetHeight;
-    const opacity = Math.max(0, Math.min(1, 1 - scrollPosition / heroHeight));
-    hero.style.opacity = opacity;
-    
-    if (scrollPosition > heroHeight / 2) {
-      features.classList.add('animate-fade-in');
-    }
-  });
-});
+        .bg-dark-gradient {
+            background: linear-gradient(to bottom, #1a202c, #2d3748);
+        }
+        .text-stroke {
+            -webkit-text-stroke: 1px white;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-dark-gradient text-white">
+    <!-- Navigation -->
+    <nav class="bg-transparent py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <img src="path-to-your-logo.png" alt="Expansion Logo" class="h-8">
+                </div>
+                <div class="hidden md:block">
+                    <a href="#" class="text-gray-300 hover:text-white px-3 py-2">Home</a>
+                    <a href="#" class="text-gray-300 hover:text-white px-3 py-2">Features</a>
+                    <a href="#" class="text-gray-300 hover:text-white px-3 py-2">Pricing</a>
+                </div>
+                <div>
+                    <a href="#" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium">Log In</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-</script>
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex items-center">
+        <div class="absolute inset-0 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Tech Background" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black opacity-60"></div>
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-4">
+                <span class="text-stroke">REVOLUTIONIZE</span>
+                <span class="text-blue-500">YOUR BUSINESS</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+                Traditional business tools are <span class="line-through text-red-500">holding you back</span>. Expansion gives you the power to compete in the digital age.
+            </p>
+            <a href="#" class="bg-blue-600 text-white px-8 py-4 rounded-md text-lg font-bold inline-block hover:bg-blue-700 transition duration-300">
+                Claim Your Power
+            </a>
+            <div class="mt-12 flex justify-center space-x-8">
+                <div class="text-center">
+                    <div class="text-4xl font-bold">10K+</div>
+                    <div class="text-gray-400">Success Stories</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold">24/7</div>
+                    <div class="text-gray-400">Expert Support</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold">100K+</div>
+                    <div class="text-gray-400">Active Users</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12">Enter The Future Now</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="feature-card bg-gray-800 p-8 rounded-lg">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" alt="Custom Domain" class="w-16 h-16 mb-4">
+                    <h3 class="text-2xl font-bold mb-2">Custom Domain Integration</h3>
+                    <p class="text-gray-400">Your business deserves its own digital identity. Don't settle for generic solutions.</p>
+                </div>
+                <div class="feature-card bg-gray-800 p-8 rounded-lg">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2972/2972471.png" alt="Analytics" class="w-16 h-16 mb-4">
+                    <h3 class="text-2xl font-bold mb-2">Advanced Analytics</h3>
+                    <p class="text-gray-400">Harness the power of data to make informed decisions and outperform your competition.</p>
+                </div>
+                <div class="feature-card bg-gray-800 p-8 rounded-lg">
+                    <img src="https://cdn-icons-png.flaticon.com/512/6977/6977079.png" alt="Rapid Updates" class="w-16 h-16 mb-4">
+                    <h3 class="text-2xl font-bold mb-2">Rapid Updates</h3>
+                    <p class="text-gray-400">Stay ahead of the curve with our lightning-fast update system. Never fall behind again.</p>
+                </div>
+                <div class="feature-card bg-gray-800 p-8 rounded-lg">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1067/1067566.png" alt="24/7 Support" class="w-16 h-16 mb-4">
+                    <h3 class="text-2xl font-bold mb-2">24/7 Expert Support</h3>
+                    <p class="text-gray-400">Our team of experts is always ready to assist you. Success doesn't wait for business hours.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const heroSection = document.getElementById('hero');
+        const features = document.querySelectorAll('.feature-card');
+
+        const heroObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in-up');
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        heroObserver.observe(heroSection);
+
+        const featureObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in-up');
+                    }
+                });
+            },
+            { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
+        );
+
+        features.forEach(feature => {
+            featureObserver.observe(feature);
+        });
+
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            const heroHeight = heroSection.offsetHeight;
+            const opacity = Math.max(0, Math.min(1, 1 - scrollPosition / (heroHeight / 2)));
+            heroSection.style.opacity = opacity;
+        });
+    });
+    </script>
 <!-- Testimonials Section -->
             <section class="relative py-24 overflow-hidden bg-gradient-to-b from-white via-purple-50 to-blue-50 dark:from-purple-900 dark:via-gray-800 dark:to-gray-900">
             <!-- Background animation -->
