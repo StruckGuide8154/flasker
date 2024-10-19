@@ -159,6 +159,24 @@ def allowed_file(filename):
 
 from urllib.parse import urlparse, urlunparse, parse_qs
 
+@app.route('/download_db')
+@login_required
+@system_user_required
+def download_db():
+    if not current_user.is_system_user:
+        flash('You do not have permission to download the database.', 'error')
+        return redirect(url_for('dashboard'))
+    
+    try:
+        return send_file('users.db',
+                         as_attachment=True,
+                         download_name='users_backup.db',
+                         mimetype='application/octet-stream')
+    except Exception as e:
+        flash(f'Error downloading database: {str(e)}', 'error')
+        return redirect(url_for('dashboard'))
+
+
 @app.before_request
 def handle_trailing_slash_and_query():
     rurl = request.url
