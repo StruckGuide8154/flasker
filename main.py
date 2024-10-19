@@ -36,7 +36,6 @@ from werkzeug.utils import secure_filename
 import stripe
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-from werkzeug.urls import url_parse, url_encode
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
