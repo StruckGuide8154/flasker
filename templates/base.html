@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head><script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add this part to handle the dropdown toggle
+    const dropdownToggle = document.querySelector('[data-collapse-toggle="dropdown-other"]');
+    const dropdownContent = document.getElementById('dropdown-other');
+
+    dropdownToggle.addEventListener('click', function() {
+        dropdownContent.classList.toggle('hidden');
+    });
+});
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expansion</title>
