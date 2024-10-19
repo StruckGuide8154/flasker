@@ -1300,58 +1300,70 @@ updatePricingTables()
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
                           <!-- Refined Contact Form -->
                           <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
-                            <div class="p-8">
-                              <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Reach Out to Us</h2>
-                              <form class="space-y-6">
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                  <div class="relative">
-                                    <label for="firstName" class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-800 px-1 text-xs font-medium text-gray-600 dark:text-gray-400">
-                                      First Name
-                                    </label>
-                                    <input type="text" id="firstName" name="firstName" class="block w-full px-4 py-3 rounded-md border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" placeholder="John">
-                                  </div>
-                                  <div class="relative">
-                                    <label for="lastName" class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-800 px-1 text-xs font-medium text-gray-600 dark:text-gray-400">
-                                      Last Name
-                                    </label>
-                                    <input type="text" id="lastName" name="lastName" class="block w-full px-4 py-3 rounded-md border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" placeholder="Doe">
-                                  </div>
-                                </div>
-                                <div class="relative">
-                                  <label for="email" class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-800 px-1 text-xs font-medium text-gray-600 dark:text-gray-400">
-                                    Email
-                                  </label>
-                                  <input type="email" id="email" name="email" class="block w-full px-4 py-3 rounded-md border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" placeholder="you@example.com">
-                                </div>
-                                <div class="relative">
-                                  <label for="company" class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-800 px-1 text-xs font-medium text-gray-600 dark:text-gray-400">
-                                    Company (Optional)
-                                  </label>
-                                  <input type="text" id="company" name="company" class="block w-full px-4 py-3 rounded-md border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" placeholder="Acme Inc.">
-                                </div>
-                                <div class="relative">
-                                  <label for="projectType" class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-800 px-1 text-xs font-medium text-gray-600 dark:text-gray-400">
-                                    What can we help you with?
-                                  </label>
-                                  <select id="projectType" name="projectType" class="block w-full px-4 py-3 rounded-md border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
-                                    <option value="">Select an option</option>
-                                    <option value="email_hosting">Email Hosting</option>
-                                    <option value="custom_solution">Custom Solution</option>
-                                    <option value="consultation">Consultation</option>
-                                    <option value="other">Other</option>
-                                  </select>
-                                </div>
-                                <div class="relative">
-                                  <label for="message" class="absolute -top-2 left-2 inline-block bg-white dark:bg-gray-800 px-1 text-xs font-medium text-gray-600 dark:text-gray-400">
-                                    Message
-                                  </label>
-                                  <textarea id="message" name="message" rows="4" class="block w-full px-4 py-3 rounded-md border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-900 text-gray-900 dark:text-white" placeholder="Tell us about your project or question..."></textarea>
-                                </div>
+    <div class="bg-white rounded-xl shadow-2xl p-8 md:p-12 w-full max-w-4xl">
+        <h1 class="text-4xl md:text-5xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-500">Get in Touch</h1>
+        <p class="text-gray-600 text-center mb-10 text-lg">We're here to help. Fill out the form below, and we'll get back to you as soon as possible.</p>
+        
+        <form id="contactForm" class="space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="relative">
+                    <label for="name" class="absolute -top-2 left-2 inline-block bg-white px-1 text-sm font-medium text-gray-600">
+                        Full Name
+                    </label>
+                    <input type="text" id="name" name="name" class="block w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 text-lg transition duration-200" placeholder="John Doe">
+                </div>
+                <div class="relative">
+                    <label for="email" class="absolute -top-2 left-2 inline-block bg-white px-1 text-sm font-medium text-gray-600">
+                        Email Address
+                    </label>
+                    <input type="email" id="email" name="email" class="block w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 text-lg transition duration-200" placeholder="you@example.com">
+                </div>
+            </div>
+            
+            <div class="relative">
+                <label for="reason" class="absolute -top-2 left-2 inline-block bg-white px-1 text-sm font-medium text-gray-600">
+                    How can we assist you?
+                </label>
+                <select id="reason" name="reason" class="block w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 text-lg transition duration-200">
+                    <option value="">Please select...</option>
+                    <option value="email_hosting">Email Hosting Solutions</option>
+                    <option value="custom_solution">Custom IT Solutions</option>
+                    <option value="consultation">Technical Consultation</option>
+                    <option value="other">Other Inquiries</option>
+                </select>
+            </div>
+            
+            <div class="relative">
+                <label for="plan" class="absolute -top-2 left-2 inline-block bg-white px-1 text-sm font-medium text-gray-600">
+                    Interested Plan
+                </label>
+                <select id="plan" name="plan" class="block w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 text-lg transition duration-200">
+                    <option value="">Select a plan...</option>
+                    <option value="basic">Basic Plan</option>
+                    <option value="pro">Pro Plan</option>
+                    <option value="enterprise">Enterprise Solution</option>
+                </select>
+            </div>
+            
+            <div class="relative">
+                <label for="domain" class="absolute -top-2 left-2 inline-block bg-white px-1 text-sm font-medium text-gray-600">
+                    Domain (Optional)
+                </label>
+                <input type="text" id="domain" name="domain" class="block w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 text-lg transition duration-200" placeholder="yourdomain.com">
+            </div>
+            
+            <div class="relative">
+                <label for="message" class="absolute -top-2 left-2 inline-block bg-white px-1 text-sm font-medium text-gray-600">
+                    Your Message
+                </label>
+                <textarea id="message" name="message" rows="5" class="block w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white text-gray-900 text-lg transition duration-200" placeholder="Please provide details about your inquiry..."></textarea>
+            </div>
+            
+            <button type="submit" id="submitButton" class="w-full flex justify-center py-4 px-6 border border-transparent rounded-lg shadow-sm text-xl font-medium text-white bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+                Send Message
+            </button>
+        </form>
 
-  <button type="submit" id="submitButton" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-                                  Send Message
-                                </button>
-                              </form>
                                   <div class="flex justify-center mt-4 mb-8">
   <button id="tempTicketLoginBtn" class="group relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold text-white rounded-full shadow-2xl bg-gradient-to-br from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 active:from-blue-700 active:to-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 ease-out hover:scale-105">
     <span class="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-600 to-purple-700 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"></span>
@@ -1967,5 +1979,75 @@ updatePricingTables()
   </div>
 </div>
 
+    <div id="credentialsModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                Your Temporary Credentials
+                            </h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500">
+                                    Please save these credentials. You will need them to access your ticket.
+                                </p>
+                                <p class="mt-2 text-sm text-gray-900">
+                                    Username: <span id="tempUsername" class="font-bold"></span>
+                                </p>
+                                <p class="mt-1 text-sm text-gray-900">
+                                    Password: <span id="tempPassword" class="font-bold"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" id="closeModal" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contactForm');
+            const modal = document.getElementById('credentialsModal');
+            const closeModalButton = document.getElementById('closeModal');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+
+                fetch('/create_home_ticket', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('tempUsername').textContent = data.username;
+                    document.getElementById('tempPassword').textContent = data.password;
+                    modal.classList.remove('hidden');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
+            });
+
+            closeModalButton.addEventListener('click', function() {
+                modal.classList.add('hidden');
+                form.reset();
+            });
+        });
+    </script>
                                   {% endblock %}
