@@ -356,7 +356,7 @@ def download_db():
         flash('You do not have permission to download the database.', 'error')
         return redirect(url_for('dashboard'))
     
-    db_path = 'users.db'  # Adjust this path if your database is located elsewhere
+    db_path = 'instance/users.db'  # Adjust this path if your database is located elsewhere
     
     if not os.path.exists(db_path):
         flash('Database file not found.', 'error')
