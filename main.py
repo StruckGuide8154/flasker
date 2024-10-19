@@ -170,7 +170,8 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-
+def get_affiliate(referral_code):
+    return Affiliate.query.filter_by(referral_code=referral_code).first()
 
 
 @app.before_request
