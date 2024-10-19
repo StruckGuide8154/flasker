@@ -858,9 +858,13 @@ def add_message(ticket_id):
         if temp_ticket_id != ticket_id:
             return jsonify({'error': 'Permission denied'}), 403
 
-    data = request.form
-    message_content = data.get('message', '')
-    image_filename = data.get('image_filename', None)
+    data = request.json  # Change this to handle JSON data
+    message_content = data.get('message', '').strip()
+    image_filename = data.get('image_filename')
+
+    # Check if the message is empty
+    if not message_content and not image_filename:
+        return jsonify({'error': 'Message cannot be empty'}), 400
 
     message = Message(
         content=message_content,
