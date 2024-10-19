@@ -36,6 +36,7 @@ from werkzeug.utils import secure_filename
 import stripe
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+temp_tokens = {}
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -365,6 +366,19 @@ def get_ticket_stats(user):
 
 
 
+@app.route('/ref/<referral_code>')
+def affiliate_redirect(referral_code):
+    # Generate a temporary token
+    token = secrets.token_urlsafe(16)
+    
+    # Store the token with the referral code and expiration time
+    temp_tokens[token] = {
+        'referral_code': referral_code,
+        'expires': datetime.utcnow() + timedelta(minutes=5)  # Token expires in 5 minutes
+    }
+    
+    # Redirect to home page with the token
+    return redirect(url_for('home', token=token))
 
 @app.route('/affiliate', methods=['GET', 'POST'])
 @login_required
@@ -384,6 +398,62 @@ def affiliate():
         user_affiliate = Affiliate.query.filter_by(email=current_user.email).first()
         referral_stats = get_referral_stats(user_affiliate.referral_code) if user_affiliate else None
         return render_template('affiliate.html', user_affiliate=user_affiliate, referral_stats=referral_stats)
+
+@app.before_request
+def track_affiliate():
+    token = request.args.get('token')
+    
+    if token and token in temp_tokens:
+        token_data = temp_tokens[token]
+        
+        # Check if the token is still valid
+        if datetime.utcnow() <= token_data['expires']:
+            referral_code = token_data['referral_code']
+            affiliate = Affiliate.query.filter_by(referral_code=referral_code).first()
+            
+            if affiliate and 'referral' not in session:
+                # Increment clicks only for new sessions
+                affiliate.clicks += 1
+                db.session.commit()
+                
+                # Set session variables
+                session['referral'] = referral_code
+                session['session_start_time'] = datetime.utcnow().timestamp()
+        
+        # Remove the used token
+        del temp_tokens[token]
+
+    # Track time for unauthenticated sessions
+    if 'referral' in session and not current_user.is_authenticated:
+        if 'session_start_time' in session:
+            current_time = datetime.utcnow().timestamp()
+            session_duration = current_time - session['session_start_time']
+            
+            # Update the total time for the affiliate
+            referral_code = session['referral']
+            affiliate = Affiliate.query.filter_by(referral_code=referral_code).first()
+            if affiliate:
+                affiliate.total_time_on_page += int(session_duration)
+                db.session.commit()
+            
+            # Reset the session start time
+            session['session_start_time'] = current_time
+
+@app.teardown_request
+def update_session_time(exception=None):
+    if 'referral' in session and not current_user.is_authenticated and 'session_start_time' in session:
+        current_time = datetime.utcnow().timestamp()
+        session_duration = current_time - session['session_start_time']
+        
+        # Update the total time for the affiliate
+        referral_code = session['referral']
+        affiliate = Affiliate.query.filter_by(referral_code=referral_code).first()
+        if affiliate:
+            affiliate.total_time_on_page += int(session_duration)
+            db.session.commit()
+        
+        # Reset the session start time
+        session['session_start_time'] = current_time
 
 @app.route('/update_user_count', methods=['POST'])
 @login_required
