@@ -2035,23 +2035,42 @@ document.addEventListener('DOMContentLoaded', function() {
         const modal = document.createElement('div');
         modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center';
         modal.innerHTML = `
-            <div class="bg-white p-8 rounded-lg shadow-xl max-w-md w-full">
-                <h2 class="text-2xl font-bold mb-4">Temporary Login Credentials</h2>
-                <p class="mb-4">Use these credentials to access your ticket:</p>
-                <div class="mb-4">
-                    <strong>Username:</strong> <span class="font-mono">${username}</span>
-                </div>
-                <div class="mb-6">
-                    <strong>Password:</strong> <span class="font-mono">${password}</span>
-                </div>
-                <p class="text-sm text-gray-600 mb-4">Please save these credentials. You will need them to check your ticket status.</p>
-                <button id="loginNow" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-                    Login Now
-                </button>
-                <button id="closeModal" class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded">
-                    Close
-                </button>
-            </div>
+<div class="bg-gradient-to-br from-gray-900 to-black p-8 rounded-2xl shadow-2xl max-w-md w-full border-2 border-red-600 relative overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-600 to-purple-600"></div>
+    <div class="absolute top-0 right-0 w-24 h-24 bg-red-500 rounded-full mix-blend-multiply filter blur-xl opacity-25 animate-pulse"></div>
+    <div class="absolute bottom-0 left-0 w-24 h-24 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-25 animate-pulse"></div>
+
+    <h2 class="text-3xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-500">Access Granted</h2>
+    <p class="mb-6 text-gray-300">Utilize these high-security credentials to breach your ticket firewall:</p>
+
+    <div class="space-y-4 mb-8">
+        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700 flex items-center justify-between">
+            <span class="text-gray-400 font-semibold">User:</span>
+            <span class="font-mono text-green-400 text-lg">${username}</span>
+        </div>
+        <div class="bg-gray-800 p-4 rounded-lg border border-gray-700 flex items-center justify-between relative">
+            <span class="text-gray-400 font-semibold">Pass:</span>
+            <span class="font-mono text-green-400 text-lg" id="passwordDisplay">••••••••</span>
+            <button id="togglePassword" class="absolute right-2 text-gray-400 hover:text-white focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                    <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <p class="text-sm text-gray-400 mb-6">Warning: These classified credentials are crucial for ongoing mission access. Secure them immediately.</p>
+
+    <div class="flex space-x-4">
+        <button id="loginNow" class="flex-1 bg-gradient-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+            Login NOW
+        </button>
+        <button id="closeModal" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
+            Close
+        </button>
+    </div>
+</div>
         `;
 
         document.body.appendChild(modal);
