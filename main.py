@@ -135,7 +135,7 @@ class Ticket(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     messages = db.relationship('Message', backref='ticket', lazy=True)
     temp_password_hash = db.Column(db.String(100))
-    referral = db.Column(db.String(100))
+    referral = db.Column(db.String(20), nullable=True)
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -151,6 +151,9 @@ class Affiliate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     referral_code = db.Column(db.String(20), unique=True, nullable=False)
+    user_count = db.Column(db.Integer, default=0)
+    clicks = db.Column(db.Integer, default=0)
+    total_time_on_page = db.Column(db.Integer, default=0)  # in seconds
 
 @app.before_request
 def track_referral():
@@ -335,14 +338,66 @@ def affiliate():
         referral_stats = get_referral_stats(user_affiliate.referral_code) if user_affiliate else None
         return render_template('affiliate.html', user_affiliate=user_affiliate, referral_stats=referral_stats)
 
+@app.route('/update_user_count', methods=['POST'])
+@login_required
+def update_user_count():
+    if not current_user.is_system_user:
+        return jsonify({'error': 'Unauthorized'}), 403
+
+    affiliate_id = request.json.get('affiliate_id')
+    change = request.json.get('change')  # 1 for increase, -1 for decrease
+
+    affiliate = Affiliate.query.get(affiliate_id)
+    if not affiliate:
+        return jsonify({'error': 'Affiliate not found'}), 404
+
+    affiliate.user_count = max(0, affiliate.user_count + change)
+    db.session.commit()
+
+    return jsonify({'success': True, 'new_count': affiliate.user_count})
+
+@app.route('/track_click', methods=['POST'])
+def track_click():
+    referral_code = request.json.get('referral_code')
+    affiliate = Affiliate.query.filter_by(referral_code=referral_code).first()
+    if affiliate:
+        affiliate.clicks += 1
+        db.session.commit()
+    return jsonify({'success': True})
+
+@app.route('/track_time', methods=['POST'])
+def track_time():
+    referral_code = request.json.get('referral_code')
+    time_spent = request.json.get('time_spent')
+    affiliate = Affiliate.query.filter_by(referral_code=referral_code).first()
+    if affiliate:
+        affiliate.total_time_on_page += time_spent
+        db.session.commit()
+    return jsonify({'success': True})
+
 def get_referral_stats(referral_code):
-    # Implement this function to return referral statistics
-    # For example:
+    now = datetime.utcnow()
+    first_day_of_current_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    first_day_of_last_month = (first_day_of_current_month - timedelta(days=1)).replace(day=1)
+
+    affiliate = Affiliate.query.filter_by(referral_code=referral_code).first()
+    total = Ticket.query.filter_by(referral=referral_code).count()
+    this_month = Ticket.query.filter_by(referral=referral_code).filter(Ticket.created_at >= first_day_of_current_month).count()
+    last_month = Ticket.query.filter_by(referral=referral_code).filter(
+        Ticket.created_at >= first_day_of_last_month,
+        Ticket.created_at < first_day_of_current_month
+    ).count()
+
     return {
-        'total': Ticket.query.filter_by(referral=referral_code).count(),
-        'this_month': Ticket.query.filter_by(referral=referral_code).filter(Ticket.created_at >= datetime.utcnow().replace(day=1)).count(),
-        'last_month': Ticket.query.filter_by(referral=referral_code).filter(Ticket.created_at >= (datetime.utcnow().replace(day=1) - timedelta(days=1)).replace(day=1), Ticket.created_at < datetime.utcnow().replace(day=1)).count()
+        'total': total,
+        'this_month': this_month,
+        'last_month': last_month,
+        'user_count': affiliate.user_count,
+        'clicks': affiliate.clicks,
+        'avg_time_on_page': affiliate.total_time_on_page // affiliate.clicks if affiliate.clicks > 0 else 0
     }
+
+
 
 @app.route('/subscription')
 @login_required
