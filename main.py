@@ -264,6 +264,131 @@ def upload_image():
         return jsonify({'filename': unique_filename}), 200
     return jsonify({'error': 'File type not allowed'}), 400
 
+import os
+import shutil
+from flask import render_template, request, jsonify, send_file, abort
+from werkzeug.utils import secure_filename
+
+@app.route('/edit', methods=['GET', 'POST'])
+@login_required
+@system_user_required
+def edit():
+    if request.method == 'GET':
+        return render_template('edit.html')
+    
+    action = request.form.get('action')
+    path = request.form.get('path', '/')
+
+    # Ensure the path is within the allowed directory
+    if not os.path.abspath(path).startswith(os.path.abspath('/')):
+        return jsonify({'error': 'Access denied'}), 403
+
+    if action == 'list':
+        try:
+            items = []
+            for item in os.listdir(path):
+                full_path = os.path.join(path, item)
+                items.append({
+                    'name': item,
+                    'is_dir': os.path.isdir(full_path),
+                    'size': os.path.getsize(full_path) if os.path.isfile(full_path) else 0,
+                    'modified': os.path.getmtime(full_path)
+                })
+            return jsonify(items)
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
+    elif action == 'read':
+        try:
+            with open(path, 'r') as file:
+                content = file.read()
+            return jsonify({'content': content})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
+    elif action == 'write':
+        try:
+            content = request.form.get('content', '')
+            with open(path, 'w') as file:
+                file.write(content)
+            return jsonify({'success': True})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
+    elif action == 'rename':
+        try:
+            new_name = request.form.get('new_name')
+            new_path = os.path.join(os.path.dirname(path), new_name)
+            os.rename(path, new_path)
+            return jsonify({'success': True})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
+    elif action == 'delete':
+        try:
+            if os.path.isdir(path):
+                shutil.rmtree(path)
+            else:
+                os.remove(path)
+            return jsonify({'success': True})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
+    elif action == 'create_file':
+        try:
+            new_file = request.form.get('name')
+            new_path = os.path.join(path, new_file)
+            with open(new_path, 'w') as file:
+                pass  # Create an empty file
+            return jsonify({'success': True})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
+    elif action == 'create_folder':
+        try:
+            new_folder = request.form.get('name')
+            new_path = os.path.join(path, new_folder)
+            os.mkdir(new_path)
+            return jsonify({'success': True})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
+    elif action == 'upload':
+        try:
+            file = request.files['file']
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(path, filename))
+            return jsonify({'success': True})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
+    elif action == 'download':
+        try:
+            return send_file(path, as_attachment=True)
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
+    elif action == 'move':
+        try:
+            destination = request.form.get('destination')
+            shutil.move(path, os.path.join(destination, os.path.basename(path)))
+            return jsonify({'success': True})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
+    elif action == 'copy':
+        try:
+            destination = request.form.get('destination')
+            if os.path.isdir(path):
+                shutil.copytree(path, os.path.join(destination, os.path.basename(path)))
+            else:
+                shutil.copy2(path, destination)
+            return jsonify({'success': True})
+        except Exception as e:
+            return jsonify({'error': str(e)}), 400
+
+    return jsonify({'error': 'Invalid action'}), 400
+
 
 @app.route('/')
 @login_required
