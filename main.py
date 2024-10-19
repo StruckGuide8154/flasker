@@ -155,6 +155,8 @@ class Affiliate(db.Model):
     clicks = db.Column(db.Integer, default=0)
     total_time_on_page = db.Column(db.Integer, default=0)  # in seconds
 
+
+
 @app.before_request
 def track_referral():
     if 'referral' not in session and request.args.get('referral'):
@@ -172,6 +174,22 @@ def allowed_file(filename):
 
 def get_affiliate(referral_code):
     return Affiliate.query.filter_by(referral_code=referral_code).first()
+
+@app.teardown_request
+def update_session_time(exception=None):
+    if 'referral' in session and not current_user.is_authenticated and 'session_start_time' in session:
+        current_time = time.time()
+        session_duration = current_time - session['session_start_time']
+        
+        # Update the total time for the affiliate
+        referral_code = session['referral']
+        affiliate = Affiliate.query.filter_by(referral_code=referral_code).first()
+        if affiliate:
+            affiliate.total_time_on_page += int(session_duration)
+            db.session.commit()
+        
+        # Reset the session start time
+        session['session_start_time'] = current_time
 
 
 @app.before_request
@@ -198,6 +216,34 @@ def handle_trailing_slash_and_query():
     # If there's no query string but there's a trailing slash, let Flask handle it
     return None
 
+@app.before_request
+def track_affiliate():
+    # Track clicks
+    if 'referral' in request.args and 'referral' not in session:
+        referral_code = request.args['referral']
+        affiliate = Affiliate.query.filter_by(referral_code=referral_code).first()
+        if affiliate:
+            affiliate.clicks += 1
+            db.session.commit()
+        session['referral'] = referral_code
+        session['session_start_time'] = time.time()
+
+    # Track time for unauthenticated sessions
+    if 'referral' in session and not current_user.is_authenticated:
+        if 'session_start_time' in session:
+            current_time = time.time()
+            session_duration = current_time - session['session_start_time']
+            
+            # Update the total time for the affiliate
+            referral_code = session['referral']
+            affiliate = Affiliate.query.filter_by(referral_code=referral_code).first()
+            if affiliate:
+                affiliate.total_time_on_page += int(session_duration)
+                db.session.commit()
+            
+            # Reset the session start time
+            session['session_start_time'] = current_time
+            
 # New route to handle file uploads
 @app.route('/thanks')
 def thanks():
@@ -615,6 +661,9 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
+    # Clear the referral and session start time when logging out
+    session.pop('referral', None)
+    session.pop('session_start_time', None)
     logout_user()
     return redirect(url_for('login'))
 
