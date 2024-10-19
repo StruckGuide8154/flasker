@@ -126,26 +126,36 @@ class User(UserMixin, db.Model):
     user_limit = db.Column(db.Integer)
     tickets = db.relationship('Ticket', backref='user', lazy=True)
 
-
 class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
     status = db.Column(db.String(20), default='Open')
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)  # Changed to nullable
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     messages = db.relationship('Message', backref='ticket', lazy=True)
     temp_password_hash = db.Column(db.String(100))
+    referral = db.Column(db.String(100))
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     is_admin = db.Column(db.Boolean, default=False)
     ticket_id = db.Column(db.Integer, db.ForeignKey('ticket.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)  # Changed to nullable
-    temp_user = db.Column(db.String(100), nullable=True)  # New field for temporary users
-    image_filename = db.Column(db.String(255), nullable=True)  # New field for image filename
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    temp_user = db.Column(db.String(100), nullable=True)
+    image_filename = db.Column(db.String(255), nullable=True)
+
+class Affiliate(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    referral_code = db.Column(db.String(20), unique=True, nullable=False)
+
+@app.before_request
+def track_referral():
+    if 'referral' not in session and request.args.get('referral'):
+        session['referral'] = request.args.get('referral')
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -238,6 +248,15 @@ def system_user_required(f):
             return redirect(url_for('dashboard'))
         return f(*args, **kwargs)
     return decorated_function
+    
+@app.before_request
+def track_referral():
+    if 'referral' not in session and request.args.get('referral'):
+        session['referral'] = request.args.get('referral')
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 def get_miab_users(user):
     try:
@@ -297,6 +316,20 @@ def get_ticket_stats(user):
 
 
 
+@app.route('/affiliate', methods=['GET', 'POST'])
+@login_required
+@system_user_required
+def affiliate():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        referral_code = request.form.get('referral_code')
+        new_affiliate = Affiliate(email=email, referral_code=referral_code)
+        db.session.add(new_affiliate)
+        db.session.commit()
+        flash('Affiliate added successfully', 'success')
+        return redirect(url_for('affiliate'))
+    affiliates = Affiliate.query.all()
+    return render_template('affiliate.html', affiliates=affiliates)
 
 
 @app.route('/subscription')
@@ -419,27 +452,21 @@ def handle_file():
         return jsonify({'message': 'File saved successfully'})
 
 @app.route('/')
+def home():
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
+    return render_template('home.html')
+    
+@app.route('/dashboard')
 @login_required
 def dashboard():
     if current_user.is_system_user:
-        try:
-            curl_command = f'curl -X GET --user "{current_user.miab_email}:{current_user.miab_password}" {current_user.miab_url}/admin/mail/users?format=json'
-            logger.info(f"Executing cURL command: {curl_command}")
-            process = subprocess.Popen(shlex.split(curl_command), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            stdout, stderr = process.communicate()
-            if process.returncode != 0:
-                raise Exception(f"cURL command failed with return code {process.returncode}")
-            miab_users = json.loads(stdout.decode('utf-8'))
-            logger.info(f"Retrieved MIAB users: {miab_users}")
-        except Exception as e:
-            logger.error(f"Error fetching MIAB users: {str(e)}")
-            miab_users = []
-            flash(f'Error fetching MIAB users: {str(e)}', 'error')
+        tickets = Ticket.query.all()
+        affiliates = Affiliate.query.all()
+        return render_template('system_user_dashboard.html', tickets=tickets, affiliates=affiliates)
     else:
-        miab_users = []
-
-    tickets = Ticket.query.filter_by(user_id=current_user.id).all()
-    return render_template('dashboard.html', miab_users=miab_users, tickets=tickets)
+        tickets = Ticket.query.filter_by(user_id=current_user.id).all()
+        return render_template('user_dashboard.html', tickets=tickets)
 
 from urllib.parse import urlparse, urlunparse, parse_qs
 
@@ -811,42 +838,35 @@ def create_ticket():
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
-
-        # Check if the user is authenticated before accessing current_user.id
-        if not current_user.is_authenticated:
-            flash('You need to log in to create a ticket.', 'error')
-            return redirect(url_for('home'))
-
-        new_ticket = Ticket(title=title, description=description, user_id=current_user.id)
+        referral = session.get('referral')
+        new_ticket = Ticket(title=title, description=description, user_id=current_user.id, referral=referral)
         db.session.add(new_ticket)
         db.session.commit()
         flash('Ticket created successfully', 'success')
-        return redirect(url_for('tickets'))
+        return redirect(url_for('dashboard'))
     return render_template('create_ticket.html')
 
 @app.route('/create_home_ticket', methods=['POST'])
 def create_home_ticket():
-    # Retrieve form data
     name = request.form.get('name')
     email = request.form.get('email')
     reason = request.form.get('reason')
     plan = request.form.get('plan')
     domain = request.form.get('domain')
     message = request.form.get('message')
+    referral = session.get('referral')
 
     # Generate temporary password
     temp_password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
-
-    # Hash the temporary password
     hashed_temp_password = generate_password_hash(temp_password)
 
-    # Create a new ticket with the temporary password hash
     new_ticket = Ticket(
         title=f"Contact Request: {reason}",
         description=f"Name: {name}\nEmail: {email}\nReason: {reason}\nPlan: {plan}\nDomain: {domain}\nMessage: {message}",
         status='Open',
         user_id=current_user.id if current_user.is_authenticated else None,
-        temp_password_hash=hashed_temp_password
+        temp_password_hash=hashed_temp_password,
+        referral=referral
     )
 
     db.session.add(new_ticket)
@@ -855,10 +875,10 @@ def create_home_ticket():
     # Generate temporary username using the ticket's ID
     temp_username = f"user_{new_ticket.id}"
 
-    # Return the temporary username and password to the client
     return jsonify({
         'username': temp_username,
         'password': temp_password,
+        'ticket_id': new_ticket.id
     })
 
 def validate_temp_credentials(username, password):
@@ -885,16 +905,25 @@ def temp_ticket_login():
     if not username or not password:
         return jsonify({"error": "Username and password are required"}), 400
 
-    logger.info(f"Attempting login for username: {username}")
-
     if validate_temp_credentials(username, password):
         ticket_id = int(username.split('_')[1])
         session['temp_user'] = username
-        logger.info(f"Login successful for username: {username}")
         return jsonify({"message": "Login successful", "ticket_id": ticket_id}), 200
     else:
-        logger.warning(f"Invalid credentials for username: {username}")
         return jsonify({"error": "Invalid username or password"}), 401
+
+def validate_temp_credentials(username, password):
+    try:
+        ticket_id = int(username.split('_')[1])
+    except (IndexError, ValueError):
+        return False
+
+    ticket = Ticket.query.get(ticket_id)
+
+    if not ticket:
+        return False
+
+    return check_password_hash(ticket.temp_password_hash, password)
     
 @app.route('/ticket/<int:ticket_id>')
 @login_required
