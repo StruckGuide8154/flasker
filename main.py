@@ -451,6 +451,39 @@ def track_affiliate():
             # Reset the session start time
             session['session_start_time'] = current_time
 
+@app.route('/affiliate/edit/<int:affiliate_id>', methods=['GET', 'POST'])
+@login_required
+def edit_affiliate(affiliate_id):
+    if not current_user.is_system_user:
+        flash('You do not have permission to access this page.', 'error')
+        return redirect(url_for('affiliate'))
+
+    affiliate = Affiliate.query.get_or_404(affiliate_id)
+
+    if request.method == 'POST':
+        if 'add_payment' in request.form:
+            amount = float(request.form['amount'])
+            description = request.form['description']
+            new_payment = Payment(affiliate_id=affiliate.id, amount=amount, description=description)
+            db.session.add(new_payment)
+            db.session.commit()
+            flash('Payment added successfully', 'success')
+        elif 'update_sale' in request.form:
+            plan_type = request.form['plan_type']
+            amount = float(request.form['amount'])
+            new_sale = Sale(affiliate_id=affiliate.id, plan_type=plan_type, amount=amount)
+            db.session.add(new_sale)
+            affiliate.total_earnings += amount
+            db.session.commit()
+            flash('Sale updated successfully', 'success')
+
+    # Get statistics
+    stats = get_referral_stats(affiliate.referral_code)
+    sales_stats = get_sales_stats(affiliate.id)
+    payments = Payment.query.filter_by(affiliate_id=affiliate.id).order_by(Payment.created_at.desc()).all()
+
+    return render_template('edit_affiliate.html', affiliate=affiliate, stats=stats, sales_stats=sales_stats, payments=payments)
+
 @app.teardown_request
 def update_session_time(exception=None):
     if 'referral' in session and not current_user.is_authenticated and 'session_start_time' in session:
