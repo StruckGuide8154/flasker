@@ -19,9 +19,10 @@
         <li>Basic Sales: {{ sales_stats.basic_sales }}</li>  
         <li>Pro Sales: {{ sales_stats.pro_sales }}</li>
         <li>Enterprise Sales: {{ sales_stats.enterprise_sales }}</li>
-        <li>Total Earnings: ${{ sales_stats.total_earnings }}</li>
-        <li>Total Paid: ${{ sales_stats.total_paid }}</li>
-        <li>Balance Due: ${{ sales_stats.balance_due }}</li>
+<li>Total Earnings: ${{ sales_stats.total_earnings | default(0, true) | round(2) }}</li>
+<li>Total Paid: ${{ sales_stats.total_paid | default(0, true) | round(2) }}</li>
+<li>Balance Due: ${{ sales_stats.balance_due | default(0, true) | round(2) }}</li>
+
     </ul>
 
     <h2>Update Sale</h2>
