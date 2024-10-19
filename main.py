@@ -145,6 +145,18 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
+@app.before_request
+def remove_trailing_slash_before_query():
+    rurl = request.url
+    if rurl.endswith('/?') or '/?' in rurl:
+        parts = rurl.split('?', 1)
+        if len(parts) == 2:
+            path, query = parts
+            path = path.rstrip('/')
+            return redirect(f"{path}?{query}", code=301)
+
+
 # New route to handle file uploads
 @app.route('/thanks')
 def thanks():
