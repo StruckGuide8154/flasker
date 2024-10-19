@@ -406,9 +406,6 @@ def download_db():
         flash(f'Error downloading database: {str(e)}', 'error')
         return redirect(url_for('dashboard'))
 
-
-from logger import logger
-
 @app.route('/limits')
 @login_required
 def limits():
