@@ -241,95 +241,87 @@ updatePricingTables()
 
       </script>
 
-    <style>
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in-up {
-            animation: fadeInUp 0.5s ease-out;
-        }
-        .bg-dark-gradient {
-            background: linear-gradient(to bottom, #1a202c, #2d3748);
-        }
-        .text-stroke {
-            -webkit-text-stroke: 1px white;
-            color: transparent;
-        }
-    </style>
-</head>
-<body class="bg-dark-gradient text-white">
-    <!-- Navigation -->
-    <nav class="bg-transparent py-4">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center">
-                    <img src="path-to-your-logo.png" alt="Expansion Logo" class="h-8">
-                </div>
-                <div class="hidden md:block">
-                    <a href="#" class="text-gray-300 hover:text-white px-3 py-2">Home</a>
-                    <a href="#" class="text-gray-300 hover:text-white px-3 py-2">Features</a>
-                    <a href="#" class="text-gray-300 hover:text-white px-3 py-2">Pricing</a>
-                </div>
-                <div>
-                    <a href="#" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium">Log In</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+
 
 <!-- Hero Section -->
-<section id="hero" class="relative min-h-screen flex items-center bg-black overflow-hidden">
+<section id="hero" class="relative min-h-screen flex items-center overflow-hidden">
     <div class="absolute inset-0 z-0">
-        <div id="hero-bg" class="w-full h-full bg-gradient-to-br from-blue-900 to-purple-900"></div>
+        <div id="hero-bg" class="w-full h-full bg-gradient-to-br from-blue-900 via-purple-900 to-black"></div>
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div id="particles-js" class="absolute inset-0"></div>
     </div>
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-6xl md:text-8xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
-            DOMINATE<br>YOUR INDUSTRY
-        </h1>
-        <p class="text-2xl md:text-3xl mb-8 text-gray-300 max-w-3xl mx-auto">
-            While others <span class="line-through text-red-500">struggle with outdated tools</span>, 
-            you'll wield the power of EXPANSION.
-        </p>
-        <a href="#" class="inline-block px-8 py-4 text-2xl font-bold text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-md hover:from-blue-700 hover:to-purple-700 transition duration-300 transform hover:scale-105">
-            CLAIM YOUR POWER
-        </a>
-        <div class="mt-12 flex justify-center space-x-12">
-            <div class="text-center">
-                <div class="text-5xl font-bold text-blue-400">10K+</div>
-                <div class="text-xl text-gray-400">Businesses Revolutionized</div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="text-left">
+                <h1 class="text-6xl md:text-8xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 leading-tight">
+                    DOMINATE<br>YOUR INDUSTRY
+                </h1>
+                <p class="text-2xl md:text-3xl mb-8 text-gray-300 max-w-2xl">
+                    While others <span class="line-through text-red-500">struggle with outdated tools</span>, 
+                    you'll wield the power of <span class="text-blue-400 font-bold">EXPANSION</span>.
+                </p>
+                <a href="#" class="inline-block px-8 py-4 text-2xl font-bold text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-full hover:from-blue-700 hover:to-purple-700 transition duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    CLAIM YOUR POWER
+                </a>
             </div>
-            <div class="text-center">
-                <div class="text-5xl font-bold text-purple-400">24/7</div>
-                <div class="text-xl text-gray-400">Cutting-Edge Support</div>
+            <div class="relative">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full filter blur-3xl opacity-20 animate-blob"></div>
+                <img src="https://via.placeholder.com/600x400" alt="Expansion Dashboard" class="rounded-lg shadow-2xl transform hover:scale-105 transition duration-500 relative z-10">
             </div>
-            <div class="text-center">
-                <div class="text-5xl font-bold text-blue-400">100X</div>
-                <div class="text-xl text-gray-400">Efficiency Boost</div>
+        </div>
+        <div class="mt-20 grid grid-cols-3 gap-8">
+            <div class="text-center p-6 bg-gradient-to-br from-blue-900 to-purple-900 rounded-lg transform hover:scale-105 transition duration-300">
+                <div class="text-5xl font-bold text-blue-400 mb-2">10K+</div>
+                <div class="text-xl text-gray-300">Businesses Revolutionized</div>
+            </div>
+            <div class="text-center p-6 bg-gradient-to-br from-purple-900 to-pink-900 rounded-lg transform hover:scale-105 transition duration-300">
+                <div class="text-5xl font-bold text-purple-400 mb-2">24/7</div>
+                <div class="text-xl text-gray-300">Cutting-Edge Support</div>
+            </div>
+            <div class="text-center p-6 bg-gradient-to-br from-pink-900 to-red-900 rounded-lg transform hover:scale-105 transition duration-300">
+                <div class="text-5xl font-bold text-pink-400 mb-2">100X</div>
+                <div class="text-xl text-gray-300">Efficiency Boost</div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Features Section -->
-<section id="features" class="py-20 bg-gray-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-5xl font-bold text-center mb-12 text-white">TOOLS OF DOMINATION</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="feature-card bg-gradient-to-br from-blue-800 to-purple-800 p-8 rounded-lg transform transition duration-500 hover:scale-105">
-                <h3 class="text-3xl font-bold mb-4 text-blue-300">Custom Domain Mastery</h3>
+<section id="features" class="py-20 bg-gradient-to-b from-gray-900 to-black relative overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+        <div id="geometric-bg" class="w-full h-full opacity-10"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <h2 class="text-6xl font-bold text-center mb-20 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+            TOOLS OF DOMINATION
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div class="feature-card bg-gradient-to-br from-blue-800 to-purple-800 p-8 rounded-2xl transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+                <div class="flex items-center mb-6">
+                    <div class="text-4xl mr-4">🌐</div>
+                    <h3 class="text-3xl font-bold text-blue-300">Custom Domain Mastery</h3>
+                </div>
                 <p class="text-xl text-gray-300">Claim your digital territory. Leave the <span class="line-through text-red-400">generic masses</span> in the dust.</p>
             </div>
-            <div class="feature-card bg-gradient-to-br from-purple-800 to-pink-800 p-8 rounded-lg transform transition duration-500 hover:scale-105">
-                <h3 class="text-3xl font-bold mb-4 text-purple-300">AI-Powered Analytics</h3>
+            <div class="feature-card bg-gradient-to-br from-purple-800 to-pink-800 p-8 rounded-2xl transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+                <div class="flex items-center mb-6">
+                    <div class="text-4xl mr-4">📊</div>
+                    <h3 class="text-3xl font-bold text-purple-300">AI-Powered Analytics</h3>
+                </div>
                 <p class="text-xl text-gray-300">See the future of your business. While others guess, you'll <span class="text-white font-bold">know</span>.</p>
             </div>
-            <div class="feature-card bg-gradient-to-br from-pink-800 to-red-800 p-8 rounded-lg transform transition duration-500 hover:scale-105">
-                <h3 class="text-3xl font-bold mb-4 text-pink-300">Instant Deployment</h3>
+            <div class="feature-card bg-gradient-to-br from-pink-800 to-red-800 p-8 rounded-2xl transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+                <div class="flex items-center mb-6">
+                    <div class="text-4xl mr-4">🚀</div>
+                    <h3 class="text-3xl font-bold text-pink-300">Instant Deployment</h3>
+                </div>
                 <p class="text-xl text-gray-300">Launch in seconds, not days. Speed that leaves competitors in awe.</p>
             </div>
-            <div class="feature-card bg-gradient-to-br from-red-800 to-yellow-800 p-8 rounded-lg transform transition duration-500 hover:scale-105">
-                <h3 class="text-3xl font-bold mb-4 text-red-300">Unlimited Scalability</h3>
+            <div class="feature-card bg-gradient-to-br from-red-800 to-yellow-800 p-8 rounded-2xl transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+                <div class="flex items-center mb-6">
+                    <div class="text-4xl mr-4">∞</div>
+                    <h3 class="text-3xl font-bold text-red-300">Unlimited Scalability</h3>
+                </div>
                 <p class="text-xl text-gray-300">Grow without limits. Your ambition, finally unchained.</p>
             </div>
         </div>
@@ -347,8 +339,21 @@ updatePricingTables()
     50% { transform: translateY(-20px); }
 }
 
+@keyframes blob {
+    0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+    50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+}
+
 #hero-bg {
     animation: pulse 8s ease-in-out infinite;
+}
+
+.animate-blob {
+    animation: blob 8s ease-in-out infinite;
+}
+
+#hero h1 {
+    animation: float 6s ease-in-out infinite;
 }
 
 .feature-card {
@@ -359,13 +364,39 @@ updatePricingTables()
     box-shadow: 0 0 30px rgba(66, 153, 225, 0.5);
 }
 
-#hero h1 {
-    animation: float 6s ease-in-out infinite;
+#geometric-bg {
+    background-image: 
+        linear-gradient(30deg, #4b0082 12%, transparent 12.5%, transparent 87%, #4b0082 87.5%, #4b0082),
+        linear-gradient(150deg, #4b0082 12%, transparent 12.5%, transparent 87%, #4b0082 87.5%, #4b0082),
+        linear-gradient(30deg, #4b0082 12%, transparent 12.5%, transparent 87%, #4b0082 87.5%, #4b0082),
+        linear-gradient(150deg, #4b0082 12%, transparent 12.5%, transparent 87%, #4b0082 87.5%, #4b0082),
+        linear-gradient(60deg, #8f008f77 25%, transparent 25.5%, transparent 75%, #8f008f77 75%, #8f008f77),
+        linear-gradient(60deg, #8f008f77 25%, transparent 25.5%, transparent 75%, #8f008f77 75%, #8f008f77);
+    background-size: 80px 140px;
+    background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
 }
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: "#ffffff" },
+            shape: { type: "circle" },
+            opacity: { value: 0.5, random: true },
+            size: { value: 3, random: true },
+            line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+            move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
+            modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+        }
+    });
+
     const heroSection = document.getElementById('hero');
     const features = document.querySelectorAll('.feature-card');
 
@@ -378,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
         (entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.querySelectorAll('h1, p, a, div').forEach(el => fadeInUp(el));
+                    entry.target.querySelectorAll('h1, p, a, div, img').forEach(el => fadeInUp(el));
                 }
             });
         },
@@ -413,6 +444,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
+
+
 <!-- Testimonials Section -->
             <section class="relative py-24 overflow-hidden bg-gradient-to-b from-white via-purple-50 to-blue-50 dark:from-purple-900 dark:via-gray-800 dark:to-gray-900">
             <!-- Background animation -->
