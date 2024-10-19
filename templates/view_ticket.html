@@ -1,208 +1,164 @@
 {% extends "base.html" %}
 
 {% block header %}
-<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.11.5/dist/gsap.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
     body {
-        font-family: 'Clash Display', sans-serif;
+        font-family: 'Inter', sans-serif;
         background-color: #0f172a;
         color: #e2e8f0;
-        position: relative;
-        overflow-x: hidden;
-    }
-    body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: 
-            radial-gradient(circle at 25% 25%, rgba(63, 94, 251, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 75% 75%, rgba(252, 70, 107, 0.1) 0%, transparent 50%);
-        opacity: 0.5;
-        z-index: -1;
     }
     .ticket-container {
-        background: rgba(30, 41, 59, 0.7);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        background-color: #1e293b;
+        border-radius: 8px;
         overflow: hidden;
-        transform: translateY(20px);
-        opacity: 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .ticket-header {
-        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-        padding: 2rem;
-        position: relative;
-        overflow: hidden;
+        background-color: #2d3748;
+        padding: 1.5rem;
+        border-bottom: 1px solid #4a5568;
     }
-    .ticket-header::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 50%);
-        animation: pulse 15s infinite linear;
+    .ticket-content {
+        padding: 1.5rem;
     }
-    @keyframes pulse {
-        0% { transform: translate(0, 0); }
-        100% { transform: translate(50%, 50%); }
+    .ticket-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #f7fafc;
+    }
+    .ticket-id {
+        font-size: 0.875rem;
+        color: #a0aec0;
+    }
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    .info-item dt {
+        font-size: 0.875rem;
+        color: #a0aec0;
+        margin-bottom: 0.25rem;
+    }
+    .info-item dd {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #f7fafc;
     }
     .chat-container {
-        max-height: 400px;
-        overflow-y: auto;
+        background-color: #2d3748;
+        border-radius: 8px;
         padding: 1rem;
-        background-color: rgba(15, 23, 42, 0.5);
-        border-radius: 10px;
-        scrollbar-width: thin;
-        scrollbar-color: #4b5563 #1f2937;
-    }
-    .chat-container::-webkit-scrollbar {
-        width: 8px;
-    }
-    .chat-container::-webkit-scrollbar-track {
-        background: #1f2937;
-    }
-    .chat-container::-webkit-scrollbar-thumb {
-        background-color: #4b5563;
-        border-radius: 20px;
-        border: 3px solid #1f2937;
+        max-height: 300px;
+        overflow-y: auto;
     }
     .message {
-        margin-bottom: 1rem;
+        background-color: #4a5568;
+        border-radius: 8px;
         padding: 0.75rem;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        animation: fadeIn 0.5s ease-out;
+        margin-bottom: 0.75rem;
     }
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
+    .message-content {
+        color: #f7fafc;
     }
-    .user-message {
-        background-color: rgba(59, 130, 246, 0.2);
-        margin-right: 2rem;
-        border-left: 4px solid #3b82f6;
-    }
-    .admin-message {
-        background-color: rgba(139, 92, 246, 0.2);
-        margin-left: 2rem;
-        border-right: 4px solid #8b5cf6;
+    .message-timestamp {
+        font-size: 0.75rem;
+        color: #a0aec0;
+        margin-top: 0.25rem;
     }
     .input-group {
         display: flex;
         margin-top: 1rem;
-        position: relative;
     }
     .input-group input {
         flex-grow: 1;
-        padding: 0.75rem;
-        background-color: rgba(30, 41, 59, 0.7);
-        border: 2px solid #4b5563;
-        border-radius: 10px;
-        font-size: 1rem;
-        color: #e2e8f0;
-        transition: all 0.3s ease;
-    }
-    .input-group input:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        background-color: #2d3748;
+        border: 1px solid #4a5568;
+        color: #f7fafc;
+        padding: 0.5rem;
+        border-radius: 4px 0 0 4px;
     }
     .input-group button {
-        padding: 0.75rem 1.5rem;
-        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-        color: white;
+        background-color: #4299e1;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
         border: none;
-        border-radius: 10px;
-        margin-left: 0.5rem;
-        font-weight: bold;
+        border-radius: 0 4px 4px 0;
         cursor: pointer;
-        transition: all 0.3s ease;
     }
-    .input-group button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+    .status-select {
+        background-color: #2d3748;
+        border: 1px solid #4a5568;
+        color: #f7fafc;
+        padding: 0.5rem;
+        border-radius: 4px;
     }
-    .status-badge {
-        display: inline-block;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-    .status-open { background-color: rgba(16, 185, 129, 0.2); color: #10b981; }
-    .status-in-progress { background-color: rgba(245, 158, 11, 0.2); color: #f59e0b; }
-    .status-closed { background-color: rgba(239, 68, 68, 0.2); color: #ef4444; }
-    .section-title {
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 2px solid #3b82f6;
+    .update-button {
+        background-color: #4299e1;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 0.5rem;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="ticket-container max-w-4xl mx-auto my-8 p-6">
-    <div class="ticket-header mb-6">
-        <h1 class="text-4xl font-bold mb-2">{{ ticket.title }}</h1>
-        <p class="text-xl opacity-75">Ticket #{{ ticket.id }}</p>
+<div class="ticket-container">
+    <div class="ticket-header">
+        <h1 class="ticket-title">{{ ticket.title }}</h1>
+        <p class="ticket-id">Ticket #{{ ticket.id }}</p>
     </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div>
-            <h3 class="section-title">Status</h3>
-            <span class="status-badge status-{{ ticket.status.lower().replace(' ', '-') }}">{{ ticket.status }}</span>
+    <div class="ticket-content">
+        <div class="info-grid">
+            <div class="info-item">
+                <dt>Status</dt>
+                <dd>{{ ticket.status }}</dd>
+            </div>
+            <div class="info-item">
+                <dt>Created</dt>
+                <dd>{{ ticket.created_at.strftime('%b %d, %Y %H:%M:%S') }}</dd>
+            </div>
         </div>
-        <div>
-            <h3 class="section-title">Created</h3>
-            <p class="text-xl">{{ ticket.created_at.strftime('%b %d, %Y %H:%M:%S') }}</p>
+        <div class="info-item mt-4">
+            <dt>Description</dt>
+            <dd>{{ ticket.description }}</dd>
         </div>
-    </div>
-    
-    <div class="mb-6">
-        <h3 class="section-title">Description</h3>
-        <p class="text-lg bg-gray-800 bg-opacity-50 p-4 rounded-lg">{{ ticket.description }}</p>
-    </div>
-    
-    <div class="mb-6">
-        <h3 class="section-title">Conversation</h3>
+        
+        <h2 class="text-xl font-semibold mt-6 mb-3">Conversation</h2>
         <div id="chat-messages" class="chat-container">
             {% for message in ticket.messages %}
-            <div class="message {% if message.is_admin %}admin-message{% else %}user-message{% endif %}">
-                <p class="text-lg">{{ message.content }}</p>
-                <p class="text-sm opacity-75 mt-1">{{ message.created_at.strftime('%b %d, %Y %H:%M') }}</p>
+            <div class="message">
+                <p class="message-content">{{ message.content }}</p>
+                <p class="message-timestamp">{{ message.created_at.strftime('%b %d, %Y %H:%M') }}</p>
             </div>
             {% endfor %}
         </div>
         <form id="chat-form" class="mt-4">
             <div class="input-group">
-                <input type="text" id="message-input" name="message" required
-                    placeholder="Type your message...">
+                <input type="text" id="message-input" name="message" required placeholder="Type your message...">
                 <button type="submit">Send</button>
             </div>
         </form>
     </div>
 
     {% if current_user.is_system_user %}
-    <div class="mt-8 p-4 bg-gray-800 bg-opacity-50 rounded-lg">
-        <h3 class="section-title">Update Ticket Status</h3>
-        <form method="POST" action="{{ url_for('update_ticket', ticket_id=ticket.id) }}" class="flex items-center">
-            <select id="status" name="status" class="flex-grow p-2 rounded-lg bg-gray-700 border-2 border-gray-600 text-white focus:border-blue-500 focus:outline-none">
-                <option value="Open" {% if ticket.status == 'Open' %}selected{% endif %}>Open</option>
-                <option value="In Progress" {% if ticket.status == 'In Progress' %}selected{% endif %}>In Progress</option>
-                <option value="Closed" {% if ticket.status == 'Closed' %}selected{% endif %}>Closed</option>
-            </select>
-            <button type="submit" class="ml-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
-                Update
-            </button>
+    <div class="ticket-content border-t border-gray-700">
+        <form method="POST" action="{{ url_for('update_ticket', ticket_id=ticket.id) }}">
+            <div class="flex items-center">
+                <label for="status" class="mr-2">Update Status:</label>
+                <select id="status" name="status" class="status-select">
+                    <option value="Open" {% if ticket.status == 'Open' %}selected{% endif %}>Open</option>
+                    <option value="In Progress" {% if ticket.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                    <option value="Closed" {% if ticket.status == 'Closed' %}selected{% endif %}>Closed</option>
+                </select>
+                <button type="submit" class="update-button">Update</button>
+            </div>
         </form>
     </div>
     {% endif %}
