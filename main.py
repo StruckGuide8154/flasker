@@ -157,24 +157,7 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-from urllib.parse import urlparse, urlunparse, parse_qs
 
-@app.route('/download_db')
-@login_required
-@system_user_required
-def download_db():
-    if not current_user.is_system_user:
-        flash('You do not have permission to download the database.', 'error')
-        return redirect(url_for('dashboard'))
-    
-    try:
-        return send_file('users.db',
-                         as_attachment=True,
-                         download_name='users_backup.db',
-                         mimetype='application/octet-stream')
-    except Exception as e:
-        flash(f'Error downloading database: {str(e)}', 'error')
-        return redirect(url_for('dashboard'))
 
 
 @app.before_request
@@ -363,6 +346,25 @@ def dashboard():
     tickets = Ticket.query.filter_by(user_id=current_user.id).all()
     return render_template('dashboard.html', miab_users=miab_users, tickets=tickets)
 
+from urllib.parse import urlparse, urlunparse, parse_qs
+
+@app.route('/download_db')
+@login_required
+@system_user_required
+def download_db():
+    if not current_user.is_system_user:
+        flash('You do not have permission to download the database.', 'error')
+        return redirect(url_for('dashboard'))
+    
+    try:
+        return send_file('users.db',
+                         as_attachment=True,
+                         download_name='users_backup.db',
+                         mimetype='application/octet-stream')
+    except Exception as e:
+        flash(f'Error downloading database: {str(e)}', 'error')
+        return redirect(url_for('dashboard'))
+        
 @app.route('/home')
 def home():
     if current_user.is_authenticated:
