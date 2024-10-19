@@ -36,6 +36,7 @@ from werkzeug.utils import secure_filename
 import stripe
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from werkzeug.urls import url_parse, url_encode
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -146,25 +147,31 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-from werkzeug.urls import url_parse, url_encode
+from urllib.parse import urlparse, urlunparse, parse_qs
 
 @app.before_request
 def handle_trailing_slash_and_query():
     rurl = request.url
-    parsed_url = url_parse(rurl)
+    parsed_url = urlparse(rurl)
     path = parsed_url.path
-    query = parsed_url.query
+    query = parse_qs(parsed_url.query)
     
     if path.endswith('/') and query:
         # Remove the trailing slash
         path = path.rstrip('/')
         # Reconstruct the URL
-        new_url = parsed_url._replace(path=path).to_url()
+        new_url = urlunparse((
+            parsed_url.scheme,
+            parsed_url.netloc,
+            path,
+            parsed_url.params,
+            parsed_url.query,
+            parsed_url.fragment
+        ))
         return redirect(new_url, code=301)
     
     # If there's no query string but there's a trailing slash, let Flask handle it
     return None
-
 
 # New route to handle file uploads
 @app.route('/thanks')
