@@ -716,7 +716,8 @@ def pricing():
     return '''
     <!DOCTYPE html>
     <html lang="en">
-    <head>
+    <head><script async src="https://cdn.tolt.io/tolt.js" data-tolt="YOUR-TOLT-PUBLIC-ID"></script>
+
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pricing</title>
@@ -754,7 +755,8 @@ def pricingpro():
     return '''
     <!DOCTYPE html>
     <html lang="en">
-    <head>
+    <head><script async src="https://cdn.tolt.io/tolt.js" data-tolt="YOUR-TOLT-PUBLIC-ID"></script>
+
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pricing</title>
