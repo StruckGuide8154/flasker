@@ -318,19 +318,31 @@ def get_ticket_stats(user):
 
 @app.route('/affiliate', methods=['GET', 'POST'])
 @login_required
-@system_user_required
 def affiliate():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        referral_code = request.form.get('referral_code')
-        new_affiliate = Affiliate(email=email, referral_code=referral_code)
-        db.session.add(new_affiliate)
-        db.session.commit()
-        flash('Affiliate added successfully', 'success')
-        return redirect(url_for('affiliate'))
-    affiliates = Affiliate.query.all()
-    return render_template('affiliate.html', affiliates=affiliates)
+    if current_user.is_system_user:
+        affiliates = Affiliate.query.all()
+        if request.method == 'POST':
+            email = request.form.get('email')
+            referral_code = request.form.get('referral_code')
+            new_affiliate = Affiliate(email=email, referral_code=referral_code)
+            db.session.add(new_affiliate)
+            db.session.commit()
+            flash('Affiliate added successfully', 'success')
+            return redirect(url_for('affiliate'))
+        return render_template('affiliate.html', affiliates=affiliates)
+    else:
+        user_affiliate = Affiliate.query.filter_by(email=current_user.email).first()
+        referral_stats = get_referral_stats(user_affiliate.referral_code) if user_affiliate else None
+        return render_template('affiliate.html', user_affiliate=user_affiliate, referral_stats=referral_stats)
 
+def get_referral_stats(referral_code):
+    # Implement this function to return referral statistics
+    # For example:
+    return {
+        'total': Ticket.query.filter_by(referral=referral_code).count(),
+        'this_month': Ticket.query.filter_by(referral=referral_code).filter(Ticket.created_at >= datetime.utcnow().replace(day=1)).count(),
+        'last_month': Ticket.query.filter_by(referral=referral_code).filter(Ticket.created_at >= (datetime.utcnow().replace(day=1) - timedelta(days=1)).replace(day=1), Ticket.created_at < datetime.utcnow().replace(day=1)).count()
+    }
 
 @app.route('/subscription')
 @login_required
