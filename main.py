@@ -713,6 +713,21 @@ def pricing():
   toltScript.src = 'https://cdn.tolt.io/tolt.js';
   toltScript.setAttribute('data-tolt', 'c58e85f6-afa3-4f06-b729-b8c9989537f1');
   document.head.appendChild(toltScript);
+</script><script>
+const updatePricingTables = () => {
+var stripePricingTables = document.querySelectorAll("stripe-pricing-table");
+if (window.tolt_referral !== null && stripePricingTables.length > 0) {
+stripePricingTables.forEach(stripePricingTable => {
+stripePricingTable.setAttribute("client-reference-id", window.tolt_referral);
+})
+}
+}setTimeout(updatePricingTables, 1000);
+setTimeout(updatePricingTables, 2200);
+setTimeout(updatePricingTables, 3200);window.addEventListener("tolt_referral_ready", () => {
+if (window.tolt_referral) {
+updatePricingTables()
+}
+})
 </script>
     </head>
     <body>
@@ -736,6 +751,21 @@ def pricingpro():
   toltScript.src = 'https://cdn.tolt.io/tolt.js';
   toltScript.setAttribute('data-tolt', 'c58e85f6-afa3-4f06-b729-b8c9989537f1');
   document.head.appendChild(toltScript);
+</script><script>
+const updatePricingTables = () => {
+var stripePricingTables = document.querySelectorAll("stripe-pricing-table");
+if (window.tolt_referral !== null && stripePricingTables.length > 0) {
+stripePricingTables.forEach(stripePricingTable => {
+stripePricingTable.setAttribute("client-reference-id", window.tolt_referral);
+})
+}
+}setTimeout(updatePricingTables, 1000);
+setTimeout(updatePricingTables, 2200);
+setTimeout(updatePricingTables, 3200);window.addEventListener("tolt_referral_ready", () => {
+if (window.tolt_referral) {
+updatePricingTables()
+}
+})
 </script>
     </head>
     <body>
