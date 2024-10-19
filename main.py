@@ -239,6 +239,11 @@ def system_user_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+@app.route('/subscription')
+@login_required
+def subscription():
+    return render_template('subscription.html', user=current_user)
+
 @app.route('/upload_image', methods=['POST'])
 @temp_login_required
 def upload_image():
