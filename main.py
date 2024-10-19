@@ -1004,10 +1004,20 @@ def validate_temp_credentials(username, password):
 @login_required
 def ticket_details(ticket_id):
     ticket = Ticket.query.get_or_404(ticket_id)
-    if not current_user.is_system_user and ticket.user_id != current_user.id:
+    
+    if current_user.is_system_user:
+        can_send_message = True
+    elif ticket.user_id == current_user.id:
+        can_send_message = False
+    else:
         flash('You do not have permission to view this ticket.', 'error')
         return redirect(url_for('tickets'))
-    return render_template('ticket_details.html', ticket=ticket)
+    
+    return render_template('ticket_details.html', 
+                           ticket=ticket, 
+                           can_send_message=can_send_message, 
+                           get_affiliate=get_affiliate)
+
 
 @app.route('/ticket/<int:ticket_id>/add_message', methods=['POST'])
 @temp_login_required
