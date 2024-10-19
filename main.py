@@ -356,15 +356,24 @@ def download_db():
         flash('You do not have permission to download the database.', 'error')
         return redirect(url_for('dashboard'))
     
+    db_path = 'users.db'  # Adjust this path if your database is located elsewhere
+    
+    if not os.path.exists(db_path):
+        flash('Database file not found.', 'error')
+        return redirect(url_for('dashboard'))
+    
     try:
-        return send_file('users.db',
+        return send_file(db_path,
                          as_attachment=True,
                          download_name='users_backup.db',
                          mimetype='application/octet-stream')
     except Exception as e:
         flash(f'Error downloading database: {str(e)}', 'error')
         return redirect(url_for('dashboard'))
-        
+
+
+
+
 @app.route('/home')
 def home():
     if current_user.is_authenticated:
