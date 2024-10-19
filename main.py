@@ -363,6 +363,10 @@ def upload_image():
         return jsonify({'filename': unique_filename}), 200
     return jsonify({'error': 'File type not allowed'}), 400
 
+def get_affiliate(referral_code):
+    return Affiliate.query.filter_by(referral_code=referral_code).first()
+
+
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max upload size
 
 @app.route('/explorer')
