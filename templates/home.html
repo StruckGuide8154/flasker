@@ -2005,96 +2005,90 @@ document.addEventListener('DOMContentLoaded', () => {
     <div id="modalContainer"></div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('contactForm');
-            const modalContainer = document.getElementById('modalContainer');
-
-            function createModal(username, password) {
-                const modalHTML = `
-                    <div id="credentialsModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-                        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-                            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                    <div class="sm:flex sm:items-start">
-                                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                                Your Temporary Credentials
-                                            </h3>
-                                            <div class="mt-2">
-                                                <p class="text-sm text-gray-500">
-                                                    Please save these credentials. You will need them to access your ticket.
-                                                </p>
-                                                <p class="mt-2 text-sm text-gray-900">
-                                                    Username: <span id="tempUsername" class="font-bold">${username}</span>
-                                                </p>
-                                                <p class="mt-1 text-sm text-gray-900">
-                                                    Password: <span id="tempPassword" class="font-bold">${password}</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                    <button type="button" id="closeModal" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
-                                        Close
-                                    </button>
-                                    <button type="button" id="cancelButton" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                                        Cancel
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                modalContainer.innerHTML = modalHTML;
-
-                const closeModalButton = document.getElementById('closeModal');
-                const cancelButton = document.getElementById('cancelButton');
-                const modal = document.getElementById('credentialsModal');
-
-                closeModalButton.addEventListener('click', function() {
-                    modal.remove();
-                });
-
-                cancelButton.addEventListener('click', function() {
-                    // Here you would typically send a request to the server to cancel the ticket
-                    // For now, we'll just remove the modal and reset the form
-                    modal.remove();
-                    form.reset();
-                    alert('Your request has been cancelled.');
-                });
-            }
-
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData.entries());
-
-                fetch('/create_home_ticket', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.username && data.password) {
-                        createModal(data.username, data.password);
-                    } else {
-                        throw new Error('Credentials are missing from the response');
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    alert('An error occurred. Please try again.');
-                });
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('#contactForm');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            
+            fetch('/create_home_ticket', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.username && data.password) {
+                    showCredentialsModal(data.username, data.password);
+                } else {
+                    throw new Error('Credentials are missing from the response');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
             });
         });
+    }
+
+    function showCredentialsModal(username, password) {
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center';
+        modal.innerHTML = `
+            <div class="bg-white p-8 rounded-lg shadow-xl max-w-md w-full">
+                <h2 class="text-2xl font-bold mb-4">Temporary Login Credentials</h2>
+                <p class="mb-4">Use these credentials to access your ticket:</p>
+                <div class="mb-4">
+                    <strong>Username:</strong> <span class="font-mono">${username}</span>
+                </div>
+                <div class="mb-6">
+                    <strong>Password:</strong> <span class="font-mono">${password}</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">Please save these credentials. You will need them to check your ticket status.</p>
+                <button id="loginNow" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+                    Login Now
+                </button>
+                <button id="closeModal" class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded">
+                    Close
+                </button>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        document.getElementById('loginNow').addEventListener('click', function() {
+            performTempLogin(username, password);
+        });
+
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.body.removeChild(modal);
+        });
+    }
+
+    function performTempLogin(username, password) {
+        fetch('/temp_ticket_login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ticket_id) {
+                window.location.href = `/view_ticket/${data.ticket_id}`;
+            } else {
+                throw new Error('Login failed');
+            }
+        })
+        .catch((error) => {
+            console.error('Login error:', error);
+            alert('Login failed. Please try again.');
+        });
+    }
+});
     </script><script>
+          
 document.addEventListener('DOMContentLoaded', () => {
   const scrollButtons = document.querySelectorAll('.scroll-to-contact');
   
