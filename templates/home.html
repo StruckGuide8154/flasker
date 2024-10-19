@@ -1711,49 +1711,91 @@ document.addEventListener('DOMContentLoaded', () => {
               });
               </script>
             <!-- Temporary Ticket Login Modal -->
-            <div id="tempTicketLoginModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-              <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                  <form id="tempTicketLoginForm">
-                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                      <div class="sm:flex sm:items-start">
-                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
-                          <svg class="h-6 w-6 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                          </svg>
-                        </div>
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                          <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                            Temporary Ticket Login
-                          </h3>
-                          <div class="mt-2 space-y-4">
-                            <div>
-                              <label for="tempUsername" class="block text-sm font-medium text-gray-700">Username</label>
-                              <input type="text" name="username" id="tempUsername" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                            </div>
-                            <div>
-                              <label for="tempPassword" class="block text-sm font-medium text-gray-700">Password</label>
-                              <input type="password" name="password" id="tempPassword" required class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                      <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
-                        Login
-                      </button>
-                      <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" id="closeTempLoginModal">
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
+<div id="tempTicketLoginModal" class="fixed z-50 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity backdrop-blur-sm" aria-hidden="true"></div>
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+    <div class="inline-block align-bottom bg-gradient-to-br from-gray-900 to-black rounded-lg text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border-2 border-red-600">
+      <form id="tempTicketLoginForm" class="relative">
+        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-600 to-purple-600"></div>
+        <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div class="sm:flex sm:items-start">
+            <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-600 sm:mx-0 sm:h-10 sm:w-10">
+              <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+              </svg>
+            </div>
+            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+              <h3 class="text-2xl leading-6 font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-500" id="modal-title">
+                Temporary Access Portal
+              </h3>
+              <div class="mt-6 space-y-6">
+                <div class="relative">
+                  <input type="text" name="username" id="tempUsername" required class="w-full bg-gray-800 text-white border-2 border-gray-700 rounded-md py-3 px-4 focus:outline-none focus:border-red-500 transition-colors" placeholder="Username">
+                  <label for="tempUsername" class="absolute left-4 top-3 text-gray-500 transition-all duration-300 pointer-events-none">Username</label>
+                </div>
+                <div class="relative">
+                  <input type="password" name="password" id="tempPassword" required class="w-full bg-gray-800 text-white border-2 border-gray-700 rounded-md py-3 px-4 focus:outline-none focus:border-red-500 transition-colors" placeholder="Password">
+                  <label for="tempPassword" class="absolute left-4 top-3 text-gray-500 transition-all duration-300 pointer-events-none">Password</label>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <button type="submit" class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-red-600 to-purple-600 text-white font-bold rounded-md hover:from-red-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-300 transform hover:scale-105">
+            Initiate Access
+          </button>
+          <button type="button" id="closeTempLoginModal" class="mt-3 sm:mt-0 sm:mr-3 w-full sm:w-auto px-6 py-3 bg-gray-800 text-white font-bold rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-300">
+            Abort Mission
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
+<style>
+#tempTicketLoginForm input:not(:placeholder-shown) + label,
+#tempTicketLoginForm input:focus + label {
+  transform: translateY(-2.5rem) scale(0.8);
+  color: #ef4444;
+}
+
+#tempTicketLoginForm input:focus::placeholder {
+  color: transparent;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('tempTicketLoginModal');
+  const openModalBtn = document.getElementById('tempTicketLoginBtn');
+  const closeModalBtn = document.getElementById('closeTempLoginModal');
+  const form = document.getElementById('tempTicketLoginForm');
+
+  openModalBtn.addEventListener('click', () => {
+    modal.classList.remove('hidden');
+    setTimeout(() => modal.querySelector('input').focus(), 100);
+  });
+
+  closeModalBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Handle form submission here
+    console.log('Form submitted');
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.add('hidden');
+    }
+  });
+});
+</script>
       <!-- Footer -->
               <footer class="relative bg-gradient-to-b from-white via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900 overflow-hidden">
                 <div class="footer-bg absolute inset-0">
