@@ -708,7 +708,12 @@ def pricing():
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pricing</title>
-        <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+        <script async src="https://js.stripe.com/v3/pricing-table.js"></script><script>
+  var toltScript = document.createElement('script');
+  toltScript.src = 'https://cdn.tolt.io/tolt.js';
+  toltScript.setAttribute('data-tolt', 'c58e85f6-afa3-4f06-b729-b8c9989537f1');
+  document.head.appendChild(toltScript);
+</script>
     </head>
     <body>
 <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
@@ -726,7 +731,12 @@ def pricingpro():
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pricing</title>
-        <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+        <script async src="https://js.stripe.com/v3/pricing-table.js"></script><script>
+  var toltScript = document.createElement('script');
+  toltScript.src = 'https://cdn.tolt.io/tolt.js';
+  toltScript.setAttribute('data-tolt', 'c58e85f6-afa3-4f06-b729-b8c9989537f1');
+  document.head.appendChild(toltScript);
+</script>
     </head>
     <body>
 <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
