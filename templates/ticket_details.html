@@ -22,6 +22,24 @@
                 <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Description</dt>
                 <dd class="mt-1 text-sm text-gray-900 dark:text-white">{{ ticket.description }}</dd>
             </div>
+            {% if current_user.is_system_user %}
+            <div class="sm:col-span-2">
+                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Referral Information</dt>
+                <dd class="mt-1 text-sm text-gray-900 dark:text-white">
+                    {% if ticket.referral %}
+                        Referral Code: {{ ticket.referral }}
+                        {% set affiliate = get_affiliate(ticket.referral) %}
+                        {% if affiliate %}
+                            <br>Affiliate Email: {{ affiliate.email }}
+                        {% else %}
+                            <br>No matching affiliate found for this referral code.
+                        {% endif %}
+                    {% else %}
+                        No referral information available for this ticket.
+                    {% endif %}
+                </dd>
+            </div>
+            {% endif %}
         </dl>
     </div>
     
