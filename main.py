@@ -407,6 +407,37 @@ def download_db():
         return redirect(url_for('dashboard'))
 
 
+from logger import logger
+
+@app.route('/limits')
+@login_required
+def limits():
+    # Fetch the current user's data
+    user_data = get_user_limits_data(current_user)
+
+    # Fetch ticket statistics
+    ticket_stats = get_ticket_stats(current_user)
+
+    return render_template('limits.html', user=user_data, ticket_stats=ticket_stats)
+
+def get_user_limits_data(user):
+    # Fetch MIAB user data
+    miab_users = get_miab_users(user)
+
+    # Calculate current users
+    current_users = sum(len(domain['users']) for domain in miab_users)
+
+    # Get storage and bandwidth data from MIAB
+    storage_used, storage_limit, bandwidth_used, bandwidth_limit = get_miab_usage_data(user)
+
+    return {
+        'current_users': current_users,
+        'user_limit': user.user_limit,
+        'storage_used': storage_used,
+        'storage_limit': storage_limit,
+        'bandwidth_used': bandwidth_used,
+        'bandwidth_limit': bandwidth_limit
+    }
 
 
 @app.route('/home')
