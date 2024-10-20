@@ -38,6 +38,7 @@ import stripe
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 import json
+import shutil
 
 
 
