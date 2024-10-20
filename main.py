@@ -592,7 +592,9 @@ def format_currency(value):
 
 
 
-
+@app.route('/a.svg')
+def serdve_webap():
+    return send_file('a.svg', mimetype='image/svg')
 
 @app.route('/v.webp')
 def serdve_webp():
