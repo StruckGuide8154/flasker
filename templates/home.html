@@ -2352,45 +2352,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="absolute top-0 right-1/2 w-1/2 h-full bg-gradient-to-b from-transparent to-white dark:to-gray-900"></div>
                           </div>
                         </footer>
-                        <script>
-                          // Toggle dark mode
-                          const toggleDarkMode = () => {
-                            document.documentElement.classList.toggle('dark');
-                            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-                          };
-
-                          // Check for stored theme preference
-                          if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                            document.documentElement.classList.add('dark');
-                          } else {
-                            document.documentElement.classList.remove('dark');
-                          }
-
-                          // Smooth scroll to section on click
-                          document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                            anchor.addEventListener('click', function (e) {
-                              e.preventDefault();
-
-                              document.querySelector(this.getAttribute('href')).scrollIntoView({
-                                behavior: 'smooth'
-                              });
-                            });
-                          });
-
-                          // Animate on scroll
-                          const callback = (entries, observer) => {
-                            entries.forEach(entry => {
-                              if (entry.isIntersecting) {
-                                entry.target.classList.add('animate-fade-in-up');
-                              }
-                            });
-                          };
-
-                          const observer = new IntersectionObserver(callback);
-
-                          const targets = document.querySelectorAll('.js-show-on-scroll');
-                          targets.forEach(target => observer.observe(target));
-                        </script>
                         </antArtifact>
             </section>
         </div>
