@@ -907,7 +907,7 @@ def dashboard():
         affiliates = Affiliate.query.all()
         return render_template('dashboard.html', tickets=tickets, affiliates=affiliates)
     elif current_user.is_affiliate:
-        return redirect(url_for('affiliate_dashboard'))
+        return redirect(url_for('affiliate'))
     else:
         tickets = Ticket.query.filter_by(user_id=current_user.id).all()
         return render_template('dashboard.html', tickets=tickets)
