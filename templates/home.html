@@ -1604,42 +1604,18 @@ document.addEventListener('DOMContentLoaded', () => {
     z-index: -1;
 }
 
+
 .background-imagee {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    background-image: url('a.webp');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: brightness(0.7) contrast(1.2);
-}
-
-.background-imagee::before {
-    content: "";
-    position: absolute;
-    top: -100%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: inherit;
-    background-size: cover;
-    background-position: center;
-    transform: scaleY(-1);
-    filter: brightness(0.7) contrast(1.2);
-}
-
-.background-imagee::after {
-    content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: -1;
+    background-image: url('a.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.7) contrast(1.2);
 }
 
 
