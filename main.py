@@ -249,7 +249,7 @@ def get_referral_stats(affiliate_id):
         }
     except Exception as e:
         app.logger.error(f"Error in get_referral_stats: {str(e)}")
-        return None        
+        return None
         
 @app.teardown_request
 def update_session_time(exception=None):
