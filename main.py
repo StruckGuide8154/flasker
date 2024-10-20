@@ -218,6 +218,22 @@ def get_referral_stats(affiliate_id):
 
     affiliate = Affiliate.query.get(affiliate_id)
     
+    if affiliate is None:
+        # Log the error and return a default stats dictionary
+        logger.error(f"Affiliate with ID {affiliate_id} not found")
+        return {
+            'total': total,
+            'this_month': this_month,
+            'last_month': last_month,
+            'user_count': 0,
+            'clicks': 0,
+            'total_time_on_page': 0,
+            'total_earnings': 0,
+            'total_paid': 0,
+            'balance_due': 0,
+            'recent_payments': []
+        }
+    
     total_earnings = db.session.query(func.sum(Sale.amount)).filter_by(affiliate_id=affiliate_id).scalar() or 0
     total_paid = db.session.query(func.sum(Payment.amount)).filter_by(affiliate_id=affiliate_id).scalar() or 0
     
@@ -240,7 +256,6 @@ def get_referral_stats(affiliate_id):
             } for payment in recent_payments
         ]
     }
-
 @app.teardown_request
 def update_session_time(exception=None):
     if 'referral' in session and not current_user.is_authenticated and 'session_start_time' in session:
@@ -682,12 +697,11 @@ def edit_affiliate(affiliate_id):
             flash('Invoiced user count updated successfully', 'success')
 
     # Get statistics
-    stats = get_referral_stats(affiliate.referral_code)
+    stats = get_referral_stats(affiliate.id)
     sales_stats = get_sales_stats(affiliate.id)
     payments = Payment.query.filter_by(affiliate_id=affiliate.id).order_by(Payment.created_at.desc()).all()
 
     return render_template('edit_affiliate.html', affiliate=affiliate, stats=stats, sales_stats=sales_stats, payments=payments)
-
 
 @app.teardown_request
 def update_session_time(exception=None):
