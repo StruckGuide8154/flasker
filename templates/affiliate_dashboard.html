@@ -91,14 +91,12 @@
             <p class="mb-2 text-gray-600 dark:text-gray-300">Your Referral Code:</p>
             <div class="flex items-center">
                 <span id="referral-code" class="font-bold text-2xl text-primary-600 dark:text-primary-400 mr-2">{{ user_affiliate.referral_code }}</span>
-                <button id="copy-referral" class="bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 px-3 py-1 rounded-full text-sm hover:bg-primary-200 dark:hover:bg-primary-800 transition duration-300">Copy</button>
             </div>
         </div>
         <div>
             <p class="mb-2 text-gray-600 dark:text-gray-300">Your Affiliate Link:</p>
             <div class="flex items-center">
                 <input id="affiliate-link" type="text" readonly value="{{ url_for('home', _external=True) }}/ref/{{ user_affiliate.referral_code }}" class="flex-grow font-medium text-sm text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 p-2 rounded-l-md">
-                <button id="copy-link" class="bg-primary-500 text-white px-3 py-2 rounded-r-md hover:bg-primary-600 transition duration-300">Copy</button>
             </div>
         </div>
     </div>
