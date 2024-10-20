@@ -555,6 +555,19 @@ def affiliate():
                                user_affiliate=user_affiliate, 
                                referral_stats=[{'stats': referral_stats}] if referral_stats else None)
 
+@app.template_filter('format_currency')
+def format_currency(value):
+    if isinstance(value, (int, float)):
+        return f"{value:.2f}"
+    elif isinstance(value, str):
+        try:
+            return f"{float(value):.2f}"
+        except ValueError:
+            return "0.00"
+    elif isinstance(value, Undefined):
+        return "0.00"
+    else:
+        return "0.00"
 
 
 
