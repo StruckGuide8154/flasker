@@ -502,10 +502,11 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="absolute inset-0 bg-dots"></div>
     </div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-6xl md:text-8xl font-thin mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 fade-sides grainy-text">
-            DOMINATE<br>YOUR INDUSTRY
+        <h1 class="text-6xl md:text-8xl font-outline mb-4 text-white fade-sides grainy-text">
+            <span class="inline-block transform -skew-x-12 bg-gradient-to-r from-blue-400 to-purple-600 px-2">DOMINATE</span><br>
+            <span class="inline-block transform skew-x-12 bg-gradient-to-r from-purple-600 to-blue-400 px-2">YOUR INDUSTRY</span>
         </h1>
-        <p class="text-2xl md:text-3xl mb-8 text-gray-300 max-w-3xl mx-auto fade-sides grainy-text">
+        <p class="text-2xl md:text-4xl mb-8 text-gray-300 max-w-3xl mx-auto fade-sides grainy-text">
             An business email solution built 
             <span class="relative inline-block">
                 <span class="line-through text-red-500">for</span>
@@ -515,28 +516,72 @@ document.addEventListener('DOMContentLoaded', () => {
         </p>
         <p class="text-2xl md:text-3xl mb-8 text-gray-300 max-w-3xl mx-auto fade-sides grainy-text">
             While others <span class="line-through text-red-500">struggle with outdated tools</span>, 
-            you'll wield the power of EXPANSION.
+            you'll wield the power of <span class="text-purple-400">EXPANSION</span>.
         </p>
         <a href="#contact" class="enroll-button scroll-to-contact">
             CLAIM YOUR POWER
         </a>
         <div class="mt-12 flex justify-center space-x-12">
             <div class="text-center">
-                <div class="text-5xl font-thin text-blue-400 fade-sides grainy-text">10K+</div>
+                <div class="text-5xl font-outline text-blue-400 fade-sides grainy-text">10K+</div>
                 <div class="text-xl text-gray-400 fade-sides grainy-text">Businesses Revolutionized</div>
             </div>
             <div class="text-center">
-                <div class="text-5xl font-thin text-purple-400 fade-sides grainy-text">24/7</div>
+                <div class="text-5xl font-outline text-purple-400 fade-sides grainy-text">24/7</div>
                 <div class="text-xl text-gray-400 fade-sides grainy-text">Cutting-Edge Support</div>
             </div>
             <div class="text-center">
-                <div class="text-5xl font-thin text-blue-400 fade-sides grainy-text">100X</div>
+                <div class="text-5xl font-outline text-blue-400 fade-sides grainy-text">100X</div>
                 <div class="text-xl text-gray-400 fade-sides grainy-text">Efficiency Boost</div>
             </div>
         </div>
     </div>
+    <div class="floating-words" aria-hidden="true">
+        <span class="word-1">Dominate</span>
+        <span class="word-2">Expand</span>
+        <span class="word-3">Revolution</span>
+        <span class="word-4">Power</span>
+        <span class="word-5">Efficiency</span>
+    </div>
 </section>
+
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;800&display=swap');
+
+#hero {
+    font-family: 'Raleway', sans-serif;
+}
+
+.bg-dots {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes float-word {
+    0%, 100% { transform: translate(0, 0) rotate(0); }
+    25% { transform: translate(20px, 15px) rotate(10deg); }
+    50% { transform: translate(5px, -10px) rotate(-5deg); }
+    75% { transform: translate(-15px, 5px) rotate(3deg); }
+}
+
+#hero-bg {
+    animation: pulse 8s ease-in-out infinite;
+}
+
+#hero h1 {
+    animation: float 6s ease-in-out infinite;
+}
+
 .fade-sides {
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
     mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
@@ -544,14 +589,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
 .grainy-text {
     text-shadow:
-        -1px -1px 0 rgba(0, 0, 0, 0.5),
-        1px -1px 0 rgba(0, 0, 0, 0.5),
-        -1px 1px 0 rgba(0, 0, 0, 0.5),
-        1px 1px 0 rgba(0, 0, 0, 0.5);
-    filter: blur(0.9px);
+        -0.5px -0.5px 0 rgba(0, 0, 0, 0.3),
+        0.5px -0.5px 0 rgba(0, 0, 0, 0.3),
+        -0.5px 0.5px 0 rgba(0, 0, 0, 0.3),
+        0.5px 0.5px 0 rgba(0, 0, 0, 0.3);
+    filter: blur(0.5px);
 }
 
-/* Rest of the CSS remains the same */
+.font-outline {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.enroll-button {
+    /* ... (enroll button styles remain the same) ... */
+}
+
+.floating-words {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    perspective: 500px;
+}
+
+.floating-words span {
+    position: absolute;
+    font-size: 2em;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.1);
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.3);
+    transform-style: preserve-3d;
+    animation: float-word 12s infinite ease-in-out;
+}
+
+.word-1 { top: 20%; left: 10%; animation-delay: 0s; }
+.word-2 { top: 40%; right: 15%; animation-delay: -3s; }
+.word-3 { bottom: 30%; left: 20%; animation-delay: -7s; }
+.word-4 { top: 50%; right: 10%; animation-delay: -5s; }
+.word-5 { bottom: 20%; right: 20%; animation-delay: -9s; }
 </style>
 
 <script>
