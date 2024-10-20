@@ -723,126 +723,185 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-<section id="features" class="relative py-24 bg-gray-900 overflow-hidden">
-    <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
-    <div class="container mx-auto px-4 relative z-10">
-        <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 glow-text">
-            Unleash Your Digital Dominance
+<section id="features" class="relative py-20 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <div class="w-full h-full bg-gradient-to-br from-gray-900 via-black to-blue-900 opacity-90"></div>
+        <div class="absolute inset-0 bg-[url('c.webp')] bg-cover bg-center opacity-20 mix-blend-overlay"></div>
+        <div class="absolute inset-0 bg-dots"></div>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center text-white glow-text">
+            Revolutionize Your Business Communications
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="feature-card">
-                <div class="feature-icon text-blue-400">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
-                    </svg>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="card-inner">
+                    <h3 class="text-2xl font-semibold mb-4 text-purple-400">Tailored Business Emails</h3>
+                    <p class="text-gray-300">Craft your brand identity with custom domain emails, designed to elevate your professional presence.</p>
                 </div>
-                <h3 class="text-xl font-semibold mb-2 text-white">Domain Mastery</h3>
-                <p class="text-gray-400">Seize control of your digital realm. Manage domains, DNS, and SSL with unparalleled precision.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon text-purple-400">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                    </svg>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="card-inner">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-400">Powerful Admin Panel</h3>
+                    <p class="text-gray-300">Take control with an intuitive admin interface, offering granular permissions and real-time analytics.</p>
                 </div>
-                <h3 class="text-xl font-semibold mb-2 text-white">Analytics Supremacy</h3>
-                <p class="text-gray-400">Harness the power of data. Our advanced analytics unveil insights that turn strategies into conquests.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon text-green-400">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="card-inner">
+                    <h3 class="text-2xl font-semibold mb-4 text-purple-400">Self-Hosted Inbox</h3>
+                    <p class="text-gray-300">Ensure data sovereignty with a secure, self-hosted email solution that puts you in charge of your information.</p>
                 </div>
-                <h3 class="text-xl font-semibold mb-2 text-white">Deployment Dominance</h3>
-                <p class="text-gray-400">Launch with lightning speed. Our deployment arsenal ensures your vision materializes instantly.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon text-red-400">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                    </svg>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="card-inner">
+                    <h3 class="text-2xl font-semibold mb-4 text-blue-400">Website Integration</h3>
+                    <p class="text-gray-300">Seamlessly integrate with your existing website, creating a cohesive online ecosystem for your business.</p>
                 </div>
-                <h3 class="text-xl font-semibold mb-2 text-white">Scaling Supremacy</h3>
-                <p class="text-gray-400">Grow without limits. Our infrastructure adapts to your ambition, ensuring your empire expands unchecked.</p>
             </div>
         </div>
-        <div class="mt-16 text-center">
-            <a href="#" class="inline-flex items-center px-6 py-3 text-lg font-semibold text-white bg-gradient-to-r from-blue-500 to-purple-600 rounded-md hover:from-blue-600 hover:to-purple-700 transition duration-300">
-                Claim Your Power
-                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                </svg>
+        <div class="text-center mt-16">
+            <p class="text-2xl text-white glow-text mb-8">Built <span class="line-through text-red-500">for</span> <span class="text-green-400 font-bold">with</span> You</p>
+            <a href="#contact" class="enroll-button pulse-button scroll-to-contact">
+                Start Your Journey
             </a>
         </div>
     </div>
 </section>
 
 <style>
-.bg-grid-pattern {
-    background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;800&display=swap');
+
+#features {
+    font-family: 'Raleway', sans-serif;
+}
+
+.bg-dots {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
     background-size: 20px 20px;
 }
 
 .glow-text {
-    text-shadow: 0 0 10px rgba(104, 109, 224, 0.5),
-                 0 0 20px rgba(104, 109, 224, 0.3),
-                 0 0 30px rgba(104, 109, 224, 0.2);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3), 0 0 30px rgba(255, 255, 255, 0.2);
 }
 
 .feature-card {
-    @apply bg-gray-800 bg-opacity-50 p-6 rounded-lg transition-all duration-300;
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.card-inner {
+    padding: 2rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    height: 100%;
+    transition: all 0.3s ease;
 }
 
-.feature-card:hover {
-    @apply transform scale-105 shadow-lg;
-    background-color: rgba(31, 41, 55, 0.8);
+.feature-card:hover .card-inner {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.feature-icon {
-    @apply mb-4;
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    transform: scale(0);
+    transition: transform 0.5s ease-out;
+}
+
+.feature-card:hover::before {
+    transform: scale(1);
+}
+
+.enroll-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    background: linear-gradient(45deg, #4a0e8f, #81d4fa);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.enroll-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+    transform: scale(0);
+    transition: transform 0.5s ease-out;
+}
+
+.enroll-button:hover::before {
+    transform: scale(1);
 }
 
 @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+    0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
 }
 
-.feature-card:hover .feature-icon {
+.pulse-button {
     animation: pulse 2s infinite;
+}
+
+[data-aos] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition-property: opacity, transform;
+    transition-duration: 0.6s;
+    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+[data-aos].aos-animate {
+    opacity: 1;
+    transform: translateY(0);
 }
 </style>
 
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const features = document.querySelectorAll('.feature-card');
-    
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
+    AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100
+    });
 
-    const featureObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('opacity-100', 'translate-y-0');
-                entry.target.classList.remove('opacity-0', 'translate-y-4');
-                observer.unobserve(entry.target);
-            }
+    const featuresSection = document.getElementById('features');
+    const parallaxElements = featuresSection.querySelectorAll('.feature-card');
+
+    window.addEventListener('scroll', () => {
+        const scrollPosition = window.scrollY;
+        parallaxElements.forEach((el, index) => {
+            const speed = 0.05 * (index + 1);
+            el.style.transform = `translateY(${scrollPosition * speed}px)`;
         });
-    }, observerOptions);
-
-    features.forEach(feature => {
-        feature.classList.add('opacity-0', 'translate-y-4', 'transition-all', 'duration-500');
-        featureObserver.observe(feature);
     });
 });
 </script>
+
+
+
+
 <!-- Testimonials Section -->
 <section id="testimonials" class="relative py-24 overflow-hidden bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900">
     <!-- Background animation -->
