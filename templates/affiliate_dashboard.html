@@ -97,7 +97,7 @@
         <div>
             <p class="mb-2 text-gray-600 dark:text-gray-300">Your Affiliate Link:</p>
             <div class="flex items-center">
-                <input id="affiliate-link" type="text" readonly value="{{ url_for('home', _external=True) }}?ref={{ user_affiliate.referral_code }}" class="flex-grow font-medium text-sm text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 p-2 rounded-l-md">
+                <input id="affiliate-link" type="text" readonly value="{{ url_for('home', _external=True) }}/ref/{{ user_affiliate.referral_code }}" class="flex-grow font-medium text-sm text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 p-2 rounded-l-md">
                 <button id="copy-link" class="bg-primary-500 text-white px-3 py-2 rounded-r-md hover:bg-primary-600 transition duration-300">Copy</button>
             </div>
         </div>
@@ -311,6 +311,48 @@ document.addEventListener('DOMContentLoaded', function() {
             updateChartColors();
         });
     }
+});
+</script><script>document.addEventListener('DOMContentLoaded', function() {
+    // ... (previous code remains the same)
+
+    // Copy referral code to clipboard
+    const referralCodeElement = document.getElementById('referral-code');
+    const copyReferralButton = document.getElementById('copy-referral');
+    if (referralCodeElement && copyReferralButton) {
+        copyReferralButton.addEventListener('click', () => {
+            copyToClipboard(referralCodeElement.innerText, copyReferralButton);
+        });
+    }
+
+    // Copy affiliate link to clipboard
+    const affiliateLinkElement = document.getElementById('affiliate-link');
+    const copyLinkButton = document.getElementById('copy-link');
+    if (affiliateLinkElement && copyLinkButton) {
+        copyLinkButton.addEventListener('click', () => {
+            copyToClipboard(affiliateLinkElement.value, copyLinkButton);
+        });
+    }
+
+    // Function to copy text to clipboard and show feedback
+    function copyToClipboard(text, button) {
+        navigator.clipboard.writeText(text).then(() => {
+            const originalText = button.innerText;
+            button.innerText = 'Copied!';
+            button.disabled = true;
+            setTimeout(() => {
+                button.innerText = originalText;
+                button.disabled = false;
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+            button.innerText = 'Error';
+            setTimeout(() => {
+                button.innerText = originalText;
+            }, 2000);
+        });
+    }
+
+    // ... (rest of the code remains the same)
 });
 </script>
 {% endblock %}
