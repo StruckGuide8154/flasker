@@ -1,227 +1,229 @@
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Affiliate Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100">
-    <div class="container mx-auto px-4 py-8">
-        <h1 class="text-4xl font-bold mb-8 text-center">
-            Your Gateway to <span class="text-blue-600">Financial Freedom</span>
-        </h1>
+{% block title %}Affiliate Dashboard{% endblock %}
 
-        <div class="mb-12 text-center">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 100" class="w-full h-20">
-                <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="48" fill="#4A5568" text-anchor="middle" dominant-baseline="middle">
-                    One Step Closer to
-                    <tspan fill="#48BB78">Freedom</tspan>
-                </text>
-                <text x="50%" y="85%" font-family="Arial, sans-serif" font-size="24" fill="#718096" text-anchor="middle" dominant-baseline="middle">
-                    <tspan text-decoration="line-through" fill="#F56565">Financial Constraints</tspan>
-                    <tspan dx="10">Boundless Opportunities</tspan>
-                </text>
-            </svg>
+{% block head %}
+{{ super() }}
+<script src="https://cdn.tailwindcss.com"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold mb-8 text-center">
+        Your Gateway to <span class="text-blue-600">Financial Freedom</span>
+    </h1>
+
+    <div class="mb-12 text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 100" class="w-full h-20">
+            <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="48" fill="#4A5568" text-anchor="middle" dominant-baseline="middle">
+                One Step Closer to
+                <tspan fill="#48BB78">Freedom</tspan>
+            </text>
+            <text x="50%" y="85%" font-family="Arial, sans-serif" font-size="24" fill="#718096" text-anchor="middle" dominant-baseline="middle">
+                <tspan text-decoration="line-through" fill="#F56565">Financial Constraints</tspan>
+                <tspan dx="10">Boundless Opportunities</tspan>
+            </text>
+        </svg>
+    </div>
+
+    {% if user_affiliate %}
+        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Your Affiliate Superpowers</h2>
+            <p class="mb-2">Email: <span class="font-bold">{{ user_affiliate.email }}</span></p>
+            <p class="mb-4">Referral Code: <span id="referral-code" class="font-bold text-indigo-600">{{ user_affiliate.referral_code }}</span>
+                <button id="copy-referral" class="ml-2 px-2 py-1 bg-gray-200 rounded-md text-sm hover:bg-gray-300 transition duration-300">Copy</button>
+            </p>
+            
+            <div class="border-t pt-4 mt-4">
+                <p class="italic text-gray-600">
+                    "The secret to getting ahead is getting started." - Mark Twain
+                </p>
+                <p class="mt-2">
+                    You've taken that crucial first step. Now, let's turn your network into your net worth!
+                </p>
+            </div>
         </div>
 
-        {% if user_affiliate %}
-            <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
-                <h2 class="text-2xl font-semibold mb-4">Your Affiliate Superpowers</h2>
-                <p class="mb-2">Email: <span class="font-bold">{{ user_affiliate.email }}</span></p>
-                <p class="mb-4">Referral Code: <span id="referral-code" class="font-bold text-indigo-600">{{ user_affiliate.referral_code }}</span>
-                    <button id="copy-referral" class="ml-2 px-2 py-1 bg-gray-200 rounded-md text-sm hover:bg-gray-300 transition duration-300">Copy</button>
-                </p>
-                
-                <div class="border-t pt-4 mt-4">
-                    <p class="italic text-gray-600">
-                        "The secret to getting ahead is getting started." - Mark Twain
-                    </p>
-                    <p class="mt-2">
-                        You've taken that crucial first step. Now, let's turn your network into your net worth!
-                    </p>
+        {% if referral_stats %}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white shadow-lg rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Your Impact</h3>
+                    <ul class="space-y-2">
+                        <li>Total Referrals: <span class="font-bold text-green-600 animate-number" data-target="{{ referral_stats.total }}">0</span></li>
+                        <li>This Month's Conquests: <span class="font-bold text-blue-600 animate-number" data-target="{{ referral_stats.this_month }}">0</span></li>
+                        <li>Last Month's Triumphs: <span class="font-bold text-indigo-600 animate-number" data-target="{{ referral_stats.last_month }}">0</span></li>
+                        <li>Click Magnetism: <span class="font-bold text-purple-600 animate-number" data-target="{{ referral_stats.clicks }}">0</span></li>
+                        <li>Attention Captured: <span class="font-bold text-pink-600 animate-number" data-target="{{ referral_stats.total_time_on_page }}">0</span> seconds</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white shadow-lg rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Your Treasure Chest</h3>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" class="w-full h-32 mb-4">
+                        <rect x="50" y="25" width="200" height="100" fill="#FCD34D" stroke="#D97706" stroke-width="4" />
+                        <path d="M50 75 Q 150 25 250 75" fill="none" stroke="#D97706" stroke-width="4" />
+                        <circle cx="150" cy="75" r="30" fill="#059669" />
+                        <text x="150" y="85" font-family="Arial, sans-serif" font-size="36" fill="white" text-anchor="middle">$</text>
+                    </svg>
+                    <p class="mb-2">Total Earnings: <span class="font-bold text-green-600">$<span class="animate-number" data-target="{{ '%.2f'|format(referral_stats.total_earnings) }}">0.00</span></span></p>
+                    <p class="mb-2">Total Paid: <span class="font-bold text-blue-600">$<span class="animate-number" data-target="{{ '%.2f'|format(referral_stats.total_paid) }}">0.00</span></span></p>
+                    <p class="mb-4">Balance Due: <span class="font-bold text-indigo-600">$<span class="animate-number" data-target="{{ '%.2f'|format(referral_stats.balance_due) }}">0.00</span></span></p>
+                    
+                    <div class="border-t pt-4 mt-4">
+                        <p class="font-semibold mb-2">Recent Victories:</p>
+                        {% if referral_stats.recent_payments %}
+                            <ul class="list-disc list-inside">
+                                {% for payment in referral_stats.recent_payments %}
+                                    <li class="recent-victory">${{ "%.2f"|format(payment.amount) }} on {{ payment.created_at }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="italic text-gray-600">Your first payment is on the horizon. Keep pushing!</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
 
-            {% if referral_stats %}
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white shadow-lg rounded-lg p-6">
-                        <h3 class="text-xl font-semibold mb-4">Your Impact</h3>
-                        <ul class="space-y-2">
-                            <li>Total Referrals: <span class="font-bold text-green-600 animate-number" data-target="{{ referral_stats.total }}">0</span></li>
-                            <li>This Month's Conquests: <span class="font-bold text-blue-600 animate-number" data-target="{{ referral_stats.this_month }}">0</span></li>
-                            <li>Last Month's Triumphs: <span class="font-bold text-indigo-600 animate-number" data-target="{{ referral_stats.last_month }}">0</span></li>
-                            <li>Click Magnetism: <span class="font-bold text-purple-600 animate-number" data-target="{{ referral_stats.clicks }}">0</span></li>
-                            <li>Attention Captured: <span class="font-bold text-pink-600 animate-number" data-target="{{ referral_stats.total_time_on_page }}">0</span> seconds</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-white shadow-lg rounded-lg p-6">
-                        <h3 class="text-xl font-semibold mb-4">Your Treasure Chest</h3>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" class="w-full h-32 mb-4">
-                            <rect x="50" y="25" width="200" height="100" fill="#FCD34D" stroke="#D97706" stroke-width="4" />
-                            <path d="M50 75 Q 150 25 250 75" fill="none" stroke="#D97706" stroke-width="4" />
-                            <circle cx="150" cy="75" r="30" fill="#059669" />
-                            <text x="150" y="85" font-family="Arial, sans-serif" font-size="36" fill="white" text-anchor="middle">$</text>
-                        </svg>
-                        <p class="mb-2">Total Earnings: <span class="font-bold text-green-600">$<span class="animate-number" data-target="{{ '%.2f'|format(referral_stats.total_earnings) }}">0.00</span></span></p>
-                        <p class="mb-2">Total Paid: <span class="font-bold text-blue-600">$<span class="animate-number" data-target="{{ '%.2f'|format(referral_stats.total_paid) }}">0.00</span></span></p>
-                        <p class="mb-4">Balance Due: <span class="font-bold text-indigo-600">$<span class="animate-number" data-target="{{ '%.2f'|format(referral_stats.balance_due) }}">0.00</span></span></p>
-                        
-                        <div class="border-t pt-4 mt-4">
-                            <p class="font-semibold mb-2">Recent Victories:</p>
-                            {% if referral_stats.recent_payments %}
-                                <ul class="list-disc list-inside">
-                                    {% for payment in referral_stats.recent_payments %}
-                                        <li>${{ "%.2f"|format(payment.amount) }} on {{ payment.created_at }}</li>
-                                    {% endfor %}
-                                </ul>
-                            {% else %}
-                                <p class="italic text-gray-600">Your first payment is on the horizon. Keep pushing!</p>
-                            {% endif %}
-                        </div>
-                    </div>
+            <div class="mt-12 text-center">
+                <h3 class="text-2xl font-bold mb-4">Your Mission, Should You Choose to Accept It</h3>
+                <p class="mb-4">
+                    Every referral is a step towards <span class="text-green-600">financial independence</span>.
+                    Don't just dream about freedom – <span class="text-blue-600">build it</span>, one click at a time.
+                </p>
+                <button id="mission-toggle" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300">
+                    Show Mission Details
+                </button>
+                <div id="mission-details" class="mt-4 hidden">
+                    <p>1. Share your unique referral code with your network.</p>
+                    <p>2. Guide potential clients through the sign-up process.</p>
+                    <p>3. Earn commissions on successful referrals.</p>
+                    <p>4. Track your progress and celebrate each milestone!</p>
                 </div>
-
-                <div class="mt-12 text-center">
-                    <h3 class="text-2xl font-bold mb-4">Your Mission, Should You Choose to Accept It</h3>
-                    <p class="mb-4">
-                        Every referral is a step towards <span class="text-green-600">financial independence</span>.
-                        Don't just dream about freedom – <span class="text-blue-600">build it</span>, one click at a time.
-                    </p>
-                    <button id="mission-toggle" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300">
-                        Show Mission Details
-                    </button>
-                    <div id="mission-details" class="mt-4 hidden">
-                        <p>1. Share your unique referral code with your network.</p>
-                        <p>2. Guide potential clients through the sign-up process.</p>
-                        <p>3. Earn commissions on successful referrals.</p>
-                        <p>4. Track your progress and celebrate each milestone!</p>
-                    </div>
-                </div>
-            {% else %}
-                <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-                    <h3 class="text-xl font-semibold mb-4">Your Journey Begins Here</h3>
-                    <p class="mb-4">
-                        The path to financial freedom is paved with the first referral. 
-                        Your story of success is waiting to be written!
-                    </p>
-                    <a href="#" class="inline-block bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition duration-300">
-                        Start Your Adventure
-                    </a>
-                </div>
-            {% endif %}
+            </div>
         {% else %}
             <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-                <h2 class="text-2xl font-semibold mb-4">Unlock Your Affiliate Potential</h2>
+                <h3 class="text-xl font-semibold mb-4">Your Journey Begins Here</h3>
                 <p class="mb-4">
-                    Your journey to financial freedom is just a click away. 
-                    Join our affiliate program and turn your influence into income!
+                    The path to financial freedom is paved with the first referral. 
+                    Your story of success is waiting to be written!
                 </p>
-                <a href="#" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
-                    Become an Affiliate
+                <a href="#" class="inline-block bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition duration-300">
+                    Start Your Adventure
                 </a>
             </div>
         {% endif %}
+    {% else %}
+        <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+            <h2 class="text-2xl font-semibold mb-4">Unlock Your Affiliate Potential</h2>
+            <p class="mb-4">
+                Your journey to financial freedom is just a click away. 
+                Join our affiliate program and turn your influence into income!
+            </p>
+            <a href="#" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+                Become an Affiliate
+            </a>
+        </div>
+    {% endif %}
 
-        <div class="mt-12">
-            <h2 class="text-2xl font-bold mb-4">Your Support Tickets</h2>
-            <div class="bg-white shadow-lg rounded-lg p-6">
-                <p class="text-gray-600 italic mb-4">
-                    "The only way to do great work is to love what you do." - Steve Jobs
-                </p>
-                {% if tickets %}
-                    <ul class="space-y-4">
-                        {% for ticket in tickets %}
-                            <li class="border-b pb-4">
-                                <h3 class="font-semibold text-lg">{{ ticket.title }}</h3>
-                                <p class="text-gray-600">Status: <span class="font-medium {% if ticket.status == 'Open' %}text-green-600{% elif ticket.status == 'Closed' %}text-red-600{% else %}text-yellow-600{% endif %}">{{ ticket.status }}</span></p>
-                                <p class="text-sm text-gray-500">Created on: {{ ticket.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
-                                <a href="{{ url_for('view_ticket', ticket_id=ticket.id) }}" class="text-blue-600 hover:underline">View Details</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>No support tickets at the moment. Need help? Don't hesitate to reach out!</p>
-                {% endif %}
-                <div class="mt-4">
-                    <a href="{{ url_for('create_ticket') }}" class="inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition duration-300">
-                        Create New Ticket
-                    </a>
-                </div>
+    <div id="tickets-section" class="mt-12">
+        <h2 class="text-2xl font-bold mb-4">Your Support Tickets</h2>
+        <div class="bg-white shadow-lg rounded-lg p-6">
+            <p class="text-gray-600 italic mb-4">
+                "The only way to do great work is to love what you do." - Steve Jobs
+            </p>
+            {% if tickets %}
+                <ul class="space-y-4">
+                    {% for ticket in tickets %}
+                        <li class="border-b pb-4">
+                            <h3 class="font-semibold text-lg">{{ ticket.title }}</h3>
+                            <p class="text-gray-600">Status: <span class="font-medium {% if ticket.status == 'Open' %}text-green-600{% elif ticket.status == 'Closed' %}text-red-600{% else %}text-yellow-600{% endif %}">{{ ticket.status }}</span></p>
+                            <p class="text-sm text-gray-500">Created on: {{ ticket.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                            <a href="{{ url_for('view_ticket', ticket_id=ticket.id) }}" class="text-blue-600 hover:underline">View Details</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No support tickets at the moment. Need help? Don't hesitate to reach out!</p>
+            {% endif %}
+            <div class="mt-4">
+                <a href="{{ url_for('create_ticket') }}" class="inline-block bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition duration-300">
+                    Create New Ticket
+                </a>
             </div>
         </div>
     </div>
+</div>
+{% endblock %}
 
+{% block scripts %}
+{{ super() }}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Animate the numbers
-        const counters = document.querySelectorAll('.animate-number');
-        counters.forEach(counter => {
-            const target = parseFloat(counter.getAttribute('data-target'));
-            const duration = 2000; // 2 seconds
-            const steps = 100;
-            const stepValue = target / steps;
-            let current = 0;
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate the numbers
+    const counters = document.querySelectorAll('.animate-number');
+    counters.forEach(counter => {
+        const target = parseFloat(counter.getAttribute('data-target'));
+        const duration = 2000; // 2 seconds
+        const steps = 100;
+        const stepValue = target / steps;
+        let current = 0;
 
-            const timer = setInterval(() => {
-                current += stepValue;
-                counter.textContent = current.toFixed(2);
-                if (current >= target) {
-                    clearInterval(timer);
-                    counter.textContent = target.toFixed(2);
-                }
-            }, duration / steps);
-        });
-
-        // Toggle mission details
-        const missionToggle = document.getElementById('mission-toggle');
-        const missionDetails = document.getElementById('mission-details');
-        if (missionToggle && missionDetails) {
-            missionToggle.addEventListener('click', () => {
-                missionDetails.classList.toggle('hidden');
-                missionToggle.textContent = missionDetails.classList.contains('hidden') ? 'Show Mission Details' : 'Hide Mission Details';
-            });
-        }
-
-        // Copy referral code to clipboard
-        const referralCodeElement = document.getElementById('referral-code');
-        const copyButton = document.getElementById('copy-referral');
-        if (referralCodeElement && copyButton) {
-            copyButton.addEventListener('click', () => {
-                navigator.clipboard.writeText(referralCodeElement.textContent).then(() => {
-                    copyButton.textContent = 'Copied!';
-                    setTimeout(() => {
-                        copyButton.textContent = 'Copy';
-                    }, 2000);
-                }).catch(err => {
-                    console.error('Failed to copy text: ', err);
-                });
-            });
-        }
-
-        // Add hover effect to recent victories
-        const recentVictories = document.querySelectorAll('.recent-victory');
-        recentVictories.forEach(victory => {
-            victory.addEventListener('mouseenter', () => {
-                victory.classList.add('bg-yellow-100');
-            });
-            victory.addEventListener('mouseleave', () => {
-                victory.classList.remove('bg-yellow-100');
-            });
-        });
-
-        // Smooth scroll to tickets section
-        const ticketsLink = document.getElementById('tickets-link');
-        const ticketsSection = document.getElementById('tickets-section');
-        if (ticketsLink && ticketsSection) {
-            ticketsLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                ticketsSection.scrollIntoView({ behavior: 'smooth' });
-            });
-        }
+        const timer = setInterval(() => {
+            current += stepValue;
+            counter.textContent = current.toFixed(2);
+            if (current >= target) {
+                clearInterval(timer);
+                counter.textContent = target.toFixed(2);
+            }
+        }, duration / steps);
     });
-    </script>
-</body>
-</html>
+
+    // Toggle mission details
+    const missionToggle = document.getElementById('mission-toggle');
+    const missionDetails = document.getElementById('mission-details');
+    if (missionToggle && missionDetails) {
+        missionToggle.addEventListener('click', () => {
+            missionDetails.classList.toggle('hidden');
+            missionToggle.textContent = missionDetails.classList.contains('hidden') ? 'Show Mission Details' : 'Hide Mission Details';
+        });
+    }
+
+    // Copy referral code to clipboard
+    const referralCodeElement = document.getElementById('referral-code');
+    const copyButton = document.getElementById('copy-referral');
+    if (referralCodeElement && copyButton) {
+        copyButton.addEventListener('click', () => {
+            navigator.clipboard.writeText(referralCodeElement.textContent).then(() => {
+                copyButton.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyButton.textContent = 'Copy';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        });
+    }
+
+    // Add hover effect to recent victories
+    const recentVictories = document.querySelectorAll('.recent-victory');
+    recentVictories.forEach(victory => {
+        victory.addEventListener('mouseenter', () => {
+            victory.classList.add('bg-yellow-100');
+        });
+        victory.addEventListener('mouseleave', () => {
+            victory.classList.remove('bg-yellow-100');
+        });
+    });
+
+    // Smooth scroll to tickets section
+    const ticketsLink = document.getElementById('tickets-link');
+    const ticketsSection = document.getElementById('tickets-section');
+    if (ticketsLink && ticketsSection) {
+        ticketsLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            ticketsSection.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+});
+</script>
+{% endblock %}
