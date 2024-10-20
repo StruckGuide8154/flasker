@@ -415,18 +415,22 @@ def serialize_referrals(referrals):
     """Converts referral objects into JSON serializable structures."""
     serialized_referrals = []
     for referral in referrals:
-        # Ensure referral.stats exists and has the necessary attributes
-        stats = referral.stats if referral.stats else {}
-        total = stats.get('total', 0)
-        total_earnings = stats.get('total_earnings', 0.0)
+        # Use get_referral_stats to populate stats
+        stats = get_referral_stats(referral.referral_code)
+        if not stats:
+            stats = {
+                'total': 0,
+                'this_month': 0,
+                'last_month': 0,
+                'user_count': 0,
+                'clicks': 0,
+                'total_time_on_page': 0
+            }
         
         serialized_referrals.append({
             'email': referral.email,
             'referral_code': referral.referral_code,
-            'stats': {
-                'total': total,
-                'total_earnings': total_earnings
-            }
+            'stats': stats
         })
     return serialized_referrals
 
@@ -450,10 +454,6 @@ def affiliate():
                 flash('Affiliate added successfully', 'success')
 
             return redirect(url_for('affiliate'))
-
-        # Calculate statistics for each affiliate
-        for affiliate in affiliates:
-            affiliate.stats = get_referral_stats(affiliate.referral_code)
 
         # Serialize the data to ensure it's JSON serializable
         try:
@@ -664,7 +664,6 @@ def get_referral_stats(referral_code):
         'clicks': affiliate.clicks,
         'total_time_on_page': affiliate.total_time_on_page
     }
-
 
 
 @app.route('/subscription')
