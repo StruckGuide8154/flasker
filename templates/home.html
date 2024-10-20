@@ -723,86 +723,107 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-<section id="features" class="relative py-20 overflow-hidden">
+<section id="features" class="relative py-24 overflow-hidden bg-black">
     <div class="absolute inset-0 z-0">
-        <div class="w-full h-full bg-gradient-to-br from-gray-900 via-black to-blue-900 opacity-90"></div>
-        <div class="absolute inset-0 bg-[url('c.webp')] bg-cover bg-center opacity-20 mix-blend-overlay"></div>
-        <div class="absolute inset-0 bg-dots"></div>
+        <div class="w-full h-full bg-gradient-to-br from-black via-blue-900 to-purple-900 opacity-70"></div>
+        <div class="absolute inset-0 bg-[url('c.webp')] bg-cover bg-center opacity-30 mix-blend-overlay"></div>
     </div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center text-white glow-text">
-            Revolutionize Your Business Communications
+        <h2 class="text-5xl md:text-7xl font-black mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 glow-text-intense">
+            Unleash Your Business Potential
         </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div class="feature-card" data-tilt data-tilt-max="10">
                 <div class="card-inner">
-                    <h3 class="text-2xl font-semibold mb-4 text-purple-400">Tailored Business Emails</h3>
-                    <p class="text-gray-300">Craft your brand identity with custom domain emails, designed to elevate your professional presence.</p>
+                    <div class="icon-wrapper">
+                        <i class="fas fa-envelope-open-text text-5xl text-blue-400"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4 text-white glow-text-subtle">Dominate with Custom Emails</h3>
+                    <p class="text-xl text-gray-300">Forge your digital identity with bespoke email solutions that command attention and respect.</p>
                 </div>
             </div>
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="feature-card" data-tilt data-tilt-max="10">
                 <div class="card-inner">
-                    <h3 class="text-2xl font-semibold mb-4 text-blue-400">Powerful Admin Panel</h3>
-                    <p class="text-gray-300">Take control with an intuitive admin interface, offering granular permissions and real-time analytics.</p>
+                    <div class="icon-wrapper">
+                        <i class="fas fa-sliders-h text-5xl text-purple-400"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4 text-white glow-text-subtle">Conquer with Admin Power</h3>
+                    <p class="text-xl text-gray-300">Wield unparalleled control with our robust admin panel, designed for the modern conqueror.</p>
                 </div>
             </div>
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="feature-card" data-tilt data-tilt-max="10">
                 <div class="card-inner">
-                    <h3 class="text-2xl font-semibold mb-4 text-purple-400">Self-Hosted Inbox</h3>
-                    <p class="text-gray-300">Ensure data sovereignty with a secure, self-hosted email solution that puts you in charge of your information.</p>
+                    <div class="icon-wrapper">
+                        <i class="fas fa-server text-5xl text-pink-400"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4 text-white glow-text-subtle">Fortify with Self-Hosting</h3>
+                    <p class="text-xl text-gray-300">Claim absolute sovereignty over your data with our impenetrable self-hosted solution.</p>
                 </div>
             </div>
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="feature-card" data-tilt data-tilt-max="10">
                 <div class="card-inner">
-                    <h3 class="text-2xl font-semibold mb-4 text-blue-400">Website Integration</h3>
-                    <p class="text-gray-300">Seamlessly integrate with your existing website, creating a cohesive online ecosystem for your business.</p>
+                    <div class="icon-wrapper">
+                        <i class="fas fa-globe text-5xl text-green-400"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4 text-white glow-text-subtle">Integrate and Dominate</h3>
+                    <p class="text-xl text-gray-300">Seamlessly merge with your digital empire, creating an unstoppable online presence.</p>
                 </div>
             </div>
         </div>
-        <div class="text-center mt-16">
-            <p class="text-2xl text-white glow-text mb-8">Built <span class="line-through text-red-500">for</span> <span class="text-green-400 font-bold">with</span> You</p>
-            <a href="#contact" class="enroll-button pulse-button scroll-to-contact">
-                Start Your Journey
+        <div class="text-center mt-20">
+            <p class="text-3xl font-bold text-white glow-text-intense mb-8">
+                Built <span class="relative inline-block">
+                    <span class="absolute inset-x-0 bottom-0 h-3 bg-red-500 transform -skew-x-12"></span>
+                    <span class="relative text-red-500">for</span>
+                </span>
+                <span class="text-green-400 font-black text-4xl ml-2">WITH</span> You
+            </p>
+            <a href="#contact" class="cta-button scroll-to-contact">
+                CLAIM YOUR DOMINANCE
             </a>
         </div>
     </div>
 </section>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
 
 #features {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
-.bg-dots {
-    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-    background-size: 20px 20px;
+.glow-text-intense {
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.7),
+        0 0 20px rgba(255, 255, 255, 0.5),
+        0 0 30px rgba(255, 255, 255, 0.3),
+        0 0 40px rgba(78, 13, 218, 0.3),
+        0 0 70px rgba(78, 13, 218, 0.2),
+        0 0 80px rgba(78, 13, 218, 0.1);
 }
 
-.glow-text {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3), 0 0 30px rgba(255, 255, 255, 0.2);
+.glow-text-subtle {
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.5),
+        0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .feature-card {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    backdrop-filter: blur(5px);
-    transition: all 0.3s ease;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
     overflow: hidden;
 }
 
 .card-inner {
-    padding: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+    padding: 3rem;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
     height: 100%;
-    transition: all 0.3s ease;
-}
-
-.feature-card:hover .card-inner {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    z-index: 1;
 }
 
 .feature-card::before {
@@ -812,32 +833,47 @@ document.addEventListener('DOMContentLoaded', () => {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
     transform: scale(0);
-    transition: transform 0.5s ease-out;
+    transition: transform 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .feature-card:hover::before {
     transform: scale(1);
 }
 
-.enroll-button {
+.feature-card:hover .card-inner {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.icon-wrapper {
+    margin-bottom: 1.5rem;
+    transition: all 0.5s ease;
+}
+
+.feature-card:hover .icon-wrapper {
+    transform: scale(1.2) rotate(10deg);
+}
+
+.cta-button {
     display: inline-block;
-    padding: 12px 24px;
-    font-size: 1.2rem;
-    font-weight: bold;
+    padding: 18px 36px;
+    font-size: 1.5rem;
+    font-weight: 900;
     text-transform: uppercase;
     color: white;
     background: linear-gradient(45deg, #4a0e8f, #81d4fa);
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     position: relative;
     overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
-.enroll-button::before {
+.cta-button::before {
     content: '';
     position: absolute;
     top: -50%;
@@ -846,60 +882,72 @@ document.addEventListener('DOMContentLoaded', () => {
     height: 200%;
     background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
     transform: scale(0);
-    transition: transform 0.5s ease-out;
+    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.enroll-button:hover::before {
+.cta-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.cta-button:hover::before {
     transform: scale(1);
 }
 
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
-.pulse-button {
-    animation: pulse 2s infinite;
+.feature-card {
+    animation: float 6s ease-in-out infinite;
 }
 
-[data-aos] {
-    opacity: 0;
-    transform: translateY(20px);
-    transition-property: opacity, transform;
-    transition-duration: 0.6s;
-    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+.feature-card:nth-child(odd) {
+    animation-delay: -3s;
 }
 
-[data-aos].aos-animate {
-    opacity: 1;
-    transform: translateY(0);
+@media (max-width: 768px) {
+    .feature-card {
+        animation: none;
+    }
 }
 </style>
 
-<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+<script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    AOS.init({
-        duration: 1000,
-        once: true,
-        offset: 100
+    VanillaTilt.init(document.querySelectorAll(".feature-card"), {
+        max: 10,
+        speed: 400,
+        glare: true,
+        "max-glare": 0.3,
     });
 
     const featuresSection = document.getElementById('features');
-    const parallaxElements = featuresSection.querySelectorAll('.feature-card');
+    const parallaxElements = featuresSection.querySelectorAll('.feature-card, h2, .cta-button');
 
     window.addEventListener('scroll', () => {
         const scrollPosition = window.scrollY;
         parallaxElements.forEach((el, index) => {
-            const speed = 0.05 * (index + 1);
+            const speed = 0.1 * (index + 1);
             el.style.transform = `translateY(${scrollPosition * speed}px)`;
+        });
+    });
+
+    const glowElements = document.querySelectorAll('.glow-text-intense, .glow-text-subtle');
+    window.addEventListener('mousemove', (e) => {
+        glowElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            el.style.setProperty('--x', `${x}px`);
+            el.style.setProperty('--y', `${y}px`);
         });
     });
 });
 </script>
-
-
 
 
 <!-- Testimonials Section -->
