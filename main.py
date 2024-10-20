@@ -561,6 +561,11 @@ def edit_affiliate(affiliate_id):
             db.session.add(new_sale)
             db.session.commit()
             flash('Sale updated successfully', 'success')
+        elif 'update_user_count' in request.form:
+            new_user_count = int(request.form['user_count'])
+            affiliate.user_count = new_user_count
+            db.session.commit()
+            flash('Invoiced user count updated successfully', 'success')
 
     # Get statistics
     stats = get_referral_stats(affiliate.referral_code)
@@ -568,6 +573,7 @@ def edit_affiliate(affiliate_id):
     payments = Payment.query.filter_by(affiliate_id=affiliate.id).order_by(Payment.created_at.desc()).all()
 
     return render_template('edit_affiliate.html', affiliate=affiliate, stats=stats, sales_stats=sales_stats, payments=payments)
+
 
 @app.teardown_request
 def update_session_time(exception=None):
