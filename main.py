@@ -594,7 +594,9 @@ def format_currency(value):
 
 
 
-
+@app.route('/v.webp')
+def serdve_webp():
+    return send_file('v.webp', mimetype='image/webp')
 
 @app.route('/z.webp')
 def serve_webp():
