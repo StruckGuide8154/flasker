@@ -1540,10 +1540,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <section id="gallery" class="relative py-24 overflow-hidden">
 <div class="absolute inset-0 z-0 webp-background"></div>
-    <div class="background-container">
-        <div class="background-imagee"></div>
-        <div class="background-overlay"></div>
-    </div
+    <div class="absolute inset-0 z-0">
+        <div class="w-full h-full bg-center bg-cover opacity-70" style="background-image: url('a.webp');"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-blue-900/80 to-purple-900/80"></div>
+    </div>
+
 
            <div class="absolute inset-0 z-1 bg-noise opacity-10"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -1588,46 +1589,14 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 </section>
 
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400&display=swap');
 
 #gallery {
     font-family: 'Raleway', sans-serif;
-    background-color: #000;
-    color: #fff;
-}
-
-.background-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1;
-}
-
-.background-imagee {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('a.webp');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: brightness(0.7) contrast(1.2);
-}
-/* Debug outline */
-.background-image {
-    outline: 2px solid red;
-}
-
-/* Ensure content is above the background */
-.relative.z-10 {
     position: relative;
-    z-index: 2;
+    color: #fff;
 }
 
 .bg-noise {
@@ -1656,13 +1625,7 @@ document.addEventListener('DOMContentLoaded', () => {
     transition: transform 0.3s ease-in-out;
     opacity: 0.8;
 }
-  .webp-background {
-    background-image: url('a.webp');
-    background-size: cover;
-    background-position: center;
-    width: 300px;
-    height: 200px;
-  }
+
 .gallery-overlay {
     position: absolute;
     inset: 0;
@@ -1694,8 +1657,6 @@ document.addEventListener('DOMContentLoaded', () => {
     font-weight: 200;
 }
 
-
-
 @keyframes scroll {
     0% { transform: translateX(0); }
     100% { transform: translateX(calc(-300px * 3)); }
@@ -1717,7 +1678,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
-
 
 
 
