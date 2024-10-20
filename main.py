@@ -144,6 +144,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
     is_system_user = db.Column(db.Boolean, default=False)
+    is_affiliate = db.Column(db.Boolean, default=False)  # New field
     miab_url = db.Column(db.String(200))
     miab_email = db.Column(db.String(100))
     miab_password = db.Column(db.String(100))
@@ -435,6 +436,27 @@ def serialize_referrals(referrals):
         })
     return serialized_referrals
 
+@app.route('/affiliate_dashboard')
+@login_required
+def affiliate_dashboard():
+    if not current_user.is_affiliate:
+        flash('You do not have permission to access this page.', 'error')
+        return redirect(url_for('home'))
+    
+    user_affiliate = Affiliate.query.filter_by(email=current_user.email).first()
+    
+    if not user_affiliate:
+        flash('Affiliate information not found. Please contact support.', 'warning')
+        return render_template('affiliate_dashboard.html', user_affiliate=None, referral_stats=None)
+
+    referral_stats = get_referral_stats(user_affiliate.id)
+    tickets = get_affiliate_tickets(current_user.id)
+    
+    return render_template('affiliate_dashboard.html', 
+                           user_affiliate=user_affiliate, 
+                           referral_stats=referral_stats,
+                           tickets=tickets)
+
 @app.route('/affiliate', methods=['GET', 'POST'])
 @login_required
 def affiliate():
@@ -680,24 +702,24 @@ def track_time():
         db.session.commit()
     return jsonify({'success': True})
 
-def get_referral_stats(referral_code):
+def get_referral_stats(affiliate_id):
     now = datetime.utcnow()
     first_day_of_current_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     first_day_of_last_month = (first_day_of_current_month - timedelta(days=1)).replace(day=1)
 
-    affiliate = Affiliate.query.filter_by(referral_code=referral_code).first()
-    if not affiliate:
-        return None
+    total = Ticket.query.filter_by(referral=affiliate_id).count()
+    this_month = Ticket.query.filter(Ticket.referral == affiliate_id, 
+                                     Ticket.created_at >= first_day_of_current_month).count()
+    last_month = Ticket.query.filter(Ticket.referral == affiliate_id,
+                                     Ticket.created_at >= first_day_of_last_month,
+                                     Ticket.created_at < first_day_of_current_month).count()
 
-    total = Ticket.query.filter_by(referral=referral_code).count()
-    this_month = Ticket.query.filter_by(referral=referral_code).filter(Ticket.created_at >= first_day_of_current_month).count()
-    last_month = Ticket.query.filter_by(referral=referral_code).filter(
-        Ticket.created_at >= first_day_of_last_month,
-        Ticket.created_at < first_day_of_current_month
-    ).count()
-
-    sales_stats = get_sales_stats(affiliate.id)
-    recent_payments = Payment.query.filter_by(affiliate_id=affiliate.id).order_by(Payment.created_at.desc()).limit(5).all()
+    affiliate = Affiliate.query.get(affiliate_id)
+    
+    total_earnings = db.session.query(func.sum(Sale.amount)).filter_by(affiliate_id=affiliate_id).scalar() or 0
+    total_paid = db.session.query(func.sum(Payment.amount)).filter_by(affiliate_id=affiliate_id).scalar() or 0
+    
+    recent_payments = Payment.query.filter_by(affiliate_id=affiliate_id).order_by(Payment.created_at.desc()).limit(5).all()
 
     return {
         'total': total,
@@ -706,9 +728,9 @@ def get_referral_stats(referral_code):
         'user_count': affiliate.user_count,
         'clicks': affiliate.clicks,
         'total_time_on_page': affiliate.total_time_on_page,
-        'total_earnings': sales_stats['total_earnings'],
-        'total_paid': sales_stats['total_paid'],
-        'balance_due': sales_stats['balance_due'],
+        'total_earnings': total_earnings,
+        'total_paid': total_paid,
+        'balance_due': total_earnings - total_paid,
         'recent_payments': [
             {
                 'amount': payment.amount,
@@ -854,6 +876,8 @@ def dashboard():
         tickets = Ticket.query.all()
         affiliates = Affiliate.query.all()
         return render_template('dashboard.html', tickets=tickets, affiliates=affiliates)
+    elif current_user.is_affiliate:
+        return redirect(url_for('affiliate_dashboard'))
     else:
         tickets = Ticket.query.filter_by(user_id=current_user.id).all()
         return render_template('dashboard.html', tickets=tickets)
@@ -947,6 +971,7 @@ def add_user():
         email = request.form['email']
         password = request.form['password']
         is_system_user = 'is_system_user' in request.form
+        is_affiliate = 'is_affiliate' in request.form
         miab_url = request.form['miab_url']
         miab_email = request.form['miab_email']
         miab_password = request.form['miab_password']
@@ -959,7 +984,6 @@ def add_user():
             user_limit = 150
         elif plan == 'custom':
             user_limit = int(request.form['custom_user_limit'])
-        # For 'unlimited' and 'null', user_limit remains None
 
         if User.query.filter_by(email=email).first():
             flash('Email already registered')
@@ -968,6 +992,7 @@ def add_user():
                 email=email, 
                 password=generate_password_hash(password),
                 is_system_user=is_system_user,
+                is_affiliate=is_affiliate,
                 miab_url=miab_url,
                 miab_email=miab_email,
                 miab_password=miab_password,
