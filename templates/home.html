@@ -1541,8 +1541,9 @@ document.addEventListener('DOMContentLoaded', () => {
 <section id="gallery" class="relative py-24 overflow-hidden">
 <div class="absolute inset-0 z-0 webp-background"></div>
     <div class="background-container">
-        <div class="background-imagee"></div>
+        <img src="a.webp" alt="Gallery Background" class="background-image" onerror="this.onerror=null; this.src='a.jpg';">
     </div>
+
            <div class="absolute inset-0 z-1 bg-noise opacity-10"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-4xl md:text-6xl font-thin mb-8 text-white glow">
@@ -1605,37 +1606,20 @@ document.addEventListener('DOMContentLoaded', () => {
     overflow: hidden;
     z-index: -1;
 }
-           
 
-.background-imagee {
-    position: absolute;
-    top: 0;
-    left: 0;
+.background-image {
     width: 100%;
     height: 100%;
-    background-image: url('a.webp');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    object-fit: cover;
+    object-position: center;
     filter: brightness(0.7) contrast(1.2);
 }
 
-
-
-.background-imagee::after {
-    content: "";
-    position: absolute;
-    bottom: -100%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: inherit;
-    background-size: cover;
-    background-position: center;
-    transform: scaleY(-1);
-    opacity: 0.7;
-    filter: brightness(0.7) contrast(1.2);
+/* Debug outline */
+.background-image {
+    outline: 2px solid red;
 }
+
 /* Ensure content is above the background */
 .relative.z-10 {
     position: relative;
