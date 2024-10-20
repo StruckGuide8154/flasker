@@ -1099,67 +1099,53 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 
-<!-- Testimonials Section -->
-<section id="testimonials" class="relative py-24 overflow-hidden bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900">
-    <!-- Background animation -->
-    <div class="hidden lg:block absolute top-10 right-10 w-64 h-64 bg-blue-500 rounded-full mix-blend-screen filter blur-xl opacity-70 animate-blob"></div>
-    <div class="hidden lg:block absolute bottom-10 left-10 w-64 h-64 bg-purple-500 rounded-full mix-blend-screen filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-    <div class="hidden lg:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-500 rounded-full mix-blend-screen filter blur-xl opacity-50 animate-blob animation-delay-4000"></div>
-
-    <!-- Particle effect -->
-    <div id="particles-js" class="absolute inset-0"></div>
-
-    <!-- Top fade-out effect -->
-    <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent z-10"></div>
-
-    <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 opacity-0 transition-opacity duration-1000 ease-out" id="testimonials-content">
-        <h2 class="mb-12 text-5xl font-extrabold text-center text-white opacity-0 transform translate-y-10 transition-all duration-1000 ease-out" id="testimonials-title">
-            SUCCESS <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">STORIES</span>
+<section id="testimonials" class="relative py-32 overflow-hidden bg-black">
+    <div class="noise-overlay"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-pink-900/20"></div>
+    
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-6xl md:text-8xl font-extralight text-center text-white opacity-80 mb-20 tracking-wider leading-tight fade-in-up">
+            Voice of <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">Innovation</span>
         </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="testimonial-card opacity-0 transform translate-y-10 transition-all duration-1000 ease-out" style="transition-delay: 200ms;">
-                <div class="relative bg-gray-800 p-8 rounded-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl border-2 border-blue-500">
-                    <div class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-blue-400 to-purple-500 opacity-10 rounded-br-full"></div>
-                    <svg class="w-12 h-12 text-blue-400 mb-4" fill="currentColor" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 8c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4zm12 0c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4z"/>
-                    </svg>
-                    <p class="text-gray-300 mb-6 text-lg">"Expansion <span class="text-blue-400 font-bold">OBLITERATED</span> our IT bottlenecks. 40% fewer support tickets, 3X faster onboarding. We're saving <span class="text-purple-400 font-bold">100+ hours monthly</span>. It's not just ROI, it's a <span class="text-blue-400 font-bold">REVOLUTION</span>."</p>
+        
+        <div class="testimonial-slider">
+            <div class="testimonial-card">
+                <div class="card-content">
+                    <p class="text-xl md:text-2xl font-thin text-gray-300 mb-6 leading-relaxed">
+                        "Expansion <span class="text-blue-400 font-normal">OBLITERATED</span> our IT bottlenecks. 40% fewer tickets, 3X faster onboarding. We're saving <span class="text-purple-400 font-normal">100+ hours monthly</span>. It's not ROI, it's a <span class="text-pink-400 font-normal">REVOLUTION</span>."
+                    </p>
                     <div class="flex items-center">
-                        <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full mr-4"></div>
+                        <div class="testimonial-avatar"></div>
                         <div>
-                            <p class="font-semibold text-white">Sarah Chen</p>
+                            <p class="font-light text-white text-lg">Sarah Chen</p>
                             <p class="text-sm text-gray-400">CTO, Nexus Innovations</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="testimonial-card opacity-0 transform translate-y-10 transition-all duration-1000 ease-out" style="transition-delay: 400ms;">
-                <div class="relative bg-gray-800 p-8 rounded-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl border-2 border-purple-500">
-                    <div class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-purple-400 to-pink-500 opacity-10 rounded-br-full"></div>
-                    <svg class="w-12 h-12 text-purple-400 mb-4" fill="currentColor" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 8c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4zm12 0c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4z"/>
-                    </svg>
-                    <p class="text-gray-300 mb-6 text-lg">"Expansion catapulted our email performance. <span class="text-purple-400 font-bold">25% higher open rates</span>, <span class="text-blue-400 font-bold">35% more click-throughs</span>. 98% inbox placement, up from 82%. For serious marketers, it's not optional—it's <span class="text-purple-400 font-bold">ESSENTIAL</span>."</p>
+            <div class="testimonial-card">
+                <div class="card-content">
+                    <p class="text-xl md:text-2xl font-thin text-gray-300 mb-6 leading-relaxed">
+                        "Expansion catapulted our performance. <span class="text-blue-400 font-normal">25% higher open rates</span>, <span class="text-purple-400 font-normal">35% more click-throughs</span>. 98% inbox placement. For serious marketers, it's <span class="text-pink-400 font-normal">ESSENTIAL</span>."
+                    </p>
                     <div class="flex items-center">
-                        <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full mr-4"></div>
+                        <div class="testimonial-avatar"></div>
                         <div>
-                            <p class="font-semibold text-white">Michael O'Brien</p>
+                            <p class="font-light text-white text-lg">Michael O'Brien</p>
                             <p class="text-sm text-gray-400">Director of Digital Marketing, GlobalReach Inc.</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="testimonial-card opacity-0 transform translate-y-10 transition-all duration-1000 ease-out" style="transition-delay: 600ms;">
-                <div class="relative bg-gray-800 p-8 rounded-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl border-2 border-pink-500">
-                    <div class="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-pink-400 to-red-500 opacity-10 rounded-br-full"></div>
-                    <svg class="w-12 h-12 text-pink-400 mb-4" fill="currentColor" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 8c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4zm12 0c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4z"/>
-                    </svg>
-                    <p class="text-gray-300 mb-6 text-lg">"In 15 years, I've never seen anything like Expansion. User-friendly AND secure. Uptime skyrocketed from 95% to <span class="text-pink-400 font-bold">99.99%</span>. Compliance? Streamlined. It's not just a game-changer—it's a <span class="text-red-400 font-bold">NEW GAME</span>."</p>
+            <div class="testimonial-card">
+                <div class="card-content">
+                    <p class="text-xl md:text-2xl font-thin text-gray-300 mb-6 leading-relaxed">
+                        "In 15 years, nothing like Expansion. User-friendly AND secure. Uptime: 95% to <span class="text-blue-400 font-normal">99.99%</span>. Compliance? Streamlined. It's not a game-changer—it's a <span class="text-purple-400 font-normal">NEW GAME</span>."
+                    </p>
                     <div class="flex items-center">
-                        <div class="w-12 h-12 bg-gradient-to-br from-pink-400 to-red-500 rounded-full mr-4"></div>
+                        <div class="testimonial-avatar"></div>
                         <div>
-                            <p class="font-semibold text-white">Priya Patel</p>
+                            <p class="font-light text-white text-lg">Priya Patel</p>
                             <p class="text-sm text-gray-400">Head of IT Security, SecureFlow Systems</p>
                         </div>
                     </div>
@@ -1167,66 +1153,82 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         </div>
     </div>
+
+    <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent"></div>
 </section>
 
 <style>
-@keyframes blob {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    25% { transform: translate(20px, -20px) scale(1.1); }
-    50% { transform: translate(-20px, 20px) scale(0.9); }
-    75% { transform: translate(20px, 20px) scale(1.05); }
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400&display=swap');
+
+#testimonials {
+    font-family: 'Raleway', sans-serif;
 }
 
-.animate-blob {
-    animation: blob 20s infinite;
+.noise-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/png;base64,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');
+    opacity: 0.02;
+    z-index: 1;
 }
 
-.animation-delay-2000 {
-    animation-delay: 2s;
+.testimonial-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
-.animation-delay-4000 {
-    animation-delay: 4s;
+.testimonial-slider::-webkit-scrollbar {
+    display: none;
 }
 
 .testimonial-card {
-    transition: all 0.5s ease-in-out;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-right: 2rem;
+    transition: all 0.5s ease;
 }
 
 .testimonial-card:hover {
-    transform: translateY(-15px) scale(1.05);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-#testimonials {
-    position: relative;
-    overflow: hidden;
-}
-
-#testimonials::before,
-#testimonials::after {
-    content: '';
-    position: absolute;
-    width: 300px;
-    height: 300px;
+.testimonial-avatar {
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    background: rgba(59, 130, 246, 0.1);
-    z-index: 0;
+    background: linear-gradient(45deg, #3490dc, #6574cd, #9561e2);
+    margin-right: 1rem;
 }
 
-#testimonials::before {
-    top: -150px;
-    left: -150px;
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease forwards;
 }
 
-#testimonials::after {
-    bottom: -150px;
-    right: -150px;
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+    50% { transform: translateY(-10px); }
 }
 
 .testimonial-card {
@@ -1242,53 +1244,51 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 </style>
 
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const testimonials = document.querySelectorAll('.testimonial-card');
-    const testimonialsContent = document.getElementById('testimonials-content');
-    const testimonialsTitle = document.getElementById('testimonials-title');
+    const slider = document.querySelector('.testimonial-slider');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
 
+    slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.classList.add('active');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.classList.remove('active');
+    });
+
+    slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.classList.remove('active');
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 2;
+        slider.scrollLeft = scrollLeft - walk;
+    });
+
+    // Intersection Observer for fade-in effect
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                testimonialsContent.style.opacity = '1';
-                testimonialsTitle.style.opacity = '1';
-                testimonialsTitle.style.transform = 'translateY(0)';
-                testimonials.forEach((testimonial, index) => {
-                    setTimeout(() => {
-                        testimonial.style.opacity = '1';
-                        testimonial.style.transform = 'translateY(0)';
-                    }, index * 200);
-                });
+                entry.target.classList.add('fade-in-up');
                 observer.unobserve(entry.target);
             }
         });
     }, { threshold: 0.1 });
 
-    observer.observe(document.getElementById('testimonials'));
-
-    // Particles.js configuration
-    particlesJS('particles-js', {
-        particles: {
-            number: { value: 80, density: { enable: true, value_area: 800 } },
-            color: { value: "#ffffff" },
-            shape: { type: "circle" },
-            opacity: { value: 0.5, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
-            size: { value: 3, random: true, anim: { enable: true, speed: 2, size_min: 0.1, sync: false } },
-            line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
-            move: { enable: true, speed: 1, direction: "none", random: true, straight: false, out_mode: "out", bounce: false, attract: { enable: false, rotateX: 600, rotateY: 600 } }
-        },
-        interactivity: {
-            detect_on: "canvas",
-            events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true },
-            modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
-        },
-        retina_detect: true
-    });
+    document.querySelectorAll('.testimonial-card, h2').forEach(el => observer.observe(el));
 });
 </script>
-
 
 
 
