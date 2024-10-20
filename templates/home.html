@@ -502,11 +502,11 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="absolute inset-0 bg-dots"></div>
     </div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-6xl md:text-8xl font-outline mb-4 text-white fade-sides grainy-text">
-            <span class="inline-block transform -skew-x-12 bg-gradient-to-r from-blue-400 to-purple-600 px-2">DOMINATE</span><br>
-            <span class="inline-block transform skew-x-12 bg-gradient-to-r from-purple-600 to-blue-400 px-2">YOUR INDUSTRY</span>
+        <h1 class="text-5xl md:text-7xl font-outline mb-4 text-white fade-sides-60 grainy-text">
+            <span class="inline-block bg-gradient-to-r from-blue-400 to-purple-600 px-2">Dominate</span>
+            <span class="inline-block bg-gradient-to-r from-purple-600 to-blue-400 px-2">Your Industry</span>
         </h1>
-        <p class="text-2xl md:text-4xl mb-8 text-gray-300 max-w-3xl mx-auto fade-sides grainy-text">
+        <p class="text-xl md:text-3xl mb-8 text-gray-300 max-w-3xl mx-auto fade-sides-60 grainy-text">
             An business email solution built 
             <span class="relative inline-block">
                 <span class="line-through text-red-500">for</span>
@@ -514,25 +514,25 @@ document.addEventListener('DOMContentLoaded', () => {
             </span> 
             <span class="text-green-500 font-bold">by</span> you
         </p>
-        <p class="text-2xl md:text-3xl mb-8 text-gray-300 max-w-3xl mx-auto fade-sides grainy-text">
+        <p class="text-xl md:text-2xl mb-8 text-gray-300 max-w-3xl mx-auto fade-sides-60 grainy-text">
             While others <span class="line-through text-red-500">struggle with outdated tools</span>, 
-            you'll wield the power of <span class="text-purple-400">EXPANSION</span>.
+            you'll wield the power of <span class="text-purple-400">expansion</span>.
         </p>
         <a href="#contact" class="enroll-button scroll-to-contact">
             CLAIM YOUR POWER
         </a>
         <div class="mt-12 flex justify-center space-x-12">
             <div class="text-center">
-                <div class="text-5xl font-outline text-blue-400 fade-sides grainy-text">10K+</div>
-                <div class="text-xl text-gray-400 fade-sides grainy-text">Businesses Revolutionized</div>
+                <div class="text-4xl font-outline text-blue-400 fade-sides-60 grainy-text">10K+</div>
+                <div class="text-lg text-gray-400 fade-sides-60 grainy-text">Businesses Revolutionized</div>
             </div>
             <div class="text-center">
-                <div class="text-5xl font-outline text-purple-400 fade-sides grainy-text">24/7</div>
-                <div class="text-xl text-gray-400 fade-sides grainy-text">Cutting-Edge Support</div>
+                <div class="text-4xl font-outline text-purple-400 fade-sides-60 grainy-text">24/7</div>
+                <div class="text-lg text-gray-400 fade-sides-60 grainy-text">Cutting-Edge Support</div>
             </div>
             <div class="text-center">
-                <div class="text-5xl font-outline text-blue-400 fade-sides grainy-text">100X</div>
-                <div class="text-xl text-gray-400 fade-sides grainy-text">Efficiency Boost</div>
+                <div class="text-4xl font-outline text-blue-400 fade-sides-60 grainy-text">100X</div>
+                <div class="text-lg text-gray-400 fade-sides-60 grainy-text">Efficiency Boost</div>
             </div>
         </div>
     </div>
@@ -542,6 +542,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="word-3">Revolution</span>
         <span class="word-4">Power</span>
         <span class="word-5">Efficiency</span>
+    </div>
+    <div class="absolute top-0 left-0 right-0 text-center mt-8">
+        <span class="text-lg font-thin text-purple-400">EXPANSION</span>
     </div>
 </section>
 
@@ -564,14 +567,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
 @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+    50% { transform: translateY(-10px); }
 }
 
-@keyframes float-word {
+@keyframes float-word-1 {
     0%, 100% { transform: translate(0, 0) rotate(0); }
-    25% { transform: translate(20px, 15px) rotate(10deg); }
-    50% { transform: translate(5px, -10px) rotate(-5deg); }
-    75% { transform: translate(-15px, 5px) rotate(3deg); }
+    25% { transform: translate(5px, 3px) rotate(2deg); }
+    50% { transform: translate(2px, -2px) rotate(-1deg); }
+    75% { transform: translate(-3px, 1px) rotate(1deg); }
+}
+
+@keyframes float-word-2 {
+    0%, 100% { transform: translate(0, 0) rotate(0); }
+    25% { transform: translate(-4px, 2px) rotate(-2deg); }
+    50% { transform: translate(1px, -3px) rotate(1deg); }
+    75% { transform: translate(3px, 2px) rotate(-1deg); }
+}
+
+@keyframes float-word-3 {
+    0%, 100% { transform: translate(0, 0) rotate(0); }
+    25% { transform: translate(3px, -2px) rotate(1deg); }
+    50% { transform: translate(-2px, 1px) rotate(-1deg); }
+    75% { transform: translate(2px, 2px) rotate(2deg); }
+}
+
+@keyframes float-word-4 {
+    0%, 100% { transform: translate(0, 0) rotate(0); }
+    25% { transform: translate(-3px, -1px) rotate(-1deg); }
+    50% { transform: translate(2px, 2px) rotate(1deg); }
+    75% { transform: translate(-2px, -2px) rotate(-2deg); }
+}
+
+@keyframes float-word-5 {
+    0%, 100% { transform: translate(0, 0) rotate(0); }
+    25% { transform: translate(2px, 2px) rotate(2deg); }
+    50% { transform: translate(-3px, -2px) rotate(-1deg); }
+    75% { transform: translate(1px, 3px) rotate(1deg); }
 }
 
 #hero-bg {
@@ -582,9 +613,10 @@ document.addEventListener('DOMContentLoaded', () => {
     animation: float 6s ease-in-out infinite;
 }
 
-.fade-sides {
+.fade-sides-60 {
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
     mask-image: linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%);
+    opacity: 0.6;
 }
 
 .grainy-text {
@@ -617,19 +649,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 .floating-words span {
     position: absolute;
-    font-size: 2em;
+    font-size: 1em;
     font-weight: 800;
     color: rgba(255, 255, 255, 0.1);
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3);
     transform-style: preserve-3d;
-    animation: float-word 12s infinite ease-in-out;
 }
 
-.word-1 { top: 20%; left: 10%; animation-delay: 0s; }
-.word-2 { top: 40%; right: 15%; animation-delay: -3s; }
-.word-3 { bottom: 30%; left: 20%; animation-delay: -7s; }
-.word-4 { top: 50%; right: 10%; animation-delay: -5s; }
-.word-5 { bottom: 20%; right: 20%; animation-delay: -9s; }
+.word-1 { top: 15%; left: 5%; animation: float-word-1 8s infinite ease-in-out; }
+.word-2 { top: 35%; right: 10%; animation: float-word-2 9s infinite ease-in-out; }
+.word-3 { bottom: 20%; left: 15%; animation: float-word-3 10s infinite ease-in-out; }
+.word-4 { top: 25%; right: 5%; animation: float-word-4 11s infinite ease-in-out; }
+.word-5 { bottom: 10%; right: 15%; animation: float-word-5 12s infinite ease-in-out; }
 </style>
 
 <script>
@@ -661,7 +692,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
-
 <!-- Features Section -->
 <section id="features" class="py-20 bg-gradient-to-b from-gray-900 to-black overflow-hidden relative">
     <div class="absolute inset-0 bg-grid-white/[0.05] bg-[size:40px_40px]" style="mask-image: linear-gradient(to bottom, transparent, black); -webkit-mask-image: linear-gradient(to bottom, transparent, black);"></div>
