@@ -204,6 +204,43 @@ def get_affiliate(referral_code):
 def get_affiliate_tickets(user_id):
     return Ticket.query.filter_by(user_id=user_id).order_by(Ticket.created_at.desc()).limit(5).all()
 
+def get_referral_stats(affiliate_id):
+    now = datetime.utcnow()
+    first_day_of_current_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    first_day_of_last_month = (first_day_of_current_month - timedelta(days=1)).replace(day=1)
+
+    total = Ticket.query.filter_by(referral=affiliate_id).count()
+    this_month = Ticket.query.filter(Ticket.referral == affiliate_id, 
+                                     Ticket.created_at >= first_day_of_current_month).count()
+    last_month = Ticket.query.filter(Ticket.referral == affiliate_id,
+                                     Ticket.created_at >= first_day_of_last_month,
+                                     Ticket.created_at < first_day_of_current_month).count()
+
+    affiliate = Affiliate.query.get(affiliate_id)
+    
+    total_earnings = db.session.query(func.sum(Sale.amount)).filter_by(affiliate_id=affiliate_id).scalar() or 0
+    total_paid = db.session.query(func.sum(Payment.amount)).filter_by(affiliate_id=affiliate_id).scalar() or 0
+    
+    recent_payments = Payment.query.filter_by(affiliate_id=affiliate_id).order_by(Payment.created_at.desc()).limit(5).all()
+
+    return {
+        'total': total,
+        'this_month': this_month,
+        'last_month': last_month,
+        'user_count': affiliate.user_count,
+        'clicks': affiliate.clicks,
+        'total_time_on_page': affiliate.total_time_on_page,
+        'total_earnings': total_earnings,
+        'total_paid': total_paid,
+        'balance_due': total_earnings - total_paid,
+        'recent_payments': [
+            {
+                'amount': payment.amount,
+                'created_at': payment.created_at.strftime('%Y-%m-%d')
+            } for payment in recent_payments
+        ]
+    }
+
 @app.teardown_request
 def update_session_time(exception=None):
     if 'referral' in session and not current_user.is_authenticated and 'session_start_time' in session:
@@ -706,42 +743,6 @@ def track_time():
         db.session.commit()
     return jsonify({'success': True})
 
-def get_referral_stats(affiliate_id):
-    now = datetime.utcnow()
-    first_day_of_current_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    first_day_of_last_month = (first_day_of_current_month - timedelta(days=1)).replace(day=1)
-
-    total = Ticket.query.filter_by(referral=affiliate_id).count()
-    this_month = Ticket.query.filter(Ticket.referral == affiliate_id, 
-                                     Ticket.created_at >= first_day_of_current_month).count()
-    last_month = Ticket.query.filter(Ticket.referral == affiliate_id,
-                                     Ticket.created_at >= first_day_of_last_month,
-                                     Ticket.created_at < first_day_of_current_month).count()
-
-    affiliate = Affiliate.query.get(affiliate_id)
-    
-    total_earnings = db.session.query(func.sum(Sale.amount)).filter_by(affiliate_id=affiliate_id).scalar() or 0
-    total_paid = db.session.query(func.sum(Payment.amount)).filter_by(affiliate_id=affiliate_id).scalar() or 0
-    
-    recent_payments = Payment.query.filter_by(affiliate_id=affiliate_id).order_by(Payment.created_at.desc()).limit(5).all()
-
-    return {
-        'total': total,
-        'this_month': this_month,
-        'last_month': last_month,
-        'user_count': affiliate.user_count,
-        'clicks': affiliate.clicks,
-        'total_time_on_page': affiliate.total_time_on_page,
-        'total_earnings': total_earnings,
-        'total_paid': total_paid,
-        'balance_due': total_earnings - total_paid,
-        'recent_payments': [
-            {
-                'amount': payment.amount,
-                'created_at': payment.created_at.strftime('%Y-%m-%d')
-            } for payment in recent_payments
-        ]
-    }
 
 
 @app.route('/subscription')
