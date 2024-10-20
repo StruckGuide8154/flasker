@@ -9,19 +9,19 @@
             <h2 class="text-2xl font-bold mb-4">Affiliate Stats</h2>
             <ul class="space-y-2">
                 <li class="flex justify-between">
-                    <span class="font-semibold">Total Referrals:</span>
+                    <span class="font-semibold">Total Referrals (Tickets):</span>
                     <span>{{ stats.total | default(0) }}</span>
                 </li>
                 <li class="flex justify-between">
-                    <span class="font-semibold">This Month:</span>
+                    <span class="font-semibold">Referrals This Month:</span>
                     <span>{{ stats.this_month | default(0) }}</span>
                 </li>
                 <li class="flex justify-between">
-                    <span class="font-semibold">Last Month:</span>
+                    <span class="font-semibold">Referrals Last Month:</span>
                     <span>{{ stats.last_month | default(0) }}</span>
                 </li>
                 <li class="flex justify-between">
-                    <span class="font-semibold">User Count:</span>
+                    <span class="font-semibold">Invoiced Users:</span>
                     <span>{{ stats.user_count | default(0) }}</span>
                 </li>
                 <li class="flex justify-between">
@@ -64,6 +64,19 @@
                 </li>
             </ul>
         </div>
+    </div>
+
+    <div class="mt-8">
+        <h2 class="text-2xl font-bold mb-4">Update Invoiced User Count</h2>
+        <form method="POST" class="space-y-4">
+            <div>
+                <label for="user_count" class="block text-sm font-medium text-gray-700">Invoiced User Count</label>
+                <input type="number" id="user_count" name="user_count" value="{{ stats.user_count }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+            </div>
+            <button type="submit" name="update_user_count" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Update User Count
+            </button>
+        </form>
     </div>
 
     <div class="mt-8">
