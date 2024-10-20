@@ -1541,8 +1541,9 @@ document.addEventListener('DOMContentLoaded', () => {
 <section id="gallery" class="relative py-24 overflow-hidden">
 <div class="absolute inset-0 z-0 webp-background"></div>
     <div class="background-container">
-        <img src="a.webp" alt="Gallery Background" class="background-image" onerror="this.onerror=null; this.src='a.jpg';">
-    </div>
+        <div class="background-image"></div>
+        <div class="background-overlay"></div>
+    </div
 
            <div class="absolute inset-0 z-1 bg-noise opacity-10"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -1608,13 +1609,17 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center;
+    background-image: url('a.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     filter: brightness(0.7) contrast(1.2);
 }
-
 /* Debug outline */
 .background-image {
     outline: 2px solid red;
