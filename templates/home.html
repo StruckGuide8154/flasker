@@ -509,13 +509,13 @@ document.addEventListener('DOMContentLoaded', () => {
         <p class="text-xl md:text-3xl mb-8 text-gray-300 max-w-3xl mx-auto fade-sides-60 grainy-text">
             An business email solution built 
             <span class="relative inline-block">
-                <span class="line-through text-red-500">for</span>
-                <span class="absolute left-0 -bottom-1 w-full h-0.5 bg-red-500"></span>
-            </span> 
-            <span class="text-green-500 font-bold">by</span> you
+                <span class="strike-through text-red-500">for</span>
+                <span class="text-green-500 font-bold">by</span>
+            </span>
+            you
         </p>
         <p class="text-xl md:text-2xl mb-8 text-gray-300 max-w-3xl mx-auto fade-sides-60 grainy-text">
-            While others <span class="line-through text-red-500">struggle with outdated tools</span>, 
+            While others <span class="strike-through text-red-500">struggle with outdated tools</span>, 
             you'll wield the power of <span class="text-purple-400">expansion</span>.
         </p>
         <a href="#contact" class="enroll-button scroll-to-contact">
@@ -537,22 +537,25 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
     <div class="floating-words" aria-hidden="true">
-        <span class="word-1">Dominate</span>
-        <span class="word-2">Expand</span>
-        <span class="word-3">Revolution</span>
-        <span class="word-4">Power</span>
-        <span class="word-5">Efficiency</span>
+        <span class="word-1 font-thin">Dominate</span>
+        <span class="word-2 font-thin">Expand</span>
+        <span class="word-3 font-thin">Revolution</span>
+        <span class="word-4 font-thin">Power</span>
+        <span class="word-5 font-thin">Efficiency</span>
     </div>
-    <div class="absolute top-0 left-0 right-0 text-center mt-8">
-        <span class="text-lg font-thin text-purple-400">EXPANSION</span>
+    <div class="absolute top-0 right-0 mt-8 mr-8">
+        <span class="text-lg font-thin text-purple-400 cursive">Expansion <span class="text-xl">Ω</span></span>
     </div>
 </section>
-
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;800&family=Allura&display=swap');
 
 #hero {
     font-family: 'Raleway', sans-serif;
+}
+
+.cursive {
+    font-family: 'Allura', cursive;
 }
 
 .bg-dots {
@@ -605,6 +608,12 @@ document.addEventListener('DOMContentLoaded', () => {
     75% { transform: translate(1px, 3px) rotate(1deg); }
 }
 
+@keyframes strike-through {
+    0% { width: 0; }
+    50% { width: 100%; }
+    100% { width: 100%; }
+}
+
 #hero-bg {
     animation: pulse 8s ease-in-out infinite;
 }
@@ -637,6 +646,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ... (enroll button styles remain the same) ... */
 }
 
+
 .floating-words {
     position: absolute;
     top: 0;
@@ -650,7 +660,6 @@ document.addEventListener('DOMContentLoaded', () => {
 .floating-words span {
     position: absolute;
     font-size: 1em;
-    font-weight: 800;
     color: rgba(255, 255, 255, 0.1);
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.3);
     transform-style: preserve-3d;
@@ -661,6 +670,24 @@ document.addEventListener('DOMContentLoaded', () => {
 .word-3 { bottom: 20%; left: 15%; animation: float-word-3 10s infinite ease-in-out; }
 .word-4 { top: 25%; right: 5%; animation: float-word-4 11s infinite ease-in-out; }
 .word-5 { bottom: 10%; right: 15%; animation: float-word-5 12s infinite ease-in-out; }
+
+.strike-through {
+    position: relative;
+    display: inline-block;
+}
+
+.strike-through::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: red;
+    animation: strike-through 2s ease-in-out forwards;
+    transform-origin: left;
+}
+      
 </style>
 
 <script>
