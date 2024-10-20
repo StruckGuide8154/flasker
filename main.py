@@ -39,6 +39,8 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 import json
 import shutil
+from jinja2 import Undefined
+
 print("test")
 
 
@@ -205,57 +207,50 @@ def get_affiliate_tickets(user_id):
     return Ticket.query.filter_by(user_id=user_id).order_by(Ticket.created_at.desc()).limit(5).all()
 
 def get_referral_stats(affiliate_id):
-    now = datetime.utcnow()
-    first_day_of_current_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    first_day_of_last_month = (first_day_of_current_month - timedelta(days=1)).replace(day=1)
+    try:
+        affiliate = Affiliate.query.get(affiliate_id)
+        
+        if affiliate is None:
+            app.logger.error(f"Affiliate with ID {affiliate_id} not found")
+            return None
 
-    total = Ticket.query.filter_by(referral=affiliate_id).count()
-    this_month = Ticket.query.filter(Ticket.referral == affiliate_id, 
-                                     Ticket.created_at >= first_day_of_current_month).count()
-    last_month = Ticket.query.filter(Ticket.referral == affiliate_id,
-                                     Ticket.created_at >= first_day_of_last_month,
-                                     Ticket.created_at < first_day_of_current_month).count()
+        now = datetime.utcnow()
+        first_day_of_current_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        first_day_of_last_month = (first_day_of_current_month - timedelta(days=1)).replace(day=1)
 
-    affiliate = Affiliate.query.get(affiliate_id)
-    
-    if affiliate is None:
-        # Log the error and return a default stats dictionary
-        logger.error(f"Affiliate with ID {affiliate_id} not found")
+        total = Ticket.query.filter_by(referral=affiliate.referral_code).count()
+        this_month = Ticket.query.filter(Ticket.referral == affiliate.referral_code, 
+                                         Ticket.created_at >= first_day_of_current_month).count()
+        last_month = Ticket.query.filter(Ticket.referral == affiliate.referral_code,
+                                         Ticket.created_at >= first_day_of_last_month,
+                                         Ticket.created_at < first_day_of_current_month).count()
+
+        total_earnings = db.session.query(func.sum(Sale.amount)).filter_by(affiliate_id=affiliate_id).scalar() or 0
+        total_paid = db.session.query(func.sum(Payment.amount)).filter_by(affiliate_id=affiliate_id).scalar() or 0
+        
+        recent_payments = Payment.query.filter_by(affiliate_id=affiliate_id).order_by(Payment.created_at.desc()).limit(5).all()
+
         return {
             'total': total,
             'this_month': this_month,
             'last_month': last_month,
-            'user_count': 0,
-            'clicks': 0,
-            'total_time_on_page': 0,
-            'total_earnings': 0,
-            'total_paid': 0,
-            'balance_due': 0,
-            'recent_payments': []
+            'user_count': affiliate.user_count,
+            'clicks': affiliate.clicks,
+            'total_time_on_page': affiliate.total_time_on_page,
+            'total_earnings': total_earnings,
+            'total_paid': total_paid,
+            'balance_due': total_earnings - total_paid,
+            'recent_payments': [
+                {
+                    'amount': payment.amount,
+                    'created_at': payment.created_at.strftime('%Y-%m-%d')
+                } for payment in recent_payments
+            ]
         }
-    
-    total_earnings = db.session.query(func.sum(Sale.amount)).filter_by(affiliate_id=affiliate_id).scalar() or 0
-    total_paid = db.session.query(func.sum(Payment.amount)).filter_by(affiliate_id=affiliate_id).scalar() or 0
-    
-    recent_payments = Payment.query.filter_by(affiliate_id=affiliate_id).order_by(Payment.created_at.desc()).limit(5).all()
-
-    return {
-        'total': total,
-        'this_month': this_month,
-        'last_month': last_month,
-        'user_count': affiliate.user_count,
-        'clicks': affiliate.clicks,
-        'total_time_on_page': affiliate.total_time_on_page,
-        'total_earnings': total_earnings,
-        'total_paid': total_paid,
-        'balance_due': total_earnings - total_paid,
-        'recent_payments': [
-            {
-                'amount': payment.amount,
-                'created_at': payment.created_at.strftime('%Y-%m-%d')
-            } for payment in recent_payments
-        ]
-    }
+    except Exception as e:
+        app.logger.error(f"Error in get_referral_stats: {str(e)}")
+        return None        
+        
 @app.teardown_request
 def update_session_time(exception=None):
     if 'referral' in session and not current_user.is_authenticated and 'session_start_time' in session:
@@ -533,27 +528,47 @@ def affiliate():
         if request.method == 'POST':
             email = request.form.get('email')
             referral_code = request.form.get('referral_code')
-
-            existing_affiliate = Affiliate.query.filter_by(email=email).first()
-            if existing_affiliate:
-                flash('An affiliate with this email already exists.', 'error')
+            
+            if not email or not referral_code:
+                flash('Email and referral code are required.', 'error')
             else:
-                new_affiliate = Affiliate(email=email, referral_code=referral_code)
-                db.session.add(new_affiliate)
-                db.session.commit()
-                flash('Affiliate added successfully', 'success')
-
+                existing_affiliate = Affiliate.query.filter_by(email=email).first()
+                if existing_affiliate:
+                    flash('An affiliate with this email already exists.', 'error')
+                else:
+                    try:
+                        new_affiliate = Affiliate(email=email, referral_code=referral_code)
+                        db.session.add(new_affiliate)
+                        db.session.commit()
+                        flash('Affiliate added successfully', 'success')
+                    except SQLAlchemyError as e:
+                        db.session.rollback()
+                        app.logger.error(f"Error adding affiliate: {str(e)}")
+                        flash('An error occurred while adding the affiliate. Please try again.', 'error')
+            
             return redirect(url_for('affiliate'))
-
+        
         return render_template('affiliate.html', affiliates=affiliates)
     
     else:
         user_affiliate = Affiliate.query.filter_by(email=current_user.email).first()
-        referral_stats = get_referral_stats(user_affiliate.referral_code) if user_affiliate else None
+        
+        if user_affiliate:
+            try:
+                referral_stats = get_referral_stats(user_affiliate.id)
+                if referral_stats is None:
+                    flash('Error retrieving referral statistics. Please try again later.', 'error')
+                    referral_stats = {}
+            except Exception as e:
+                app.logger.error(f"Error getting referral stats: {str(e)}")
+                flash('An error occurred while fetching referral statistics. Please try again later.', 'error')
+                referral_stats = {}
+        else:
+            referral_stats = {}
         
         return render_template('affiliate.html', 
                                user_affiliate=user_affiliate, 
-                               referral_stats=[{'stats': referral_stats}] if referral_stats else None)
+                               referral_stats=referral_stats)
 
 @app.template_filter('format_currency')
 def format_currency(value):
