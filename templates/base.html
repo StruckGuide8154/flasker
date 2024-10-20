@@ -23,13 +23,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const dropdownToggles = document.querySelectorAll('[data-dropdown-toggle]');
 
             function toggleSidebar() {
+                if (!sidebar || !overlay) {
+                    console.error('Sidebar or overlay element not found');
+                    return;
+                }
                 sidebar.classList.toggle('open');
+                sidebar.classList.toggle('-translate-x-full');
                 overlay.classList.toggle('active');
                 document.body.classList.toggle('overflow-hidden');
             }
 
             function closeSidebar() {
+                if (!sidebar || !overlay) {
+                    console.error('Sidebar or overlay element not found');
+                    return;
+                }
                 sidebar.classList.remove('open');
+                sidebar.classList.add('-translate-x-full');
                 overlay.classList.remove('active');
                 document.body.classList.remove('overflow-hidden');
             }
@@ -42,21 +52,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (hamburger) {
                 hamburger.addEventListener('click', toggleSidebar);
+            } else {
+                console.error('Hamburger menu element not found');
             }
 
             if (overlay) {
                 overlay.addEventListener('click', closeSidebar);
+            } else {
+                console.error('Overlay element not found');
             }
 
             // Close sidebar when clicking a link (for mobile)
-            const sidebarLinks = sidebar.querySelectorAll('a');
-            sidebarLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 768) {
-                        closeSidebar();
-                    }
+            if (sidebar) {
+                const sidebarLinks = sidebar.querySelectorAll('a');
+                sidebarLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 768) {
+                            closeSidebar();
+                        }
+                    });
                 });
-            });
+            }
 
             // Handle dropdowns in sidebar
             dropdownToggles.forEach(toggle => {
@@ -78,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Mobile menu script loaded');
             console.log('Hamburger menu element:', hamburger);
             console.log('Sidebar element:', sidebar);
+            console.log('Overlay element:', overlay);
         });
     </script>
     <meta charset="UTF-8">
@@ -343,6 +360,11 @@ document.addEventListener('DOMContentLoaded', function() {
             /* Hide default sidebar toggle on mobile */
             [data-drawer-toggle="drawer-navigation"] {
                 display: none;
+            }
+        }
+                @media (max-width: 768px) {
+            #drawer-navigation.open {
+                transform: translateX(0);
             }
         }
     </style>
