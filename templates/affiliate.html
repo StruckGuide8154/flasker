@@ -1,181 +1,153 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="bg-white dark:bg-gray-900">
+<div class="bg-gray-100 dark:bg-gray-900 min-h-screen">
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="px-4 py-6 sm:px-0">
-            <div class="border-4 border-dashed border-gray-200 dark:border-gray-700 rounded-lg min-h-screen">
-                <div class="py-10">
+            <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
+                <div class="p-6">
                     {% if current_user.is_system_user %}
-                        <h1 class="text-3xl font-bold mb-4 text-center text-gray-800 dark:text-white">Affiliates</h1>
-                        <div class="mb-4">
-                            <form method="POST" action="{{ url_for('affiliate') }}" class="flex flex-col space-y-4 items-center">
-                                <input type="email" name="email" placeholder="Affiliate Email" class="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white" required>
-                                <input type="text" name="referral_code" placeholder="Referral Code" class="px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white" required>
-                                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Add Affiliate</button>
+                        <h1 class="text-3xl font-bold mb-8 text-center text-gray-800 dark:text-white">Affiliates Management</h1>
+                        <div class="mb-8">
+                            <form method="POST" action="{{ url_for('affiliate') }}" class="max-w-md mx-auto">
+                                <div class="mb-4">
+                                    <input type="email" name="email" placeholder="Affiliate Email" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" required>
+                                </div>
+                                <div class="mb-4">
+                                    <input type="text" name="referral_code" placeholder="Referral Code" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white" required>
+                                </div>
+                                <button type="submit" class="w-full bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">Add Affiliate</button>
                             </form>
                         </div>
-                        <div class="mt-8">
-                            <div class="shadow overflow-hidden border-b border-gray-200 dark:border-gray-700 sm:rounded-lg">
-                                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                    <thead class="bg-gray-50 dark:bg-gray-800">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Email</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Referral Code</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                                    {% for affiliate in affiliates %}
                                         <tr>
-                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Email</th>
-                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Referral Code</th>
-                                            <th scope="col" class="relative px-6 py-3"><span class="sr-only">Edit</span></th>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ affiliate.email }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{{ affiliate.referral_code }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                <a href="{{ url_for('edit_affiliate', affiliate_id=affiliate.id) }}" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300" target="_blank">Edit</a>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                                        {% for affiliate in affiliates %}
-                                            <tr>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ affiliate.email }}</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{{ affiliate.referral_code }}</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <a href="{{ url_for('edit_affiliate', affiliate_id=affiliate.id) }}" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300" target="_blank">Edit</a>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     {% else %}
-                        <h1 class="text-3xl font-bold mb-4 text-center text-gray-800 dark:text-white">Affiliate Dashboard</h1>
+                        <h1 class="text-3xl font-bold mb-8 text-center text-gray-800 dark:text-white">Affiliate Dashboard</h1>
                         {% if user_affiliate %}
-                            <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg mb-8">
-                                <div class="px-4 py-5 sm:px-6">
-                                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Affiliate Information</h3>
+                            <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden mb-8">
+                                <div class="px-6 py-4">
+                                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Affiliate Information</h3>
                                 </div>
-                                <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:p-0">
-                                    <dl class="sm:divide-y sm:divide-gray-200 dark:sm:divide-gray-700">
-                                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <div class="border-t border-gray-200 dark:border-gray-700">
+                                    <dl>
+                                        <div class="px-6 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
                                             <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Email</dt>
                                             <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">{{ user_affiliate.email }}</dd>
                                         </div>
-                                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                        <div class="px-6 py-4 sm:grid sm:grid-cols-3 sm:gap-4 bg-gray-50 dark:bg-gray-700">
                                             <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Referral Code</dt>
                                             <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">{{ user_affiliate.referral_code }}</dd>
                                         </div>
-                                        <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                        <div class="px-6 py-4 sm:grid sm:grid-cols-3 sm:gap-4">
                                             <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Referral Link</dt>
                                             <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
-                                                <a href="{{ url_for('affiliate_redirect', referral_code=user_affiliate.referral_code, _external=True) }}" class="text-blue-600 dark:text-blue-400 hover:underline" target="_blank">
-                                                    {{ url_for('affiliate_redirect', referral_code=user_affiliate.referral_code, _external=True) }}
-                                                </a>
+                                                <div class="flex items-center">
+                                                    <a id="referralLink" href="{{ url_for('affiliate_redirect', referral_code=user_affiliate.referral_code, _external=True) }}" class="text-blue-600 dark:text-blue-400 hover:underline mr-2" target="_blank">
+                                                        {{ url_for('affiliate_redirect', referral_code=user_affiliate.referral_code, _external=True) }}
+                                                    </a>
+                                                    <button id="copyReferralLink" class="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                                                        Copy
+                                                    </button>
+                                                </div>
                                             </dd>
                                         </div>
                                     </dl>
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div>
-                                    <h2 class="text-2xl font-bold mb-4 text-center text-gray-800 dark:text-white">Referral Statistics</h2>
-                                    {% if referral_stats %}
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                                            <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 flex flex-col items-center">
-                                                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Referrals (Tickets)</div>
-                                                <div class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">{{ referral_stats.total }}</div>
-                                            </div>
-                                            <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 flex flex-col items-center">
-                                                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Referrals This Month</div>
-                                                <div class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">{{ referral_stats.this_month }}</div>
-                                            </div>
-                                            <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 flex flex-col items-center">
-                                                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Referrals Last Month</div>
-                                                <div class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">{{ referral_stats.last_month }}</div>
-                                            </div>
-                                            <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 flex flex-col items-center">
-                                                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Invoiced Users</div>
-                                                <div class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">{{ referral_stats.user_count }}</div>
-                                            </div>
-                                            <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 flex flex-col items-center">
-                                                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Clicks</div>
-                                                <div class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">{{ referral_stats.clicks }}</div>
-                                            </div>
-                                            <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 flex flex-col items-center">
-                                                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Time on Page (seconds)</div>
-                                                <div class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">{{ referral_stats.total_time_on_page }}</div>
-                                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                                <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
+                                    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                                        <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Referral Statistics</h2>
+                                    </div>
+                                    <div class="p-6">
+                                        <canvas id="referralChart" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
+                                    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                                        <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Earnings Overview</h2>
+                                    </div>
+                                    <div class="p-6">
+                                        <canvas id="earningsChart" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden mb-8">
+                                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                                    <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Recent Payments</h2>
+                                </div>
+                                <div class="p-6">
+                                    {% if referral_stats.recent_payments %}
+                                        <div class="overflow-x-auto">
+                                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                                    <tr>
+                                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Amount</th>
+                                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                                                    {% for payment in referral_stats.recent_payments %}
+                                                        <tr>
+                                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">${{ payment.amount | format_currency }}</td>
+                                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{{ payment.created_at }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
                                         </div>
                                     {% else %}
-                                        <p class="text-gray-500 dark:text-gray-400 text-center">No referral statistics available.</p>
+                                        <p class="text-gray-500 dark:text-gray-400 text-center">No recent payments.</p>
                                     {% endif %}
                                 </div>
-
-                                <div>
-                                    <h2 class="text-2xl font-bold mb-4 text-center text-gray-800 dark:text-white">Earnings</h2>
-                                    <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
-        <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:p-0">
-            <dl class="sm:divide-y sm:divide-gray-200 dark:sm:divide-gray-700">
-                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Earnings</dt>
-                    <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">${{ referral_stats.total_earnings | format_currency }}</dd>
-                </div>
-                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Paid</dt>
-                    <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">${{ referral_stats.total_paid | format_currency }}</dd>
-                </div>
-                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Balance Due</dt>
-                    <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">${{ referral_stats.balance_due | format_currency }}</dd>
-                </div>
-            </dl>
-        </div>
-                                    </div>
-                                </div>
                             </div>
 
-                            <div class="mt-8">
-                                <h2 class="text-2xl font-bold mb-4 text-center text-gray-800 dark:text-white">Recent Payments</h2>
-                                {% if referral_stats.recent_payments %}
-                                    <div class="shadow overflow-hidden border-b border-gray-200 dark:border-gray-700 sm:rounded-lg">
-                                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                            <thead class="bg-gray-50 dark:bg-gray-800">
-                                                <tr>
-                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Amount</th>
-                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Date</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                                                {% for payment in referral_stats.recent_payments %}
-                                                    <tr>
-                                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">${{ payment.amount | round(2) }}</td>
-                                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{{ payment.created_at }}</td>
-                                                    </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                {% else %}
-                                    <p class="text-gray-500 dark:text-gray-400 text-center">No recent payments.</p>
-                                {% endif %}
-                            </div>
-
-                            <div class="mt-8 flex justify-center">
-                                <a href="{{ url_for('claim_earnings', affiliate_id=user_affiliate.id) }}" class="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" target="_blank">Request Payout</a>
+                            <div class="flex justify-center">
+                                <a href="{{ url_for('claim_earnings', affiliate_id=user_affiliate.id) }}" class="bg-green-500 text-white px-8 py-3 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300" target="_blank">Request Payout</a>
                             </div>
                         {% else %}
                             <p class="text-gray-500 dark:text-gray-400 text-center">You are not registered as an affiliate.</p>
-{% endif %}{% endif %}
-
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     // JavaScript to copy referral link to clipboard
     function copyReferralLink() {
         var referralLink = document.getElementById('referralLink');
-        var tempInput = document.createElement('input');
-        tempInput.value = referralLink.href;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-        alert('Referral link copied to clipboard!');
+        navigator.clipboard.writeText(referralLink.href).then(function() {
+            alert('Referral link copied to clipboard!');
+        }, function(err) {
+            console.error('Could not copy text: ', err);
+        });
     }
 
     // Add event listener to the copy button
@@ -184,7 +156,74 @@
         if (copyButton) {
             copyButton.addEventListener('click', copyReferralLink);
         }
+
+        // Referral Statistics Chart
+        var ctx = document.getElementById('referralChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Total Referrals', 'This Month', 'Last Month', 'Invoiced Users', 'Clicks'],
+                datasets: [{
+                    label: 'Referral Statistics',
+                    data: [
+                        {{ referral_stats.total }},
+                        {{ referral_stats.this_month }},
+                        {{ referral_stats.last_month }},
+                        {{ referral_stats.user_count }},
+                        {{ referral_stats.clicks }}
+                    ],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        // Earnings Chart
+        var earningsCtx = document.getElementById('earningsChart').getContext('2d');
+        new Chart(earningsCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Total Earnings', 'Total Paid', 'Balance Due'],
+                datasets: [{
+                    data: [
+                        {{ referral_stats.total_earnings }},
+                        {{ referral_stats.total_paid }},
+                        {{ referral_stats.balance_due }}
+                    ],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
     });
 </script>
-
 {% endblock %}
