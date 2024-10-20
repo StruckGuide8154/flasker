@@ -656,13 +656,25 @@ def get_referral_stats(referral_code):
         Ticket.created_at < first_day_of_current_month
     ).count()
 
+    sales_stats = get_sales_stats(affiliate.id)
+    recent_payments = Payment.query.filter_by(affiliate_id=affiliate.id).order_by(Payment.created_at.desc()).limit(5).all()
+
     return {
         'total': total,
         'this_month': this_month,
         'last_month': last_month,
         'user_count': affiliate.user_count,
         'clicks': affiliate.clicks,
-        'total_time_on_page': affiliate.total_time_on_page
+        'total_time_on_page': affiliate.total_time_on_page,
+        'total_earnings': sales_stats['total_earnings'],
+        'total_paid': sales_stats['total_paid'],
+        'balance_due': sales_stats['balance_due'],
+        'recent_payments': [
+            {
+                'amount': payment.amount,
+                'created_at': payment.created_at.strftime('%Y-%m-%d')
+            } for payment in recent_payments
+        ]
     }
 
 
