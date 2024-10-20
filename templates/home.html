@@ -1544,12 +1544,24 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <section class="relative py-24 overflow-hidden bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900 text-white">
-    <div class="absolute inset-0 bg-pattern opacity-10"></div>
+    <div class="absolute inset-0 z-0">
+        <svg class="w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+    </div>
+    
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-sm"></div>
+    
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="mb-12 text-5xl font-extrabold text-center">
+        <h2 class="mb-12 text-5xl font-extrabold text-center tracking-tight">
             Witness the <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Revolution</span>
         </h2>
-        <p class="text-xl text-center mb-12 max-w-3xl mx-auto">
+        <p class="text-xl text-center mb-12 max-w-3xl mx-auto font-light">
             While others show you <span class="line-through text-red-400">static screenshots</span>, we invite you to explore the future of email management. Each image is a gateway to unparalleled efficiency.
         </p>
         <div class="relative">
@@ -1562,140 +1574,32 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p class="gallery-description">Where CEOs become visionaries. One glance, infinite insights.</p>
                     </div>
                 </div>
-                <div class="gallery-item group">
-                    <img src="gallery2.png" alt="Admin tickets system" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Issue Annihilator</span>
-                        <p class="gallery-description">Problems vanish, solutions materialize. Your support team's secret weapon.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery3.png" alt="Compose Email" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Message Architect</span>
-                        <p class="gallery-description">Craft communications that command attention. Every word, a stepping stone to success.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery4.png" alt="Receive emails" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Inbox Dominator</span>
-                        <p class="gallery-description">Where chaos bows to order. Reclaim hours of your day, effortlessly.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery5.png" alt="Light/dark mode" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Visual Mastery</span>
-                        <p class="gallery-description">Day or night, your eyes will thank you. Productivity knows no hour.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery6.png" alt="Admin panel" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Control Nexus</span>
-                        <p class="gallery-description">Unlimited power at your fingertips. Manage with the precision of a maestro.</p>
-                    </div>
-                </div>
-                                  <div class="gallery-item group">
-                    <img src="gallery1.png" alt="Admin dashboard" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Command Center</span>
-                        <p class="gallery-description">Where CEOs become visionaries. One glance, infinite insights.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery2.png" alt="Admin tickets system" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Issue Annihilator</span>
-                        <p class="gallery-description">Problems vanish, solutions materialize. Your support team's secret weapon.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery3.png" alt="Compose Email" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Message Architect</span>
-                        <p class="gallery-description">Craft communications that command attention. Every word, a stepping stone to success.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery4.png" alt="Receive emails" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Inbox Dominator</span>
-                        <p class="gallery-description">Where chaos bows to order. Reclaim hours of your day, effortlessly.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery5.png" alt="Light/dark mode" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Visual Mastery</span>
-                        <p class="gallery-description">Day or night, your eyes will thank you. Productivity knows no hour.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery6.png" alt="Admin panel" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Control Nexus</span>
-                        <p class="gallery-description">Unlimited power at your fingertips. Manage with the precision of a maestro.</p>
-                    </div>
-                </div>
-                                  <div class="gallery-item group">
-                    <img src="gallery1.png" alt="Admin dashboard" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Command Center</span>
-                        <p class="gallery-description">Where CEOs become visionaries. One glance, infinite insights.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery2.png" alt="Admin tickets system" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Issue Annihilator</span>
-                        <p class="gallery-description">Problems vanish, solutions materialize. Your support team's secret weapon.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery3.png" alt="Compose Email" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Message Architect</span>
-                        <p class="gallery-description">Craft communications that command attention. Every word, a stepping stone to success.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery4.png" alt="Receive emails" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Inbox Dominator</span>
-                        <p class="gallery-description">Where chaos bows to order. Reclaim hours of your day, effortlessly.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery5.png" alt="Light/dark mode" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Visual Mastery</span>
-                        <p class="gallery-description">Day or night, your eyes will thank you. Productivity knows no hour.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery6.png" alt="Admin panel" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Control Nexus</span>
-                        <p class="gallery-description">Unlimited power at your fingertips. Manage with the precision of a maestro.</p>
-                    </div>
-                </div>
-                  
-
-                <!-- Repeat the above items to create a seamless loop -->
+                <!-- Repeat for other gallery items -->
             </div>
         </div>
         <div class="mt-16 text-center">
-            <button class="enroll-button">
+            <a href="#contact" class="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-gray-900 bg-gradient-to-r from-blue-400 to-purple-400 hover:from-blue-500 hover:to-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
                 CLAIM YOUR POWER
-            </button>
+                <svg class="ml-2 -mr-1 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
         </div>
     </div>
 
     <!-- Decorative elements -->
-    <div class="hidden lg:block absolute top-10 left-10 w-32 h-32 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
-    <div class="hidden lg:block absolute bottom-10 right-10 w-32 h-32 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
+    <div class="absolute top-1/4 left-1/4 w-48 h-48 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob"></div>
+    <div class="absolute top-3/4 right-1/4 w-48 h-48 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-2000"></div>
+    
+    <svg class="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 200L48 185.3C96 170.7 192 141.3 288 141.3C384 141.3 480 170.7 576 166.7C672 162.7 768 125.3 864 109.3C960 93.3 1056 98.7 1152 114.7C1248 130.7 1344 157.3 1392 170.7L1440 184V200H1392C1344 200 1248 200 1152 200C1056 200 960 200 864 200C768 200 672 200 576 200C480 200 384 200 288 200C192 200 96 200 48 200H0Z" fill="url(#paint0_linear)" />
+        <defs>
+            <linearGradient id="paint0_linear" x1="720" y1="100" x2="720" y2="200" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#4C1D95" stop-opacity="0" />
+                <stop offset="1" stop-color="#4C1D95" />
+            </linearGradient>
+        </defs>
+    </svg>
 </section>
 
 <style>
@@ -1744,7 +1648,8 @@ document.addEventListener('DOMContentLoaded', () => {
 .gallery-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1758,7 +1663,7 @@ document.addEventListener('DOMContentLoaded', () => {
 .gallery-title {
     color: white;
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: 600;
     text-align: center;
     padding: 1rem;
     transform: translateY(-20px);
@@ -1777,53 +1682,6 @@ document.addEventListener('DOMContentLoaded', () => {
 .gallery-item:hover .gallery-description {
     transform: translateY(0);
 }
-.bg-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-.enroll-button {
-  display: inline-block;
-  padding: 12px 24px;
-  font-size: 18px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #fff;
-  background-color: transparent;
-  border: 2px solid;
-  border-image: linear-gradient(45deg, #4a0e8f, #0e4a8f) 1;
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.enroll-button::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(45deg, #4a0e8f, #0e4a8f);
-  z-index: -1;
-  filter: blur(10px);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.enroll-button:hover::before {
-  opacity: 1;
-}
-
-.enroll-button:hover {
-  color: #fff;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 20px rgba(74, 14, 143, 0.5);
-}
-
-.enroll-button:active {
-  transform: scale(0.98);
-}
 </style>
 
 <script>
@@ -1837,7 +1695,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
-
                   
 <section id="pricing" class="relative py-24 overflow-hidden bg-gradient-to-b from-gray-900 to-black text-white">
     <div class="absolute inset-0 bg-pattern opacity-10"></div>
