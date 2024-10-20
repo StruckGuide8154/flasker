@@ -115,7 +115,17 @@ app.after_request(add_csp_headers)
 def unauthorized():
     flash('You must be logged in to view this page.', 'warning')
     return redirect(url_for('home'))
-    
+
+
+class Sale(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    affiliate_id = db.Column(db.Integer, db.ForeignKey('affiliate.id'), nullable=False)
+    plan_type = db.Column(db.String(20), nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    affiliate = db.relationship('Affiliate', backref=db.backref('sales', lazy=True))
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True, nullable=False)
