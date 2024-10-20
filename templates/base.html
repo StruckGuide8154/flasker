@@ -15,7 +15,71 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-        
+            <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburger-menu');
+            const sidebar = document.getElementById('drawer-navigation');
+            const overlay = document.getElementById('sidebar-overlay');
+            const dropdownToggles = document.querySelectorAll('[data-dropdown-toggle]');
+
+            function toggleSidebar() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+                document.body.classList.toggle('overflow-hidden');
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.classList.remove('overflow-hidden');
+            }
+
+            function handleResize() {
+                if (window.innerWidth > 768) {
+                    closeSidebar();
+                }
+            }
+
+            if (hamburger) {
+                hamburger.addEventListener('click', toggleSidebar);
+            }
+
+            if (overlay) {
+                overlay.addEventListener('click', closeSidebar);
+            }
+
+            // Close sidebar when clicking a link (for mobile)
+            const sidebarLinks = sidebar.querySelectorAll('a');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        closeSidebar();
+                    }
+                });
+            });
+
+            // Handle dropdowns in sidebar
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('data-dropdown-toggle');
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.classList.toggle('hidden');
+                    }
+                });
+            });
+
+            window.addEventListener('resize', handleResize);
+
+            // Initial check
+            handleResize();
+
+            console.log('Mobile menu script loaded');
+            console.log('Hamburger menu element:', hamburger);
+            console.log('Sidebar element:', sidebar);
+        });
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expansion</title>
