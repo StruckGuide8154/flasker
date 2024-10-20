@@ -596,6 +596,9 @@ def format_currency(value):
 
 
 
+@app.route('/z.webp')
+def serve_webp():
+    return send_file('z.webp', mimetype='image/webp')
 
 
 app.config['UPLOAD_FOLDER'] = 'instance'
