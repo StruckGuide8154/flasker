@@ -1,4 +1,4 @@
-import os
+aimport os
 import secrets
 import time
 import flask
@@ -200,6 +200,9 @@ def allowed_file(filename):
 
 def get_affiliate(referral_code):
     return Affiliate.query.filter_by(referral_code=referral_code).first()
+
+def get_affiliate_tickets(user_id):
+    return Ticket.query.filter_by(user_id=user_id).order_by(Ticket.created_at.desc()).limit(5).all()
 
 @app.teardown_request
 def update_session_time(exception=None):
@@ -447,15 +450,15 @@ def affiliate_dashboard():
     
     if not user_affiliate:
         flash('Affiliate information not found. Please contact support.', 'warning')
-        return render_template('affiliate_dashboard.html', user_affiliate=None, referral_stats=None)
+        return render_template_string(template, user_affiliate=None, referral_stats=None, tickets=None)
 
     referral_stats = get_referral_stats(user_affiliate.id)
     tickets = get_affiliate_tickets(current_user.id)
     
-    return render_template('affiliate_dashboard.html', 
-                           user_affiliate=user_affiliate, 
-                           referral_stats=referral_stats,
-                           tickets=tickets)
+    return render_template_string(template, 
+                                  user_affiliate=user_affiliate, 
+                                  referral_stats=referral_stats,
+                                  tickets=tickets)
 
 @app.route('/affiliate', methods=['GET', 'POST'])
 @login_required
