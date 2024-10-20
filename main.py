@@ -116,6 +116,14 @@ def unauthorized():
     flash('You must be logged in to view this page.', 'warning')
     return redirect(url_for('home'))
 
+class Payment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    affiliate_id = db.Column(db.Integer, db.ForeignKey('affiliate.id'), nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+    description = db.Column(db.String(255), nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    affiliate = db.relationship('Affiliate', backref=db.backref('payments', lazy=True))
 
 class Sale(db.Model):
     id = db.Column(db.Integer, primary_key=True)
