@@ -719,45 +719,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 </script>
-<!-- Features Section -->
-<!-- Features Section -->
-<section id="features" class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-4xl font-bold text-center mb-16 text-gray-800">Key Features</h2>
+<section id="features" class="relative py-24 bg-gray-900 overflow-hidden">
+    <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
+    <div class="container mx-auto px-4 relative z-10">
+        <h2 class="text-5xl font-extrabold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 glow-text">
+            Unleash Your Digital Dominance
+        </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div class="feature-card bg-gray-50 p-8 rounded-lg shadow-md transition duration-300 ease-in-out hover:shadow-lg">
-                <svg class="w-12 h-12 text-blue-500 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
-                </svg>
-                <h3 class="text-2xl font-semibold mb-4 text-gray-800">Domain Management</h3>
-                <p class="text-lg text-gray-600">Easily manage your domain settings, DNS records, and SSL certificates from a single intuitive interface.</p>
+            <div class="feature-card" data-feature="domain-mastery">
+                <div class="feature-icon">
+                    <svg class="w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-white">Domain Mastery</h3>
+                <p class="text-gray-300">Seize control of your digital realm. Manage domains, DNS, and SSL with unparalleled precision. Your empire awaits.</p>
             </div>
-            <div class="feature-card bg-gray-50 p-8 rounded-lg shadow-md transition duration-300 ease-in-out hover:shadow-lg">
-                <svg class="w-12 h-12 text-blue-500 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                </svg>
-                <h3 class="text-2xl font-semibold mb-4 text-gray-800">Advanced Analytics</h3>
-                <p class="text-lg text-gray-600">Gain valuable insights into your website's performance with detailed analytics and reporting tools.</p>
+            <div class="feature-card" data-feature="analytics-supremacy">
+                <div class="feature-icon">
+                    <svg class="w-12 h-12 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-white">Analytics Supremacy</h3>
+                <p class="text-gray-300">Harness the power of data. Our advanced analytics unveil insights that turn mere strategies into unstoppable conquests.</p>
             </div>
-            <div class="feature-card bg-gray-50 p-8 rounded-lg shadow-md transition duration-300 ease-in-out hover:shadow-lg">
-                <svg class="w-12 h-12 text-blue-500 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                </svg>
-                <h3 class="text-2xl font-semibold mb-4 text-gray-800">Fast Deployment</h3>
-                <p class="text-lg text-gray-600">Deploy your website or application quickly and easily with our streamlined deployment process and powerful tools.</p>
+            <div class="feature-card" data-feature="deployment-dominance">
+                <div class="feature-icon">
+                    <svg class="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-white">Deployment Dominance</h3>
+                <p class="text-gray-300">Launch with lightning speed. Our deployment arsenal ensures your vision materializes instantly, leaving competitors in awe.</p>
             </div>
-            <div class="feature-card bg-gray-50 p-8 rounded-lg shadow-md transition duration-300 ease-in-out hover:shadow-lg">
-                <svg class="w-12 h-12 text-blue-500 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                </svg>
-                <h3 class="text-2xl font-semibold mb-4 text-gray-800">Scalability</h3>
-                <p class="text-lg text-gray-600">Scale your infrastructure effortlessly to meet the demands of your growing business or project.</p>
+            <div class="feature-card" data-feature="scaling-supremacy">
+                <div class="feature-icon">
+                    <svg class="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-white">Scaling Supremacy</h3>
+                <p class="text-gray-300">Grow without limits. Our infrastructure adapts to your ambition, ensuring your empire expands unchecked.</p>
             </div>
         </div>
         <div class="mt-20 text-center">
-            <a href="#" class="inline-flex items-center px-6 py-3 text-lg font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-300">
-                Get Started
-                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <a href="#" class="inline-flex items-center px-8 py-4 text-lg font-semibold text-gray-900 bg-gradient-to-r from-blue-400 to-purple-600 rounded-full hover:from-blue-500 hover:to-purple-700 transition duration-300 transform hover:scale-105 hover:shadow-lg">
+                Claim Your Power
+                <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                 </svg>
             </a>
@@ -765,35 +774,141 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 </section>
 
+<style>
+.bg-grid-pattern {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.glow-text {
+    text-shadow: 0 0 10px rgba(104, 109, 224, 0.5),
+                 0 0 20px rgba(104, 109, 224, 0.3),
+                 0 0 30px rgba(104, 109, 224, 0.2);
+}
+
+.feature-card {
+    @apply bg-gray-800 p-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+.feature-icon {
+    @apply mb-6 relative z-10;
+    transition: transform 0.3s ease-in-out;
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.feature-card:hover .feature-icon svg {
+    animation: pulse 2s infinite;
+}
+</style>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const features = document.querySelectorAll('.feature-card');
-
-    const fadeInUp = (element) => {
-        element.style.transform = 'translateY(0)';
-        element.style.opacity = '1';
+    
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
     };
 
-    const featureObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    fadeInUp(entry.target);
-                }
-            });
-        },
-        { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-    );
+    const featureObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-feature');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
 
     features.forEach(feature => {
-        feature.style.transform = 'translateY(20px)';
-        feature.style.opacity = '0';
-        feature.style.transition = 'all 0.4s ease-out';
         featureObserver.observe(feature);
     });
+
+    features.forEach(feature => {
+        feature.addEventListener('mouseenter', () => {
+            const featureType = feature.getAttribute('data-feature');
+            triggerFeatureEffect(featureType);
+        });
+    });
+
+    function triggerFeatureEffect(featureType) {
+        switch(featureType) {
+            case 'domain-mastery':
+                createParticles(50, 'blue');
+                break;
+            case 'analytics-supremacy':
+                createDataFlow();
+                break;
+            case 'deployment-dominance':
+                createLightningEffect();
+                break;
+            case 'scaling-supremacy':
+                createGrowthEffect();
+                break;
+        }
+    }
+
+    function createParticles(count, color) {
+        for (let i = 0; i < count; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.backgroundColor = color;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 1000);
+        }
+    }
+
+    function createDataFlow() {
+        const flow = document.createElement('div');
+        flow.classList.add('data-flow');
+        document.body.appendChild(flow);
+        setTimeout(() => flow.remove(), 1000);
+    }
+
+    function createLightningEffect() {
+        const lightning = document.createElement('div');
+        lightning.classList.add('lightning');
+        document.body.appendChild(lightning);
+        setTimeout(() => lightning.remove(), 300);
+    }
+
+    function createGrowthEffect() {
+        const growth = document.createElement('div');
+        growth.classList.add('growth-effect');
+        document.body.appendChild(growth);
+        setTimeout(() => growth.remove(), 1000);
+    }
 });
 </script>
-<!-- Testimonials Section -->
 <!-- Testimonials Section -->
 <section id="testimonials" class="relative py-24 overflow-hidden bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900">
     <!-- Background animation -->
