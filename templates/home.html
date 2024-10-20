@@ -1544,19 +1544,22 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <section class="relative py-24 overflow-hidden bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900 text-white">
-    <div class="absolute inset-0 bg-pattern opacity-10"></div>
+    <div class="absolute inset-0 bg-[url('a.svg')] bg-cover bg-center opacity-10 animate-pulse"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-purple-900/30 to-black/60"></div>
+    <div class="noise-overlay"></div>
+    <div class="glitch-overlay"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="mb-12 text-5xl font-extrabold text-center">
+        <h2 class="mb-12 text-5xl font-extrabold text-center glitch-text" data-text="Witness the Revolution">
             Witness the <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Revolution</span>
         </h2>
-        <p class="text-xl text-center mb-12 max-w-3xl mx-auto">
-            While others show you <span class="line-through text-red-400">static screenshots</span>, we invite you to explore the future of email management. Each image is a gateway to unparalleled efficiency.
+        <p class="text-xl text-center mb-12 max-w-3xl mx-auto neon-text">
+            While <span class="line-through text-red-400 glitch-text" data-text="mediocre solutions">mediocre solutions</span> show you static screenshots, we invite you to <span class="italic font-semibold text-glow">explore the future</span> of email management. Each image is a <span class="text-blue-400 font-bold plasma-text">gateway</span> to unparalleled efficiency.
         </p>
-        <div class="relative">
+        <div class="relative gallery-container">
             <div class="flex animate-scroll">
                 <!-- Gallery items -->
                 <div class="gallery-item group">
-                    <img src="gallery1.png" alt="Admin dashboard" class="gallery-image">
+                      <img src="gallery1.png" alt="Admin dashboard" class="gallery-image">
                     <div class="gallery-overlay">
                         <span class="gallery-title">Command Center</span>
                         <p class="gallery-description">Where CEOs become visionaries. One glance, infinite insights.</p>
@@ -1687,37 +1690,62 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         </div>
         <div class="mt-16 text-center">
-            <button class="enroll-button">
-                CLAIM YOUR POWER
+            <button class="enroll-button transform hover:scale-105 transition-all duration-300 cyber-button">
+                UNLEASH YOUR POTENTIAL
             </button>
         </div>
     </div>
 
+
     <!-- Decorative elements -->
     <div class="hidden lg:block absolute top-10 left-10 w-32 h-32 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
     <div class="hidden lg:block absolute bottom-10 right-10 w-32 h-32 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
+    <div class="hidden lg:block absolute top-1/2 left-1/4 w-48 h-48 bg-cyan-500 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
 </section>
 
+
+
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+.gallery-container {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
 @keyframes scroll {
     0% { transform: translateX(0); }
     100% { transform: translateX(calc(-400px * 6)); }
 }
+
 .animate-scroll {
     animation: scroll 60s linear infinite;
 }
+
 @keyframes blob {
     0% { transform: translate(0px, 0px) scale(1); }
     33% { transform: translate(30px, -50px) scale(1.1); }
     66% { transform: translate(-20px, 20px) scale(0.9); }
     100% { transform: translate(0px, 0px) scale(1); }
 }
+
 .animate-blob {
     animation: blob 7s infinite;
 }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
 .animation-delay-2000 {
     animation-delay: 2s;
 }
+
 .gallery-item {
     flex: 0 0 400px;
     height: 300px;
@@ -1727,20 +1755,25 @@ document.addEventListener('DOMContentLoaded', () => {
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
+    transform: perspective(1000px) rotateY(0deg);
 }
+
 .gallery-item:hover {
-    transform: scale(1.05);
+    transform: perspective(1000px) rotateY(10deg) scale(1.05);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
+
 .gallery-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease-in-out;
 }
+
 .gallery-item:hover .gallery-image {
     transform: scale(1.1);
 }
+
 .gallery-overlay {
     position: absolute;
     inset: 0;
@@ -1751,10 +1784,13 @@ document.addEventListener('DOMContentLoaded', () => {
     justify-content: center;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
+    backdrop-filter: blur(5px);
 }
+
 .gallery-item:hover .gallery-overlay {
     opacity: 1;
 }
+
 .gallery-title {
     color: white;
     font-size: 1.5rem;
@@ -1763,7 +1799,9 @@ document.addEventListener('DOMContentLoaded', () => {
     padding: 1rem;
     transform: translateY(-20px);
     transition: transform 0.3s ease-in-out;
+    font-family: 'Orbitron', sans-serif;
 }
+
 .gallery-description {
     color: #a0aec0;
     font-size: 1rem;
@@ -1773,56 +1811,236 @@ document.addEventListener('DOMContentLoaded', () => {
     transition: transform 0.3s ease-in-out;
     max-width: 300px;
 }
+
 .gallery-item:hover .gallery-title,
 .gallery-item:hover .gallery-description {
     transform: translateY(0);
 }
-.bg-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
+
 .enroll-button {
-  display: inline-block;
-  padding: 12px 24px;
-  font-size: 18px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #fff;
-  background-color: transparent;
-  border: 2px solid;
-  border-image: linear-gradient(45deg, #4a0e8f, #0e4a8f) 1;
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  cursor: pointer;
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: transparent;
+    border: 2px solid;
+    border-image: linear-gradient(45deg, #4a0e8f, #0e4a8f) 1;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
 }
 
 .enroll-button::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(45deg, #4a0e8f, #0e4a8f);
-  z-index: -1;
-  filter: blur(10px);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #4a0e8f, #0e4a8f);
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .enroll-button:hover::before {
-  opacity: 1;
+    opacity: 1;
 }
 
 .enroll-button:hover {
-  color: #fff;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 20px rgba(74, 14, 143, 0.5);
+    color: #fff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 20px rgba(74, 14, 143, 0.5);
 }
 
 .enroll-button:active {
-  transform: scale(0.98);
+    transform: scale(0.98);
+}
+
+.noise-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/png;base64,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');
+    opacity: 0.02;
+    z-index: 1;
+}
+
+HS
+give me .glitch-overlay {
+
+
+Certainly! Here's an expanded and more elaborate version of the .glitch-overlay CSS class:
+
+css
+
+Copy
+.glitch-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0.15;
+    background-image: 
+        repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.05) 0px,
+            rgba(255, 255, 255, 0.05) 1px,
+            transparent 1px,
+            transparent 2px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.05) 0px,
+            rgba(255, 255, 255, 0.05) 1px,
+            transparent 1px,
+            transparent 2px
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(255, 0, 0, 0.1) 0%,
+            rgba(0, 255, 255, 0.1) 100%
+        );
+    animation: glitch-overlay-anim 5s infinite alternate;
+}
+.glitch-text {
+    position: relative;
+    display: inline-block;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch-text::before {
+    left: 2px;
+    text-shadow: -2px 0 #ff00c1;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+    left: -2px;
+    text-shadow: -2px 0 #00fff9, 2px 2px #ff00c1;
+    clip: rect(44px, 450px, 56px, 0);
+    animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+    0% {
+        clip: rect(47px, 9999px, 23px, 0);
+    }
+    5% {
+        clip: rect(86px, 9999px, 71px, 0);
+    }
+    10% {
+        clip: rect(23px, 9999px, 6px, 0);
+    }
+    /* ... add more keyframes up to 100% */
+}
+
+@keyframes glitch-anim2 {
+    0% {
+        clip: rect(19px, 9999px, 33px, 0);
+    }
+    5% {
+        clip: rect(71px, 9999px, 37px, 0);
+    }
+    10% {
+        clip: rect(39px, 9999px, 84px, 0);
+    }
+    /* ... add more keyframes up to 100% */
+}
+
+.neon-text {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff00de, 0 0 35px #ff00de, 0 0 40px #ff00de, 0 0 50px #ff00de, 0 0 75px #ff00de;
+}
+
+.text-glow {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.plasma-text {
+    background: linear-gradient(to right, #ff00de, #00ff9d, #00b3ff, #ff00de);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: plasma 20s linear infinite;
+    background-size: 200% auto;
+}
+
+@keyframes plasma {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+.holographic-text {
+    background: linear-gradient(45deg, #ff00de, #00ff9d, #00b3ff, #ff00de);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    position: relative;
+}
+
+.holographic-text::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    filter: blur(8px);
+    opacity: 0.7;
+}
+
+.cyber-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.cyber-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        from 0deg at 50% 50%,
+        #ff00de 0deg,
+        #00ff9d 90deg,
+        #00b3ff 180deg,
+        #ff00de 270deg
+    );
+    animation: rotate 4s linear infinite;
+    z-index: -1;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
 }
 </style>
 
@@ -1835,9 +2053,32 @@ document.addEventListener('DOMContentLoaded', () => {
     gallery.addEventListener('mouseleave', () => {
         gallery.style.animationPlayState = 'running';
     });
+
+    const glitchTexts = document.querySelectorAll('.glitch-text');
+    glitchTexts.forEach(text => {
+        setInterval(() => {
+            text.style.animation = 'none';
+            void text.offsetWidth;
+            text.style.animation = null;
+        }, 5000);
+    });
+
+    const cyberButton = document.querySelector('.cyber-button');
+    cyberButton.addEventListener('mousemove', (e) => {
+        const rect = cyberButton.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        cyberButton.style.setProperty('--x', `${x}px`);
+        cyberButton.style.setProperty('--y', `${y}px`);
+    });
 });
 </script>
 
+
+
+
+
+          
                   
 <section id="pricing" class="relative py-24 overflow-hidden bg-gradient-to-b from-gray-900 to-black text-white">
     <div class="absolute inset-0 bg-pattern opacity-10"></div>
