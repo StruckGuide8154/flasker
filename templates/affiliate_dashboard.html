@@ -7,142 +7,171 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-    body {
-        font-family: 'Poppins', sans-serif;
-        background-color: #f0f4f8;
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                colors: {
+                    primary: {"50":"#eff6ff","100":"#dbeafe","200":"#bfdbfe","300":"#93c5fd","400":"#60a5fa","500":"#3b82f6","600":"#2563eb","700":"#1d4ed8","800":"#1e40af","900":"#1e3a8a"}
+                }
+            },
+            fontFamily: {
+                'body': [
+                    'Poppins', 
+                    'ui-sans-serif', 
+                    'system-ui', 
+                    '-apple-system', 
+                    'system-ui', 
+                    'Segoe UI', 
+                    'Roboto', 
+                    'Helvetica Neue', 
+                    'Arial', 
+                    'Noto Sans', 
+                    'sans-serif', 
+                    'Apple Color Emoji', 
+                    'Segoe UI Emoji', 
+                    'Segoe UI Symbol', 
+                    'Noto Color Emoji'
+                ],
+                'sans': [
+                    'Poppins', 
+                    'ui-sans-serif', 
+                    'system-ui', 
+                    '-apple-system', 
+                    'system-ui', 
+                    'Segoe UI', 
+                    'Roboto', 
+                    'Helvetica Neue', 
+                    'Arial', 
+                    'Noto Sans', 
+                    'sans-serif', 
+                    'Apple Color Emoji', 
+                    'Segoe UI Emoji', 
+                    'Segoe UI Symbol', 
+                    'Noto Color Emoji'
+                ]
+            }
+        }
     }
+</script>
+<style>
     .gradient-text {
-        background: linear-gradient(45deg, #3b82f6, #10b981);
+        @apply bg-gradient-to-r from-primary-500 to-primary-700 dark:from-primary-400 dark:to-primary-600;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
     .card {
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-        transition: all 0.3s ease;
+        @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg transition-all duration-300 border-2 border-transparent;
     }
     .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+        @apply transform -translate-y-1 shadow-xl;
     }
     .animate-number {
-        transition: all 0.5s ease;
+        @apply transition-all duration-500;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-8">
-    <h1 class="text-5xl font-bold mb-8 text-center gradient-text">
-        Your Affiliate Command Center
-    </h1>
+<div class="min-h-screen bg-gray-100 dark:bg-gray-900 py-6 flex flex-col justify-center sm:py-12">
+    <div class="relative py-3 sm:max-w-xl md:max-w-full lg:max-w-screen-lg xl:max-w-screen-xl mx-auto">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary-400 to-primary-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+        <div class="relative px-4 py-10 bg-white dark:bg-gray-800 shadow-lg sm:rounded-3xl sm:p-20">
+            <h1 class="text-5xl font-bold mb-8 text-center gradient-text">
+                Your Affiliate Command Center
+            </h1>
 
-    {% if user_affiliate %}
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div class="card p-6">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Welcome Back, {{ user_affiliate.email.split('@')[0] }}!</h2>
-                <p class="mb-4 text-gray-600">Your Referral Code:</p>
-                <div class="flex items-center">
-                    <span id="referral-code" class="font-bold text-2xl text-indigo-600 mr-2">{{ user_affiliate.referral_code }}</span>
-                    <button id="copy-referral" class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm hover:bg-indigo-200 transition duration-300">Copy</button>
-                </div>
-            </div>
-
-            <div class="card p-6">
-                <h3 class="text-xl font-semibold mb-4 text-gray-800">Quick Stats</h3>
-                <div class="space-y-2">
-                    <p class="text-gray-600">Total Referrals: <span class="font-bold text-2xl text-green-600 animate-number" data-target="{{ referral_stats.total }}">0</span></p>
-                    <p class="text-gray-600">This Month: <span class="font-bold text-2xl text-blue-600 animate-number" data-target="{{ referral_stats.this_month }}">0</span></p>
-                    <p class="text-gray-600">Last Month: <span class="font-bold text-2xl text-indigo-600 animate-number" data-target="{{ referral_stats.last_month }}">0</span></p>
-                </div>
-            </div>
-
-            <div class="card p-6">
-                <h3 class="text-xl font-semibold mb-4 text-gray-800">Earnings Overview</h3>
-                <div class="space-y-2">
-                    <p class="text-gray-600">Total Earnings: <span class="font-bold text-2xl text-green-600">$<span class="animate-number" data-target="{{ '%.2f'|format(referral_stats.total_earnings) }}">0.00</span></span></p>
-                    <p class="text-gray-600">Balance Due: <span class="font-bold text-2xl text-indigo-600">$<span class="animate-number" data-target="{{ '%.2f'|format(referral_stats.balance_due) }}">0.00</span></span></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <div class="card p-6">
-                <h3 class="text-xl font-semibold mb-4 text-gray-800">Performance Metrics</h3>
-                <canvas id="performanceChart" width="400" height="200"></canvas>
-            </div>
-
-            <div class="card p-6">
-                <h3 class="text-xl font-semibold mb-4 text-gray-800">Recent Activity</h3>
-                {% if referral_stats.recent_payments %}
-                    <ul class="space-y-2">
-                        {% for payment in referral_stats.recent_payments %}
-                            <li class="recent-victory flex justify-between items-center p-2 rounded-lg hover:bg-gray-100 transition duration-300">
-                                <span class="text-gray-800">${{ "%.2f"|format(payment.amount) }}</span>
-                                <span class="text-gray-500 text-sm">{{ payment.created_at }}</span>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="text-gray-600 italic">Your first payment is on the horizon. Keep pushing!</p>
-                {% endif %}
-            </div>
-        </div>
-
-        <div class="card p-6 mb-12">
-            <h3 class="text-2xl font-semibold mb-4 text-gray-800">Your Mission Control</h3>
-            <p class="mb-4 text-gray-600">
-                Every referral propels you towards financial independence. Transform your network into your net worth!
-            </p>
-            <button id="mission-toggle" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-indigo-600 hover:to-purple-700 transition duration-300">
-                Reveal Your Mission
-            </button>
-            <div id="mission-details" class="mt-4 hidden space-y-2 text-gray-700">
-                <p>1. Share your unique referral code across your network.</p>
-                <p>2. Guide potential clients through a seamless sign-up process.</p>
-                <p>3. Earn substantial commissions on every successful referral.</p>
-                <p>4. Track your progress and celebrate milestones along your journey!</p>
-            </div>
-        </div>
-
-    {% else %}
-        <div class="card p-6 text-center">
-            <h2 class="text-3xl font-semibold mb-4 text-gray-800">Unlock Your Affiliate Potential</h2>
-            <p class="mb-6 text-gray-600">
-                Your journey to financial freedom is just a click away. 
-                Join our elite affiliate program and transform your influence into a thriving income stream!
-            </p>
-            <a href="#" class="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-indigo-700 transition duration-300">
-                Become an Affiliate
-            </a>
-        </div>
-    {% endif %}
-
-    <div id="tickets-section" class="card p-6 mt-12">
-        <h2 class="text-2xl font-semibold mb-4 text-gray-800">Support Center</h2>
-        <p class="text-gray-600 italic mb-6">
-            "The only way to do great work is to love what you do." - Steve Jobs
-        </p>
-        {% if tickets %}
-            <div class="space-y-4">
-                {% for ticket in tickets %}
-                    <div class="border-l-4 {% if ticket.status == 'Open' %}border-green-500{% elif ticket.status == 'Closed' %}border-red-500{% else %}border-yellow-500{% endif %} pl-4 py-2">
-                        <h3 class="font-semibold text-lg text-gray-800">{{ ticket.title }}</h3>
-                        <p class="text-gray-600">Status: <span class="font-medium {% if ticket.status == 'Open' %}text-green-600{% elif ticket.status == 'Closed' %}text-red-600{% else %}text-yellow-600{% endif %}">{{ ticket.status }}</span></p>
-                        <p class="text-sm text-gray-500">Created on: {{ ticket.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
-                        <a href="{{ url_for('view_ticket', ticket_id=ticket.id) }}" class="text-blue-600 hover:underline">View Details</a>
+            {% if user_affiliate %}
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <div class="card p-6 border-primary-500">
+                        <h2 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-white">Welcome Back, {{ user_affiliate.email.split('@')[0] }}!</h2>
+                        <p class="mb-4 text-gray-600 dark:text-gray-300">Your Referral Code:</p>
+                        <div class="flex items-center">
+                            <span id="referral-code" class="font-bold text-2xl text-primary-600 dark:text-primary-400 mr-2">{{ user_affiliate.referral_code }}</span>
+                            <button id="copy-referral" class="bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 px-3 py-1 rounded-full text-sm hover:bg-primary-200 dark:hover:bg-primary-800 transition duration-300">Copy</button>
+                        </div>
                     </div>
-                {% endfor %}
+
+                    <div class="card p-6 border-green-500">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Quick Stats</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-600 dark:text-gray-300">Total Referrals: <span class="font-bold text-2xl text-green-600 dark:text-green-400 animate-number" data-target="{{ referral_stats.total }}">0</span></p>
+                            <p class="text-gray-600 dark:text-gray-300">This Month: <span class="font-bold text-2xl text-blue-600 dark:text-blue-400 animate-number" data-target="{{ referral_stats.this_month }}">0</span></p>
+                            <p class="text-gray-600 dark:text-gray-300">Last Month: <span class="font-bold text-2xl text-indigo-600 dark:text-indigo-400 animate-number" data-target="{{ referral_stats.last_month }}">0</span></p>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 border-yellow-500">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Earnings Overview</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-600 dark:text-gray-300">Total Earnings: <span class="font-bold text-2xl text-green-600 dark:text-green-400">$<span class="animate-number" data-target="{{ '%.2f'|format(referral_stats.total_earnings) }}">0.00</span></span></p>
+                            <p class="text-gray-600 dark:text-gray-300">Balance Due: <span class="font-bold text-2xl text-indigo-600 dark:text-indigo-400">$<span class="animate-number" data-target="{{ '%.2f'|format(referral_stats.balance_due) }}">0.00</span></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                    <div class="card p-6 border-blue-500">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Performance Metrics</h3>
+                        <canvas id="performanceChart" width="400" height="200"></canvas>
+                    </div>
+
+                    <div class="card p-6 border-purple-500">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Recent Activity</h3>
+                        {% if referral_stats.recent_payments %}
+                            <ul class="space-y-2">
+                                {% for payment in referral_stats.recent_payments %}
+                                    <li class="recent-victory flex justify-between items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-300">
+                                        <span class="text-gray-800 dark:text-gray-200">${{ "%.2f"|format(payment.amount) }}</span>
+                                        <span class="text-gray-500 dark:text-gray-400 text-sm">{{ payment.created_at }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-gray-600 dark:text-gray-400 italic">Your first payment is on the horizon. Keep pushing!</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+            {% else %}
+                <div class="card p-6 text-center border-primary-500">
+                    <h2 class="text-3xl font-semibold mb-4 text-gray-800 dark:text-white">Unlock Your Affiliate Potential</h2>
+                    <p class="mb-6 text-gray-600 dark:text-gray-300">
+                        Your journey to financial freedom is just a click away. 
+                        Join our elite affiliate program and transform your influence into a thriving income stream!
+                    </p>
+                    <a href="#" class="inline-block bg-gradient-to-r from-primary-500 to-primary-700 dark:from-primary-600 dark:to-primary-800 text-white px-8 py-3 rounded-lg font-semibold hover:from-primary-600 hover:to-primary-800 dark:hover:from-primary-700 dark:hover:to-primary-900 transition duration-300">
+                        Become an Affiliate
+                    </a>
+                </div>
+            {% endif %}
+
+            <div id="tickets-section" class="card p-6 mt-12 border-red-500">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-white">Support Center</h2>
+                <p class="text-gray-600 dark:text-gray-400 italic mb-6">
+                    "The only way to do great work is to love what you do." - Steve Jobs
+                </p>
+                {% if tickets %}
+                    <div class="space-y-4">
+                        {% for ticket in tickets %}
+                            <div class="border-l-4 {% if ticket.status == 'Open' %}border-green-500{% elif ticket.status == 'Closed' %}border-red-500{% else %}border-yellow-500{% endif %} pl-4 py-2">
+                                <h3 class="font-semibold text-lg text-gray-800 dark:text-white">{{ ticket.title }}</h3>
+                                <p class="text-gray-600 dark:text-gray-300">Status: <span class="font-medium {% if ticket.status == 'Open' %}text-green-600 dark:text-green-400{% elif ticket.status == 'Closed' %}text-red-600 dark:text-red-400{% else %}text-yellow-600 dark:text-yellow-400{% endif %}">{{ ticket.status }}</span></p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Created on: {{ ticket.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                                <a href="{{ url_for('view_ticket', ticket_id=ticket.id) }}" class="text-primary-600 dark:text-primary-400 hover:underline">View Details</a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-gray-600 dark:text-gray-400">No active support tickets. Need assistance? We're here to help!</p>
+                {% endif %}
+                <div class="mt-6">
+                    <a href="{{ url_for('create_ticket') }}" class="inline-block bg-green-500 dark:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-600 dark:hover:bg-green-700 transition duration-300">
+                        Create New Ticket
+                    </a>
+                </div>
             </div>
-        {% else %}
-            <p class="text-gray-600">No active support tickets. Need assistance? We're here to help!</p>
-        {% endif %}
-        <div class="mt-6">
-            <a href="{{ url_for('create_ticket') }}" class="inline-block bg-green-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-600 transition duration-300">
-                Create New Ticket
-            </a>
         </div>
     </div>
 </div>
@@ -171,16 +200,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, duration / steps);
     });
 
-    // Toggle mission details
-    const missionToggle = document.getElementById('mission-toggle');
-    const missionDetails = document.getElementById('mission-details');
-    if (missionToggle && missionDetails) {
-        missionToggle.addEventListener('click', () => {
-            missionDetails.classList.toggle('hidden');
-            missionToggle.textContent = missionDetails.classList.contains('hidden') ? 'Reveal Your Mission' : 'Hide Mission Details';
-        });
-    }
-
     // Copy referral code to clipboard
     const referralCodeElement = document.getElementById('referral-code');
     const copyButton = document.getElementById('copy-referral');
@@ -206,12 +225,12 @@ document.addEventListener('DOMContentLoaded', function() {
             datasets: [{
                 label: 'Referrals',
                 data: [12, 19, 3, 5, 2, 3],
-                borderColor: 'rgb(75, 192, 192)',
+                borderColor: 'rgb(59, 130, 246)',
                 tension: 0.1
             }, {
                 label: 'Earnings ($)',
                 data: [100, 250, 30, 50, 20, 30],
-                borderColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(16, 185, 129)',
                 tension: 0.1
             }]
         },
@@ -221,9 +240,66 @@ document.addEventListener('DOMContentLoaded', function() {
                 y: {
                     beginAtZero: true
                 }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: document.documentElement.classList.contains('dark') ? 'rgb(229, 231, 235)' : 'rgb(31, 41, 55)'
+                    }
+                }
             }
         }
     });
+
+    // Toggle dark mode
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            // Update chart colors when toggling dark mode
+            updateChartColors();
+        });
+    }
+    // Function to update chart colors based on dark mode
+    function updateChartColors() {
+        const isDarkMode = document.documentElement.classList.contains('dark');
+        const textColor = isDarkMode ? 'rgb(229, 231, 235)' : 'rgb(31, 41, 55)';
+        const chart = Chart.getChart('performanceChart');
+        if (chart) {
+            chart.options.plugins.legend.labels.color = textColor;
+            chart.options.scales.x.ticks.color = textColor;
+            chart.options.scales.y.ticks.color = textColor;
+            chart.options.scales.x.grid.color = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+            chart.options.scales.y.grid.color = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+            chart.update();
+        }
+    }
+
+    // Initial call to set correct colors
+    updateChartColors();
+
+    // Check for saved theme preference or use system preference
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+
+    // Add dark mode toggle button to the navbar
+    const navbar = document.querySelector('nav');
+    if (navbar) {
+        const darkModeButton = document.createElement('button');
+        darkModeButton.id = 'dark-mode-toggle';
+        darkModeButton.innerHTML = '🌓';
+        darkModeButton.className = 'px-3 py-1 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700';
+        navbar.appendChild(darkModeButton);
+
+        darkModeButton.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+            updateChartColors();
+        });
+    }
 });
 </script>
 {% endblock %}
