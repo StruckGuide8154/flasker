@@ -26,28 +26,31 @@
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Email</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Referral Code</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Total Referrals</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Total Earnings</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">This Month</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Last Month</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">User Count</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Clicks</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Total Time on Page</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
-<tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-    {% for affiliate in affiliates %}
-    <tr>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.email }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.referral_code }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.stats['total'] }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.stats['this_month'] }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.stats['last_month'] }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.stats['user_count'] }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.stats['clicks'] }}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.stats['total_time_on_page'] }}</td>
-
-        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-            <a href="{{ url_for('edit_affiliate', affiliate_id=affiliate.id) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</a>
-        </td>
-    </tr>
-    {% endfor %}
-</tbody>
+                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        {% for affiliate in affiliates %}
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.email }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.referral_code }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.stats['total'] or 'N/A' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.stats['this_month'] or 'N/A' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.stats['last_month'] or 'N/A' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.stats['user_count'] or 'N/A' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.stats['clicks'] or 'N/A' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.stats['total_time_on_page'] or 'N/A' }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <a href="{{ url_for('edit_affiliate', affiliate_id=affiliate.id) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -94,7 +97,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
                 <div class="px-4 py-5 sm:p-6">
                     <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Total Earnings</dt>
-<dd class="mt-1 text-3xl font-semibold text-gray-900 dark:text-white">{{ referral_stats.total_earnings }}</dd>
+                    <dd class="mt-1 text-3xl font-semibold text-gray-900 dark:text-white">{{ referral_stats.total_earnings }}</dd>
                 </div>
             </div>
         </div>
@@ -105,71 +108,21 @@
                 <div class="px-4 py-5 sm:p-6">
                     <p class="text-sm text-gray-700 dark:text-gray-300">Share this link to earn referral bonuses:</p>
                     <div class="mt-2 flex rounded-md shadow-sm">
-                        <input type="text" readonly value="{{ url_for('affiliate_redirect', referral_code=user_affiliate.referral_code, _external=True) }}" class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 dark:bg-gray-700 dark:text-white dark:border-gray-600">
-                        <button onclick="copyToClipboard()" class="inline-flex items-center px-3 py-2 border border-l-0 border-gray-300 rounded-r-md bg-gray-50 dark:bg-gray-600 text-gray-500 dark:text-gray-300 sm:text-sm">
+                        <input id="referral-link" type="text" readonly value="{{ url_for('affiliate_redirect', referral_code=user_affiliate.referral_code, _external=True) }}" class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 dark:bg-gray-700 dark:text-white dark:border-gray-600">
+                        <button onclick="copyToClipboard()" class="inline-flex items-center px-3 py-2 border border-l-0 border-gray-300 rounded-r-md bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-500 sm:text-sm">
                             Copy
                         </button>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
-            <div>
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Monthly Referrals</h2>
-                <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                    <div class="px-4 py-5 sm:p-6">
-                        <canvas id="monthlyReferralsChart"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Plan Distribution</h2>
-                <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                    <div class="px-4 py-5 sm:p-6">
-                        <canvas id="planDistributionChart"></canvas>
-                    </div>
+                    <p id="copy-alert" class="mt-2 text-sm text-green-600 hidden">Referral link copied to clipboard!</p>
                 </div>
             </div>
         </div>
 
         <div class="mb-8">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Recent Referrals</h2>
-            <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
-                <ul class="divide-y divide-gray-200 dark:divide-gray-700">
-                    {% for referral in recent_referrals %}
-                    <li class="px-4 py-4 sm:px-6">
-                        <div class="flex items-center justify-between">
-                            <p class="text-sm font-medium text-indigo-600 dark:text-indigo-400 truncate">
-                                {{ referral.email }}
-                            </p>
-                            <div class="ml-2 flex-shrink-0 flex">
-                                <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    {{ referral.plan }}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="mt-2 sm:flex sm:justify-between">
-                            <div class="sm:flex">
-                                <p class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                                    {{ referral.date.strftime('%B %d, %Y') }}
-                                </p>
-                            </div>
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Referral Statistics</h2>
+            <canvas id="referralChart" class="w-full"></canvas>
         </div>
-        {% else %}
-        <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-            <div class="px-4 py-5 sm:p-6">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Become an Affiliate</h3>
-                <div class="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-400">
-                    <p>You are not currently an affiliate. Contact the admin to become an affiliate and start earning!</p>
-                </div>
-            </div>
-        </div>
+
         {% endif %}
         {% endif %}
     </div>
@@ -177,51 +130,26 @@
 
 <script>
 function copyToClipboard() {
-    var copyText = document.querySelector('input[readonly]');
+    var copyText = document.getElementById('referral-link');
     copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
     document.execCommand("copy");
-    alert("Copied the referral link: " + copyText.value);
+    document.getElementById('copy-alert').classList.remove('hidden');
 }
 
-{% if not current_user.is_system_user and user_affiliate %}
-// Monthly Referrals Chart
-var monthlyReferralsCtx = document.getElementById('monthlyReferralsChart').getContext('2d');
-var monthlyReferralsChart = new Chart(monthlyReferralsCtx, {
-    type: 'line',
-    data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        datasets: [{
-            label: 'Referrals',
-            data: {{ monthly_referrals | tojson }},
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
-
-// Plan Distribution Chart
-var planDistributionCtx = document.getElementById('planDistributionChart').getContext('2d');
-var planDistributionChart = new Chart(planDistributionCtx, {
+var ctx = document.getElementById('referralChart').getContext('2d');
+var referralChart = new Chart(ctx, {
     type: 'pie',
     data: {
-        labels: ['Basic', 'Pro', 'Enterprise'],
+        labels: ['Basic Sales', 'Pro Sales', 'Enterprise Sales'],
         datasets: [{
+            label: 'Referral Breakdown',
             data: [{{ referral_stats.basic_sales }}, {{ referral_stats.pro_sales }}, {{ referral_stats.enterprise_sales }}],
-            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+            backgroundColor: ['#6366F1', '#EC4899', '#F59E0B'],
+            hoverOffset: 4
         }]
-    },
-    options: {
-        responsive: true
     }
 });
-{% endif %}
 </script>
+
 {% endblock %}
