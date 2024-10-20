@@ -124,6 +124,95 @@ updatePricingTables()
             footer .text-sm {
                 font-size: 0.75rem !important;
             }
+            /* Button styles */
+            .enroll-button,
+            .pricing-card a,
+            #contact button[type="submit"] {
+                font-size: 0.875rem !important;
+                padding: 0.5rem 1rem !important;
+                background-color: transparent !important;
+                border: 2px solid currentColor !important;
+                color: #fff !important;
+                transition: all 0.3s ease;
+            }
+
+            .enroll-button:hover,
+            .pricing-card a:hover,
+            #contact button[type="submit"]:hover {
+                background-color: rgba(255, 255, 255, 0.1) !important;
+            }
+
+            /* Hero Section adjustments */
+            #hero .flex.justify-center {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #hero .flex.justify-center > div {
+                margin-bottom: 1rem;
+            }
+
+            /* Features Section */
+            #features .grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* Testimonials Section */
+            #testimonials .grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* Pricing Section rearrangement */
+            #pricing .grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .pricing-card {
+                margin-bottom: 2rem;
+            }
+
+            .pricing-card.transform.scale-105 {
+                transform: none !important;
+            }
+
+            .pricing-card ul {
+                columns: 2;
+            }
+
+            .pricing-card ul li {
+                margin-bottom: 0.5rem;
+            }
+
+            .pricing-card .mb-8.p-4 {
+                margin-bottom: 1rem !important;
+            }
+
+            /* Contact Section */
+            #contact .grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* Footer adjustments */
+            footer .grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            footer .col-span-1.md\\:col-span-4.lg\\:col-span-1 {
+                margin-bottom: 2rem;
+            }
+
+            footer .grid.grid-cols-1.md\\:grid-cols-3 {
+                grid-template-columns: 1fr 1fr !important;
+            }
+
+            footer .mt-16.border-t {
+                flex-direction: column-reverse;
+                align-items: center;
+            }
+
+            footer .mt-16.border-t > div {
+                margin-bottom: 1rem;
+            }
         }
 .futuristic-heading {
     font-family: 'Clash Display', sans-serif;
