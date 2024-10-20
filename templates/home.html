@@ -1100,28 +1100,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 <section id="testimonials" class="relative py-32 overflow-hidden opacity-0 transition-opacity duration-1000">
-      <div class="content-wrapper">
-
-    <div class="background-image"></div>
-    <div class="background-overlay"></div>
-    
-    <!-- Floating Words -->
-    <div class="floating-words">
-        <span>Innovative</span>
-        <span>Powerful</span>
-        <span>Secure</span>
-        <span>Efficient</span>
-        <span>Revolutionary</span>
-    </div>
-
-    <!-- Subtle SVG Drawings -->
-
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-6xl md:text-8xl font-thin text-center text-white opacity-80 mb-20 tracking-wider leading-tight glitch-effect">
-            Voices of <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400">Transformation</span>
-        </h2>
+    <div class="content-wrapper">
+        <div class="background-container">
+            <div class="background-image"></div>
+            <div class="background-overlay"></div>
+        </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- Floating Words -->
+        <div class="floating-words">
+            <span>Innovative</span>
+            <span>Powerful</span>
+            <span>Secure</span>
+            <span>Efficient</span>
+            <span>Revolutionary</span>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-6xl md:text-8xl font-thin text-center text-white opacity-80 mb-20 tracking-wider leading-tight">
+                Voices of <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400">Transformation</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div class="testimonial-card" data-country="USA">
                 <div class="card-content">
                     <p class="text-xl md:text-2xl font-extralight text-gray-300 mb-6 leading-relaxed">
@@ -1190,12 +1189,24 @@ document.addEventListener('DOMContentLoaded', () => {
 #testimonials {
     font-family: 'Raleway', sans-serif;
     background-color: rgba(0, 0, 0, 0.7);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 .background-image {
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
     width: 100%;
     height: 100%;
     background-image: url('v.webp');
@@ -1203,6 +1214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     background-position: center;
     background-repeat: no-repeat;
     filter: brightness(0.7) contrast(1.2);
+    transform: translate(-50%, -50%);
     z-index: -2;
 }
 
@@ -1221,11 +1233,11 @@ document.addEventListener('DOMContentLoaded', () => {
     z-index: -1;
 }
 
-#testimonials {
+.content-wrapper {
     position: relative;
-    z-index: 1;
-    background-color: transparent;
+    z-index: 2;
 }
+
 
 
 .testimonial-card {
