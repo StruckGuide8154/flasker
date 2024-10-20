@@ -909,5 +909,20 @@ Stats & Domain</span></a>
     });
 
 </script>
+                    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to set the theme
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+
+        // Set the theme to dark mode on page load
+        setTheme('dark');
+    });
+</script>
 </body>
     </html>
