@@ -106,22 +106,22 @@
                                 <div>
                                     <h2 class="text-2xl font-bold mb-4 text-center text-gray-800 dark:text-white">Earnings</h2>
                                     <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
-                                        <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:p-0">
-                                            <dl class="sm:divide-y sm:divide-gray-200 dark:sm:divide-gray-700">
-                                                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Earnings</dt>
-                                                    <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">${{ referral_stats.total_earnings | round(2) }}</dd>
-                                                </div>
-                                                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Paid</dt>
-                                                    <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">${{ referral_stats.total_paid | round(2) }}</dd>
-                                                </div>
-                                                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Balance Due</dt>
-                                                    <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">${{ referral_stats.balance_due | round(2) }}</dd>
-                                                </div>
-                                            </dl>
-                                        </div>
+        <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-5 sm:p-0">
+            <dl class="sm:divide-y sm:divide-gray-200 dark:sm:divide-gray-700">
+                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Earnings</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">${{ referral_stats.total_earnings | format_currency }}</dd>
+                </div>
+                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Paid</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">${{ referral_stats.total_paid | format_currency }}</dd>
+                </div>
+                <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Balance Due</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">${{ referral_stats.balance_due | format_currency }}</dd>
+                </div>
+            </dl>
+        </div>
                                     </div>
                                 </div>
                             </div>
