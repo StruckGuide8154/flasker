@@ -1115,13 +1115,6 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 
     <!-- Subtle SVG Drawings -->
-    <svg class="hidden lg:block absolute top-10 left-10 w-32 h-32 text-cyan-500 opacity-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-    </svg>
-    
-    <svg class="hidden lg:block absolute bottom-10 right-10 w-32 h-32 text-emerald-500 opacity-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-    </svg>
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-6xl md:text-8xl font-thin text-center text-white opacity-80 mb-20 tracking-wider leading-tight glitch-effect">
@@ -1200,6 +1193,7 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 .background-image {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -1213,6 +1207,7 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 .background-overlay {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -1231,6 +1226,7 @@ document.addEventListener('DOMContentLoaded', () => {
     z-index: 1;
     background-color: transparent;
 }
+
 
 .testimonial-card {
     background: rgba(255, 255, 255, 0.1);
@@ -1316,33 +1312,7 @@ h2 {
     50% { transform: translateY(-20px) rotate(5deg); }
 }
 
-/* Glitch Effect */
-.glitch-effect {
-    position: relative;
-}
 
-.glitch-effect::before,
-.glitch-effect::after {
-    content: 'Voices of Transformation';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    clip: rect(0, 900px, 0, 0);
-}
-
-.glitch-effect::before {
-    left: 2px;
-    text-shadow: -1px 0 #ff00c1;
-    animation: glitch-anim-1 2s infinite linear alternate-reverse;
-}
-
-.glitch-effect::after {
-    left: -2px;
-    text-shadow: -1px 0 #00fff9;
-    animation: glitch-anim-2 2s infinite linear alternate-reverse;
-}
 
 @keyframes glitch-anim-1 {
     0% { clip: rect(86px, 9999px, 42px, 0); }
@@ -1429,11 +1399,7 @@ h2 {
     opacity: 1;
 }
 
-/* Typing Animation */
-.typing-effect::after {
-    content: '|';
-    animation: blink 0.7s infinite;
-}
+
 
 @keyframes blink {
     0%, 100% { opacity: 1; }
