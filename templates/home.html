@@ -1541,9 +1541,12 @@ document.addEventListener('DOMContentLoaded', () => {
 <section id="gallery" class="relative py-24 overflow-hidden">
 <div class="absolute inset-0 z-0 webp-background"></div>
     <div class="absolute inset-0 z-0">
-        <div class="w-full h-full bg-center bg-cover opacity-70" style="background-image: url('a.webp');"></div>
-        <div class="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-blue-900/80 to-purple-900/80"></div>
+        <!-- Black base layer -->
+        <div class="absolute inset-0 bg-black"></div>
+        <!-- Image overlay -->
+        <div class="absolute inset-0 bg-center bg-cover opacity-50 mix-blend-overlay" style="background-image: url('a.webp');"></div>
     </div>
+
 
 
            <div class="absolute inset-0 z-1 bg-noise opacity-10"></div>
