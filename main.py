@@ -601,7 +601,7 @@ def serve_webp():
     return send_file('z.webp', mimetype='image/webp')
 
 @app.route('/c.webp')
-def serve_webp():
+def sesrve_webp():
     return send_file('c.webp', mimetype='image/webp')
 
 
