@@ -110,8 +110,8 @@ def send_thank_you_email(to_email):
 @app.after_request
 def add_csp_headers(response):
     csp = "default-src *; " \
-          "script-src *; " \
-          "style-src *; " \
+          "script-src * 'unsafe-inline'; " \
+          "style-src * 'unsafe-inline'; " \
           "font-src *; " \
           "img-src *; " \
           "connect-src *;"
