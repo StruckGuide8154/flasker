@@ -455,31 +455,15 @@ def affiliate():
 
             return redirect(url_for('affiliate'))
 
-        # Serialize the data to ensure it's JSON serializable
-        try:
-            serialized_affiliates = serialize_referrals(affiliates)
-            print(json.dumps(serialized_affiliates))  # Debugging serialization
-        except TypeError as e:
-            print(f"Serialization error: {e}")
-
         return render_template('affiliate.html', affiliates=affiliates)
     
     else:
         user_affiliate = Affiliate.query.filter_by(email=current_user.email).first()
         referral_stats = get_referral_stats(user_affiliate.referral_code) if user_affiliate else None
         
-        # Serialize the referral stats if available
-        if referral_stats:
-            try:
-                serialized_stats = serialize_referrals([user_affiliate])
-                print(json.dumps(serialized_stats))  # Debugging serialization
-            except TypeError as e:
-                print(f"Serialization error: {e}")
-        else:
-            serialized_stats = None
-        
-        return render_template('affiliate.html', user_affiliate=user_affiliate, referral_stats=serialized_stats)
-
+        return render_template('affiliate.html', 
+                               user_affiliate=user_affiliate, 
+                               referral_stats=[{'stats': referral_stats}] if referral_stats else None)
 
 
 
