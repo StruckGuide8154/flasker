@@ -1,74 +1,134 @@
-{% extends "base.html" %}
-
-{% block content %}
-<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <div class="px-4 py-6 sm:px-0">
-        <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-8">
-            Affiliate Dashboard
-        </h1>
-
-        {% if current_user.is_system_user %}
-        <!-- Admin View -->
-        <div class="mb-8">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Affiliate List</h2>
-            <!-- Admin table and form go here -->
-        </div>
-
-        {% else %}
-        <!-- Regular User View -->
-        {% if user_affiliate %}
-        <!-- Referral Stats for regular users -->
-        <div class="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <!-- Total Referrals, This Month, Total Earnings blocks -->
-        </div>
-
-        <div class="mb-8">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Referral Link</h2>
-            <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="px-4 py-5 sm:p-6">
-                    <p class="text-sm text-gray-700 dark:text-gray-300">Share this link to earn referral bonuses:</p>
-                    <div class="mt-2 flex rounded-md shadow-sm">
-                        <input id="referral-link" type="text" readonly value="{{ url_for('affiliate_redirect', referral_code=user_affiliate.referral_code, _external=True) }}" class="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 dark:bg-gray-700 dark:text-white dark:border-gray-600">
-                        <button onclick="copyToClipboard()" class="inline-flex items-center px-3 py-2 border border-l-0 border-gray-300 rounded-r-md bg-gray-50 dark:bg-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-500 sm:text-sm">
-                            Copy
-                        </button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affiliate Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-white shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <a href="{{ url_for('dashboard') }}" class="flex-shrink-0 flex items-center">
+                        <img class="h-8 w-auto" src="logo.svg" alt="Logo">
+                    </a>
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="{{ url_for('dashboard') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                        <a href="{{ url_for('affiliate') }}" class="text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Affiliate</a>
                     </div>
-                    <p id="copy-alert" class="mt-2 text-sm text-green-600 hidden">Referral link copied to clipboard!</p>
+                </div>
+                <div class="ml-4 flex items-center md:ml-6">
+                    <a href="{{ url_for('logout') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Logout</a>
                 </div>
             </div>
         </div>
+    </nav>
 
-        <div class="mb-8">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Referral Statistics</h2>
-            <canvas id="referralChart" class="w-full"></canvas>
-        </div>
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        {% if current_user.is_system_user %}
+            <h1 class="text-3xl font-bold mb-4">Affiliates</h1>
+            <div class="mb-4">
+                <form method="POST" action="{{ url_for('affiliate') }}" class="flex space-x-4">
+                    <input type="email" name="email" placeholder="Affiliate Email" class="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <input type="text" name="referral_code" placeholder="Referral Code" class="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Add Affiliate</button>
+                </form>
+            </div>
+            <div class="bg-white shadow overflow-hidden sm:rounded-md">
+                <ul class="divide-y divide-gray-200">
+                    {% for affiliate in affiliates %}
+                        <li class="px-4 py-4 sm:px-6">
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm font-medium text-gray-900">
+                                    {{ affiliate.email }}
+                                </div>
+                                <div class="ml-2 flex-shrink-0 flex">
+                                    <a href="{{ url_for('edit_affiliate', affiliate_id=affiliate.id) }}" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        Edit
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="mt-2 sm:flex sm:justify-between">
+                                <div class="sm:flex">
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        Referral Code: {{ affiliate.referral_code }}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <h1 class="text-3xl font-bold mb-4">Affiliate Dashboard</h1>
+            {% if user_affiliate %}
+                <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                    <div class="px-4 py-5 sm:px-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">
+                            Affiliate Information
+                        </h3>
+                    </div>
+                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
+                        <dl class="sm:divide-y sm:divide-gray-200">
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500">
+                                    Email
+                                </dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                    {{ user_affiliate.email }}
+                                </dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500">
+                                    Referral Code
+                                </dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                    {{ user_affiliate.referral_code }}
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
 
-        <script>
-        function copyToClipboard() {
-            var copyText = document.getElementById('referral-link');
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); // For mobile devices
-            document.execCommand("copy");
-            document.getElementById('copy-alert').classList.remove('hidden');
-        }
-
-        var ctx = document.getElementById('referralChart').getContext('2d');
-        var referralChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Basic Sales', 'Pro Sales', 'Enterprise Sales'],
-                datasets: [{
-                    label: 'Referral Breakdown',
-                    data: [{{ referral_stats.basic_sales }}, {{ referral_stats.pro_sales }}, {{ referral_stats.enterprise_sales }}],
-                    backgroundColor: ['#6366F1', '#EC4899', '#F59E0B'],
-                    hoverOffset: 4
-                }]
-            }
-        });
-        </script>
-
-        {% endif %}
+                <div class="mt-8">
+                    <h2 class="text-2xl font-bold mb-4">Referral Statistics</h2>
+                    {% if referral_stats %}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                            <div class="bg-white shadow rounded-lg p-4">
+                                <div class="text-sm font-medium text-gray-500">Total Referrals</div>
+                                <div class="mt-1 text-3xl font-semibold text-gray-900">{{ referral_stats[0].stats.total }}</div>
+                            </div>
+                            <div class="bg-white shadow rounded-lg p-4">
+                                <div class="text-sm font-medium text-gray-500">This Month</div>
+                                <div class="mt-1 text-3xl font-semibold text-gray-900">{{ referral_stats[0].stats.this_month }}</div>
+                            </div>
+                            <div class="bg-white shadow rounded-lg p-4">
+                                <div class="text-sm font-medium text-gray-500">Last Month</div>
+                                <div class="mt-1 text-3xl font-semibold text-gray-900">{{ referral_stats[0].stats.last_month }}</div>
+                            </div>
+                            <div class="bg-white shadow rounded-lg p-4">
+                                <div class="text-sm font-medium text-gray-500">User Count</div>
+                                <div class="mt-1 text-3xl font-semibold text-gray-900">{{ referral_stats[0].stats.user_count }}</div>
+                            </div>
+                            <div class="bg-white shadow rounded-lg p-4">
+                                <div class="text-sm font-medium text-gray-500">Clicks</div>
+                                <div class="mt-1 text-3xl font-semibold text-gray-900">{{ referral_stats[0].stats.clicks }}</div>
+                            </div>
+                            <div class="bg-white shadow rounded-lg p-4">
+                                <div class="text-sm font-medium text-gray-500">Total Time on Page (seconds)</div>
+                                <div class="mt-1 text-3xl font-semibold text-gray-900">{{ referral_stats[0].stats.total_time_on_page }}</div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p class="text-gray-500">No referral statistics available.</p>
+                    {% endif %}
+                </div>
+            {% else %}
+                <p class="text-gray-500">You are not registered as an affiliate.</p>
+            {% endif %}
         {% endif %}
     </div>
-</div>
-{% endblock %}
+</body>
+</html>
