@@ -480,6 +480,56 @@ def affiliate():
 
 
 
+app.config['UPLOAD_FOLDER'] = 'instance'
+
+@app.route('/upload_db', methods=['GET', 'POST'])
+@login_required
+@system_user_required
+def upload_db():
+    if request.method == 'POST':
+        # Check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part', 'error')
+            return redirect(request.url)
+        file = request.files['file']
+        # If user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file', 'error')
+            return redirect(request.url)
+        if file and file.filename.endswith('.db'):
+            filename = secure_filename(file.filename)
+            temp_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            
+            # Ensure the upload folder exists
+            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+            
+            file.save(temp_path)
+            
+            # Close the current database connection
+            db.session.remove()
+            db.engine.dispose()
+            
+            try:
+                # Replace the current database file
+                current_db_path = app.config['SQLALCHEMY_DATABASE_URI'].replace('sqlite:///', '')
+                shutil.move(temp_path, current_db_path)
+                
+                # Reconnect to the new database
+                db.engine.dispose()
+                db.session.remove()
+                db.create_all()
+                
+                flash('Database successfully uploaded and replaced', 'success')
+            except Exception as e:
+                flash(f'Error replacing database: {str(e)}', 'error')
+            
+            return redirect(url_for('dashboard'))
+        else:
+            flash('Invalid file type. Please upload a .db file.', 'error')
+            return redirect(request.url)
+    
+    return render_template('upload_db.html')
 
 @app.route('/ref/<referral_code>')
 def affiliate_redirect(referral_code):
