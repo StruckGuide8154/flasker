@@ -1100,16 +1100,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 <section id="testimonials" class="relative py-32 overflow-hidden opacity-0 transition-opacity duration-1000">
+      <div class="content-wrapper">
+
     <div class="background-image"></div>
     <div class="background-overlay"></div>
     
+    <!-- Floating Words -->
+    <div class="floating-words">
+        <span>Innovative</span>
+        <span>Powerful</span>
+        <span>Secure</span>
+        <span>Efficient</span>
+        <span>Revolutionary</span>
+    </div>
+
+    <!-- Subtle SVG Drawings -->
+    <svg class="hidden lg:block absolute top-10 left-10 w-32 h-32 text-cyan-500 opacity-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+    </svg>
+    
+    <svg class="hidden lg:block absolute bottom-10 right-10 w-32 h-32 text-emerald-500 opacity-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+    </svg>
+
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-6xl md:text-8xl font-thin text-center text-white opacity-80 mb-20 tracking-wider leading-tight">
+        <h2 class="text-6xl md:text-8xl font-thin text-center text-white opacity-80 mb-20 tracking-wider leading-tight glitch-effect">
             Voices of <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400">Transformation</span>
         </h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div class="testimonial-card">
+            <div class="testimonial-card" data-country="USA">
                 <div class="card-content">
                     <p class="text-xl md:text-2xl font-extralight text-gray-300 mb-6 leading-relaxed">
                         Expansion <span class="text-cyan-400 font-light">OBLITERATED</span> our IT bottlenecks. 40% fewer tickets, 3X faster onboarding. We're saving <span class="text-teal-400 font-light">100+ hours monthly</span>. It's not ROI, it's a <span class="text-emerald-400 font-light">REVOLUTION</span>.
@@ -1123,7 +1143,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             </div>
-            <div class="testimonial-card">
+            <div class="testimonial-card" data-country="UK">
                 <div class="card-content">
                     <p class="text-xl md:text-2xl font-extralight text-gray-300 mb-6 leading-relaxed">
                         Expansion catapulted our performance. <span class="text-cyan-400 font-light">25% higher open rates</span>, <span class="text-teal-400 font-light">35% more click-throughs</span>. 98% inbox placement. For serious marketers, it's <span class="text-emerald-400 font-light">ESSENTIAL</span>.
@@ -1137,7 +1157,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             </div>
-            <div class="testimonial-card">
+            <div class="testimonial-card" data-country="India">
                 <div class="card-content">
                     <p class="text-xl md:text-2xl font-extralight text-gray-300 mb-6 leading-relaxed">
                         In 15 years, nothing like Expansion. User-friendly AND secure. Uptime: 95% to <span class="text-cyan-400 font-light">99.99%</span>. Compliance? Streamlined. It's not a game-changer—it's a <span class="text-teal-400 font-light">NEW GAME</span>.
@@ -1151,7 +1171,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             </div>
-            <div class="testimonial-card">
+            <div class="testimonial-card" data-country="Germany">
                 <div class="card-content">
                     <p class="text-xl md:text-2xl font-extralight text-gray-300 mb-6 leading-relaxed">
                         Expansion isn't just software—it's a <span class="text-cyan-400 font-light">PARADIGM SHIFT</span>. Our team's productivity soared by <span class="text-teal-400 font-light">200%</span>. Client satisfaction? Off the charts. This is the future of business communication.
@@ -1167,6 +1187,8 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         </div>
     </div>
+            </div>
+
 </section>
 
 <style>
@@ -1178,7 +1200,7 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 .background-image {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -1186,8 +1208,8 @@ document.addEventListener('DOMContentLoaded', () => {
     background-image: url('v.webp');
     background-size: cover;
     background-position: center;
-    filter: blur(10px);
-    opacity: 0.3;
+    background-repeat: no-repeat;
+    filter: brightness(0.7) contrast(1.2);
     z-index: -2;
 }
 
@@ -1197,9 +1219,32 @@ document.addEventListener('DOMContentLoaded', () => {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%);
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.7) 0%,
+        rgba(0,0,0,0.5) 50%,
+        rgba(0,0,0,0.7) 100%
+    );
     z-index: -1;
 }
+
+#testimonials {
+    position: relative;
+    z-index: 1;
+    background-color: transparent;
+}
+
+.testimonial-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Adjust the content wrapper to create space below the divs */
+.content-wrapper {
+    padding-bottom: 100px; /* Adjust this value as needed */
+}
+
 
 .testimonial-card {
     background: rgba(255, 255, 255, 0.05);
@@ -1223,8 +1268,8 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 .testimonial-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(20, 184, 166, 0.1);
+    transform: translateY(-10px) rotate3d(1, 1, 1, 5deg);
+    box-shadow: 0 20px 40px rgba(20, 184, 166, 0.2);
 }
 
 .testimonial-avatar {
@@ -1244,55 +1289,168 @@ h2 {
     font-family: 'Open Sans', sans-serif;
 }
 
+/* Floating Words */
+.floating-words {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.floating-words span {
+    position: absolute;
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.1);
+    animation: float 15s infinite ease-in-out;
+}
+
+.floating-words span:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+.floating-words span:nth-child(2) { top: 20%; right: 20%; animation-delay: -2s; }
+.floating-words span:nth-child(3) { bottom: 30%; left: 30%; animation-delay: -4s; }
+.floating-words span:nth-child(4) { bottom: 40%; right: 40%; animation-delay: -6s; }
+.floating-words span:nth-child(5) { top: 50%; left: 50%; animation-delay: -8s; }
+
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
 }
 
+/* Glitch Effect */
+.glitch-effect {
+    position: relative;
+}
+
+.glitch-effect::before,
+.glitch-effect::after {
+    content: 'Voices of Transformation';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip: rect(0, 900px, 0, 0);
+}
+
+.glitch-effect::before {
+    left: 2px;
+    text-shadow: -1px 0 #ff00c1;
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.glitch-effect::after {
+    left: -2px;
+    text-shadow: -1px 0 #00fff9;
+    animation: glitch-anim-2 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+    0% { clip: rect(86px, 9999px, 42px, 0); }
+    20% { clip: rect(39px, 9999px, 65px, 0); }
+    40% { clip: rect(89px, 9999px, 99px, 0); }
+    60% { clip: rect(6px, 9999px, 85px, 0); }
+    80% { clip: rect(84px, 9999px, 32px, 0); }
+    100% { clip: rect(35px, 9999px, 70px, 0); }
+}
+
+@keyframes glitch-anim-2 {
+    0% { top: -1px; left: 1px; clip: rect(16px, 9999px, 79px, 0); }
+    20% { top: -3px; left: 2px; clip: rect(72px, 9999px, 9px, 0); }
+    40% { top: 2px; left: -1px; clip: rect(17px, 9999px, 31px, 0); }
+    60% { top: 1px; left: -2px; clip: rect(52px, 9999px, 97px, 0); }
+    80% { top: -2px; left: 2px; clip: rect(61px, 9999px, 22px, 0); }
+    100% { top: 3px; left: 1px; clip: rect(42px, 9999px, 94px, 0); }
+}
+
+/* Flag SVGs */
+.testimonial-card::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 20px;
+    background-size: cover;
+    opacity: 0.5;
+}
+
+.testimonial-card[data-country="USA"]::after {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23f0f0f0" d="M0 85.33v341.332h512V85.33z"/><g fill="%23d80027"><path d="M0 85.333h512V128H0zM0 170.667h512v42.667H0zM0 256h512v42.667H0zM0 341.333h512V384H0z"/></g><path fill="%232e52b2" d="M0 85.33v170.666h256V85.33z"/></svg>');
+}
+
+.testimonial-card[data-country="UK"]::after {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23f0f0f0" d="M0 85.333h512V426.67H0z"/><path fill="%23d80027" d="M288 85.33h-64v138.666H0v64h224v138.666h64V287.996h224v-64H288z"/><path fill="%230052b4" d="M393.785 315.358L512 381.034v-65.676zM311.652 315.358L512 426.662v-31.474l-143.693-79.83zM458.634 426.662l-146.982-81.664v81.664z"/><path fill="%23f0f0f0" d="M311.652 315.358L512 426.662v-31.474l-143.693-79.83z"/><path fill="%230052b4" d="M311.652 315.358L512 426.662v-31.474l-143.693-79.83z"/><path fill="%23d80027" d="M90.341 315.356L0 365.546v-50.19zM200.348 329.51v97.151H25.491z"/><path fill="%230052b4" d="M143.693 315.358L0 395.188v31.474l200.348-111.304z"/><path fill="%23d80027" d="M118.215 196.634L0 130.958v65.676zM200.348 196.634L0 85.33v31.474l143.693 79.83zM53.366 85.33l146.982 81.664V85.33z"/><path fill="%23f0f0f0" d="M200.348 196.634L0 85.33v31.474l143.693 79.83z"/><path fill="%230052b4" d="M200.348 196.634L0 85.33v31.474l143.693 79.83z"/><path fill="%23d80027" d="M421.659 196.636L512 146.446v50.19zM311.652 182.482V85.331h174.857z"/><path fill="%230052b4" d="M368.307 196.634L512 116.804V85.33L311.652 196.634z"/></svg>');
+}
+
+.testimonial-card[data-country="India"]::after {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23f0f0f0" d="M0 85.331h512v341.337H0z"/><path fill="%23ff9811" d="M0 85.331h512v113.775H0z"/><path fill="%23138808" d="M0 312.882h512v113.775H0z"/><circle fill="%23000080" cx="256" cy="256" r="43.896"/><circle fill="%23f0f0f0" cx="256" cy="256" r="27.434"/><circle fill="%23000080" cx="256" cy="256" r="8.621"/></svg>');
+}
+
+.testimonial-card[data-country="Germany"]::after {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="%23ffda44" d="M15.923 345.043C52.094 442.527 145.929 512 256 512s203.906-69.473 240.077-166.957L256 322.783l-240.077 22.26z"/><path d="M256 0C145.929 0 52.094 69.472 15.923 166.957L256 189.217l240.077-22.26C459.906 69.472 366.071 0 256 0z"/><path fill="%23d80027" d="M15.923 166.957C5.633 194.69 0 224.686 0 256s5.633 61.31 15.923 89.043h480.155C506.368 317.31 512 287.314 512 256s-5.632-61.31-15.923-89.043H15.923z"/></svg>');
+}
+
+/* Particle Effect */
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* Tilt Effect */
 .testimonial-card {
-    animation: float 6s ease-in-out infinite;
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
 }
 
-.testimonial-card:nth-child(2) {
-    animation-delay: -1.5s;
+.testimonial-card:hover {
+    transform: perspective(1000px) rotateX(10deg) rotateY(10deg) rotateZ(0deg);
 }
 
-.testimonial-card:nth-child(3) {
-    animation-delay: -3s;
+/* Spotlight Hover */
+.testimonial-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at var(--x) var(--y), rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 2;
+    pointer-events: none;
 }
 
-.testimonial-card:nth-child(4) {
-    animation-delay: -4.5s;
+.testimonial-card:hover::before {
+    opacity: 1;
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+/* Typing Animation */
+.typing-effect::after {
+    content: '|';
+    animation: blink 0.7s infinite;
 }
 
-.testimonial-avatar {
-    animation: pulse 4s ease-in-out infinite;
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-    h2 {
-        font-size: 3rem;
-    }
-    .testimonial-card {
-        padding: 1.5rem;
-    }
-    .card-content p {
-        font-size: 1.2rem;
-    }
-}
 </style>
 
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const testimonialSection = document.getElementById('testimonials');
     const testimonialCards = document.querySelectorAll('.testimonial-card');
 
+    // Fade-in effect
     const fadeInSection = (entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -1321,21 +1479,73 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
     });
 
-    // Hover effect for enhanced engagement
+    // Tilt effect
     testimonialCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-15px) scale(1.03)';
-            card.style.boxShadow = '0 30px 60px rgba(20, 184, 166, 0.2)';
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
 
         card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(0) scale(1)';
-            card.style.boxShadow = '0 20px 40px rgba(20, 184, 166, 0.1)';
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
         });
+    });
+
+    // Spotlight hover effect
+    testimonialCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            card.style.setProperty('--x', `${x}px`);
+            card.style.setProperty('--y', `${y}px`);
+        });
+    });
+
+    // Particle effect
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: "#ffffff" },
+            shape: { type: "circle" },
+            opacity: { value: 0.5, random: true },
+            size: { value: 3, random: true },
+            move: { enable: true, speed: 1, direction: "none", random: true, out_mode: "out" }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
+            modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+        }
+    });
+
+    // Typing animation
+    const typingTexts = document.querySelectorAll('.typing-effect');
+    typingTexts.forEach(text => {
+        const fullText = text.textContent;
+        text.textContent = '';
+        let i = 0;
+        function typeWriter() {
+            if (i < fullText.length) {
+                text.textContent += fullText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        typeWriter();
     });
 });
 </script>
-
 
 <section class="relative py-24 overflow-hidden bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900 text-white">
     <div class="absolute inset-0 bg-pattern opacity-10"></div>
