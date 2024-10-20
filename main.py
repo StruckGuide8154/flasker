@@ -481,7 +481,6 @@ def affiliate():
 
 
 
-
 @app.route('/ref/<referral_code>')
 def affiliate_redirect(referral_code):
     # Generate a temporary token
