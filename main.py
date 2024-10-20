@@ -415,47 +415,20 @@ def serialize_referrals(referrals):
     """Converts referral objects into JSON serializable structures."""
     serialized_referrals = []
     for referral in referrals:
+        # Ensure referral.stats exists and has the necessary attributes
+        stats = referral.stats if referral.stats else {}
+        total = stats.get('total', 0)
+        total_earnings = stats.get('total_earnings', 0.0)
+        
         serialized_referrals.append({
             'email': referral.email,
             'referral_code': referral.referral_code,
             'stats': {
-                'total': referral.stats.total,
-                'total_earnings': referral.stats.total_earnings
+                'total': total,
+                'total_earnings': total_earnings
             }
         })
     return serialized_referrals
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@app.route('/ref/<referral_code>')
-def affiliate_redirect(referral_code):
-    # Generate a temporary token
-    token = secrets.token_urlsafe(16)
-    
-    # Store the token with the referral code and expiration time
-    temp_tokens[token] = {
-        'referral_code': referral_code,
-        'expires': datetime.utcnow() + timedelta(minutes=5)  # Token expires in 5 minutes
-    }
-    
-    # Redirect to home page with the token
-    return redirect(url_for('home', token=token))
 
 @app.route('/affiliate', methods=['GET', 'POST'])
 @login_required
@@ -506,6 +479,39 @@ def affiliate():
             serialized_stats = None
         
         return render_template('affiliate.html', user_affiliate=user_affiliate, referral_stats=serialized_stats)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@app.route('/ref/<referral_code>')
+def affiliate_redirect(referral_code):
+    # Generate a temporary token
+    token = secrets.token_urlsafe(16)
+    
+    # Store the token with the referral code and expiration time
+    temp_tokens[token] = {
+        'referral_code': referral_code,
+        'expires': datetime.utcnow() + timedelta(minutes=5)  # Token expires in 5 minutes
+    }
+    
+    # Redirect to home page with the token
+    return redirect(url_for('home', token=token))
+
 
 @app.before_request
 def track_affiliate():
