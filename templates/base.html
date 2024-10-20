@@ -615,7 +615,59 @@ Stats & Domain</span></a>
                                                             });
                                                         });
                                                     </script>
-                                                    
+                                                            <script>
+            // Function to set the theme
+            function setTheme(theme) {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            }
+
+            // Function to update the toggle button icons
+            function updateToggleIcon() {
+                const darkIcon = document.getElementById('theme-toggle-dark-icon');
+                const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+            }
+
+            // Check if the user is authenticated
+            function isAuthenticated() {
+                // Replace this with your actual authentication check logic
+                // For example, you can check if a specific element exists on the page
+                // that indicates the user is authenticated
+                return document.querySelector('.authenticated-element') !== null;
+            }
+
+            // Set the initial theme based on authentication status
+            if (!isAuthenticated()) {
+                setTheme('dark');
+            }
+
+            // Update the toggle icon on page load
+            document.addEventListener('DOMContentLoaded', function() {
+                updateToggleIcon();
+
+                // Hide the toggle button if the user is not authenticated
+                if (!isAuthenticated()) {
+                    const themeToggleBtn = document.getElementById('theme-toggle');
+                    themeToggleBtn.style.display = 'none';
+                }
+            });
+
+            // Add event listener to the toggle button
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            themeToggleBtn.addEventListener('click', () => {
+                if (isAuthenticated()) {
+                    setTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark');
+                    updateToggleIcon();
+                }
+            });
+        </script>
+
                                                     {% endif %}
 
                     <main class="{% if current_user.is_authenticated %}pt-14 md:ml-64{% endif %} h-auto bg-white bg-opacity-90 dark:bg-gray-900 dark:bg-opacity-90">
