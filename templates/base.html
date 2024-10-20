@@ -19,12 +19,18 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('DOMContentLoaded', function() {
             const hamburger = document.getElementById('hamburger-menu');
             const sidebar = document.getElementById('drawer-navigation');
-            const overlay = document.getElementById('sidebar-overlay');
-            const dropdownToggles = document.querySelectorAll('[data-dropdown-toggle]');
+            let overlay = document.getElementById('sidebar-overlay');
+
+            // Create overlay if it doesn't exist
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'sidebar-overlay';
+                document.body.appendChild(overlay);
+            }
 
             function toggleSidebar() {
-                if (!sidebar || !overlay) {
-                    console.error('Sidebar or overlay element not found');
+                if (!sidebar) {
+                    console.error('Sidebar element not found');
                     return;
                 }
                 sidebar.classList.toggle('open');
@@ -34,8 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             function closeSidebar() {
-                if (!sidebar || !overlay) {
-                    console.error('Sidebar or overlay element not found');
+                if (!sidebar) {
+                    console.error('Sidebar element not found');
                     return;
                 }
                 sidebar.classList.remove('open');
@@ -56,11 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Hamburger menu element not found');
             }
 
-            if (overlay) {
-                overlay.addEventListener('click', closeSidebar);
-            } else {
-                console.error('Overlay element not found');
-            }
+            overlay.addEventListener('click', closeSidebar);
 
             // Close sidebar when clicking a link (for mobile)
             if (sidebar) {
@@ -73,18 +75,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 });
             }
-
-            // Handle dropdowns in sidebar
-            dropdownToggles.forEach(toggle => {
-                toggle.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('data-dropdown-toggle');
-                    const targetElement = document.getElementById(targetId);
-                    if (targetElement) {
-                        targetElement.classList.toggle('hidden');
-                    }
-                });
-            });
 
             window.addEventListener('resize', handleResize);
 
@@ -362,11 +352,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 display: none;
             }
         }
-                @media (max-width: 768px) {
+        @media (max-width: 768px) {
             #drawer-navigation.open {
                 transform: translateX(0);
             }
         }
+        @media (max-width: 768px) {
+            #drawer-navigation.open {
+                transform: translateX(0);
+            }
+        }
+
+        /* Styles for dynamically created overlay */
+        #sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        #sidebar-overlay.active {
+            display: block;
+        }
+
     </style>
 
     <div class="blob-motion">
