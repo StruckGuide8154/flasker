@@ -522,7 +522,6 @@ def edit_affiliate(affiliate_id):
             amount = float(request.form['amount'])
             new_sale = Sale(affiliate_id=affiliate.id, plan_type=plan_type, amount=amount)
             db.session.add(new_sale)
-            affiliate.total_earnings += amount
             db.session.commit()
             flash('Sale updated successfully', 'success')
 
