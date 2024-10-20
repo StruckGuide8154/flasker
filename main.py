@@ -491,26 +491,37 @@ def serialize_referrals(referrals):
         })
     return serialized_referrals
 
-@app.route('/affiliate_dashboard')
+@app.route('/affiliate_dashboard', methods=['GET', 'POST'])
 @login_required
 def affiliate_dashboard():
-    if not current_user.is_affiliate:
-        flash('You do not have permission to access this page.', 'error')
-        return redirect(url_for('home'))
-    
-    user_affiliate = Affiliate.query.filter_by(email=current_user.email).first()
-    
-    if not user_affiliate:
-        flash('Affiliate information not found. Please contact support.', 'warning')
-        return render_template('affiliate_dashboard.html', user_affiliate=None, referral_stats=None, tickets=None)
+    if current_user.is_system_user:
+        affiliates = Affiliate.query.all()
+        
+        if request.method == 'POST':
+            email = request.form.get('email')
+            referral_code = request.form.get('referral_code')
 
-    referral_stats = get_referral_stats(user_affiliate.id)
-    tickets = get_affiliate_tickets(current_user.id)
+            existing_affiliate = Affiliate.query.filter_by(email=email).first()
+            if existing_affiliate:
+                flash('An affiliate with this email already exists.', 'error')
+            else:
+                new_affiliate = Affiliate(email=email, referral_code=referral_code)
+                db.session.add(new_affiliate)
+                db.session.commit()
+                flash('Affiliate added successfully', 'success')
+
+            return redirect(url_for('affiliate'))
+
+        return render_template('affiliate.html', affiliates=affiliates)
     
-    return render_template('affiliate_dashboard.html', 
-                           user_affiliate=user_affiliate, 
-                           referral_stats=referral_stats,
-                           tickets=tickets)
+    else:
+        user_affiliate = Affiliate.query.filter_by(email=current_user.email).first()
+        referral_stats = get_referral_stats(user_affiliate.referral_code) if user_affiliate else None
+        
+        return render_template('affiliate.html', 
+                               user_affiliate=user_affiliate, 
+                               referral_stats=[{'stats': referral_stats}] if referral_stats else None)
+
 
 
 @app.route('/affiliate', methods=['GET', 'POST'])
