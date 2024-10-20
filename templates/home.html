@@ -1099,13 +1099,13 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 
-<section id="testimonials" class="relative py-32 overflow-hidden opacity-0 transition-opacity duration-1000">
-    <div class="content-wrapper">
-        <div class="background-container">
-            <div class="background-image"></div>
-            <div class="background-overlay"></div>
-        </div>
-        
+<section id="testimonials" class="relative py-32 overflow-visible">
+    <div class="background-container">
+        <div class="background-image"></div>
+        <div class="background-overlay"></div>
+    </div>
+    
+    <div class="content-wrapper relative z-10">
         <!-- Floating Words -->
         <div class="floating-words">
             <span>Innovative</span>
@@ -1115,7 +1115,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <span>Revolutionary</span>
         </div>
 
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-6xl md:text-8xl font-thin text-center text-white opacity-80 mb-20 tracking-wider leading-tight">
                 Voices of <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400">Transformation</span>
             </h2>
@@ -1188,10 +1188,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 #testimonials {
     font-family: 'Raleway', sans-serif;
-    background-color: rgba(0, 0, 0, 0.7);
     position: relative;
     z-index: 1;
-    overflow: hidden;
 }
 
 .background-container {
@@ -1201,12 +1199,13 @@ document.addEventListener('DOMContentLoaded', () => {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    z-index: -1;
 }
 
 .background-image {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background-image: url('v.webp');
@@ -1214,8 +1213,6 @@ document.addEventListener('DOMContentLoaded', () => {
     background-position: center;
     background-repeat: no-repeat;
     filter: brightness(0.7) contrast(1.2);
-    transform: translate(-50%, -50%);
-    z-index: -2;
 }
 
 .background-overlay {
@@ -1230,7 +1227,6 @@ document.addEventListener('DOMContentLoaded', () => {
         rgba(0,0,0,0.5) 50%,
         rgba(0,0,0,0.7) 100%
     );
-    z-index: -1;
 }
 
 .content-wrapper {
