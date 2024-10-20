@@ -74,19 +74,19 @@
                                     {% if referral_stats %}
                                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                                             <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 flex flex-col items-center">
-                                                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Referrals</div>
+                                                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Referrals (Tickets)</div>
                                                 <div class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">{{ referral_stats[0].stats.total }}</div>
                                             </div>
                                             <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 flex flex-col items-center">
-                                                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">This Month</div>
+                                                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Referrals This Month</div>
                                                 <div class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">{{ referral_stats[0].stats.this_month }}</div>
                                             </div>
                                             <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 flex flex-col items-center">
-                                                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Last Month</div>
+                                                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Referrals Last Month</div>
                                                 <div class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">{{ referral_stats[0].stats.last_month }}</div>
                                             </div>
                                             <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 flex flex-col items-center">
-                                                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">User Count</div>
+                                                <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Invoiced Users</div>
                                                 <div class="mt-2 text-3xl font-semibold text-gray-900 dark:text-white">{{ referral_stats[0].stats.user_count }}</div>
                                             </div>
                                             <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 flex flex-col items-center">
