@@ -1,4 +1,4 @@
-aimport os
+import os
 import secrets
 import time
 import flask
