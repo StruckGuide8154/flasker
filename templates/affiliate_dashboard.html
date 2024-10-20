@@ -14,43 +14,10 @@
             extend: {
                 colors: {
                     primary: {"50":"#eff6ff","100":"#dbeafe","200":"#bfdbfe","300":"#93c5fd","400":"#60a5fa","500":"#3b82f6","600":"#2563eb","700":"#1d4ed8","800":"#1e40af","900":"#1e3a8a"}
+                },
+                fontFamily: {
+                    'sans': ['Poppins', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif'],
                 }
-            },
-            fontFamily: {
-                'body': [
-                    'Poppins', 
-                    'ui-sans-serif', 
-                    'system-ui', 
-                    '-apple-system', 
-                    'system-ui', 
-                    'Segoe UI', 
-                    'Roboto', 
-                    'Helvetica Neue', 
-                    'Arial', 
-                    'Noto Sans', 
-                    'sans-serif', 
-                    'Apple Color Emoji', 
-                    'Segoe UI Emoji', 
-                    'Segoe UI Symbol', 
-                    'Noto Color Emoji'
-                ],
-                'sans': [
-                    'Poppins', 
-                    'ui-sans-serif', 
-                    'system-ui', 
-                    '-apple-system', 
-                    'system-ui', 
-                    'Segoe UI', 
-                    'Roboto', 
-                    'Helvetica Neue', 
-                    'Arial', 
-                    'Noto Sans', 
-                    'sans-serif', 
-                    'Apple Color Emoji', 
-                    'Segoe UI Emoji', 
-                    'Segoe UI Symbol', 
-                    'Noto Color Emoji'
-                ]
             }
         }
     }
@@ -62,13 +29,10 @@
         -webkit-text-fill-color: transparent;
     }
     .card {
-        @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg transition-all duration-300 border-2 border-transparent;
+        @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg transition-all duration-300 border-2 border-transparent hover:border-primary-500 dark:hover:border-primary-400;
     }
     .card:hover {
         @apply transform -translate-y-1 shadow-xl;
-    }
-    .animate-number {
-        @apply transition-all duration-500;
     }
 </style>
 {% endblock %}
@@ -84,25 +48,27 @@
 
             {% if user_affiliate %}
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-<div class="card p-6 border-primary-500">
-    <h2 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-white">Welcome Back, {{ user_affiliate.email.split('@')[0] }}!</h2>
-    <div class="space-y-4">
-        <div>
-            <p class="mb-2 text-gray-600 dark:text-gray-300">Your Referral Code:</p>
-            <div class="flex items-center">
-                <span id="referral-code" class="font-bold text-2xl text-primary-600 dark:text-primary-400 mr-2">{{ user_affiliate.referral_code }}</span>
-            </div>
-        </div>
-        <div>
-            <p class="mb-2 text-gray-600 dark:text-gray-300">Your Affiliate Link:</p>
-            <div class="flex items-center">
-                <input id="affiliate-link" type="text" readonly value="{{ url_for('home', _external=True) }}/ref/{{ user_affiliate.referral_code }}" class="flex-grow font-medium text-sm text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 p-2 rounded-l-md">
-            </div>
-        </div>
-    </div>
-</div>
+                    <div class="card p-6">
+                        <h2 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-white">Welcome, {{ user_affiliate.email.split('@')[0] }}!</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="mb-2 text-gray-600 dark:text-gray-300">Your Referral Code:</p>
+                                <div class="flex items-center">
+                                    <span id="referral-code" class="font-bold text-2xl text-primary-600 dark:text-primary-400 mr-2">{{ user_affiliate.referral_code }}</span>
+                                    <button id="copy-referral" class="bg-primary-500 hover:bg-primary-600 text-white px-3 py-1 rounded-md text-sm">Copy</button>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="mb-2 text-gray-600 dark:text-gray-300">Your Affiliate Link:</p>
+                                <div class="flex items-center">
+                                    <input id="affiliate-link" type="text" readonly value="https://expansion.ltd/ref/{{ user_affiliate.referral_code }}" class="flex-grow font-medium text-sm text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 p-2 rounded-l-md">
+                                    <button id="copy-link" class="bg-primary-500 hover:bg-primary-600 text-white px-3 py-2 rounded-r-md">Copy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    <div class="card p-6 border-green-500">
+                    <div class="card p-6">
                         <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Quick Stats</h3>
                         <div class="space-y-2">
                             <p class="text-gray-600 dark:text-gray-300">Total Referrals: <span class="font-bold text-2xl text-green-600 dark:text-green-400 animate-number" data-target="{{ referral_stats.total }}">0</span></p>
@@ -111,7 +77,7 @@
                         </div>
                     </div>
 
-                    <div class="card p-6 border-yellow-500">
+                    <div class="card p-6">
                         <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Earnings Overview</h3>
                         <div class="space-y-2">
                             <p class="text-gray-600 dark:text-gray-300">Total Earnings: <span class="font-bold text-2xl text-green-600 dark:text-green-400">$<span class="animate-number" data-target="{{ '%.2f'|format(referral_stats.total_earnings) }}">0.00</span></span></p>
@@ -121,17 +87,17 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                    <div class="card p-6 border-blue-500">
+                    <div class="card p-6">
                         <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Performance Metrics</h3>
                         <canvas id="performanceChart" width="400" height="200"></canvas>
                     </div>
 
-                    <div class="card p-6 border-purple-500">
+                    <div class="card p-6">
                         <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Recent Activity</h3>
                         {% if referral_stats.recent_payments %}
                             <ul class="space-y-2">
                                 {% for payment in referral_stats.recent_payments %}
-                                    <li class="recent-victory flex justify-between items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-300">
+                                    <li class="flex justify-between items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-300">
                                         <span class="text-gray-800 dark:text-gray-200">${{ "%.2f"|format(payment.amount) }}</span>
                                         <span class="text-gray-500 dark:text-gray-400 text-sm">{{ payment.created_at }}</span>
                                     </li>
@@ -144,7 +110,7 @@
                 </div>
 
             {% else %}
-                <div class="card p-6 text-center border-primary-500">
+                <div class="card p-6 text-center">
                     <h2 class="text-3xl font-semibold mb-4 text-gray-800 dark:text-white">Unlock Your Affiliate Potential</h2>
                     <p class="mb-6 text-gray-600 dark:text-gray-300">
                         Your journey to financial freedom is just a click away. 
@@ -156,7 +122,7 @@
                 </div>
             {% endif %}
 
-            <div id="tickets-section" class="card p-6 mt-12 border-red-500">
+            <div id="tickets-section" class="card p-6 mt-12">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-white">Support Center</h2>
                 <p class="text-gray-600 dark:text-gray-400 italic mb-6">
                     "The only way to do great work is to love what you do." - Steve Jobs
@@ -190,148 +156,26 @@
 {{ super() }}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Animate the numbers
-    const counters = document.querySelectorAll('.animate-number');
-    counters.forEach(counter => {
-        const target = parseFloat(counter.getAttribute('data-target'));
-        const duration = 2000; // 2 seconds
-        const steps = 100;
-        const stepValue = target / steps;
+    // Animate numbers
+    function animateNumber(el, target) {
         let current = 0;
-
+        const duration = 2000;
+        const step = target / (duration / 16);
         const timer = setInterval(() => {
-            current += stepValue;
-            counter.textContent = current.toFixed(2);
+            current += step;
+            el.textContent = current.toFixed(2);
             if (current >= target) {
                 clearInterval(timer);
-                counter.textContent = target.toFixed(2);
+                el.textContent = target.toFixed(2);
             }
-        }, duration / steps);
+        }, 16);
+    }
+
+    document.querySelectorAll('.animate-number').forEach(el => {
+        animateNumber(el, parseFloat(el.getAttribute('data-target')));
     });
 
-    // Copy referral code to clipboard
-    const referralCodeElement = document.getElementById('referral-code');
-    const copyButton = document.getElementById('copy-referral');
-    if (referralCodeElement && copyButton) {
-        copyButton.addEventListener('click', () => {
-            navigator.clipboard.writeText(referralCodeElement.textContent).then(() => {
-                copyButton.textContent = 'Copied!';
-                setTimeout(() => {
-                    copyButton.textContent = 'Copy';
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-            });
-        });
-    }
-
-    // Performance Chart
-    const ctx = document.getElementById('performanceChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-                label: 'Referrals',
-                data: [12, 19, 3, 5, 2, 3],
-                borderColor: 'rgb(59, 130, 246)',
-                tension: 0.1
-            }, {
-                label: 'Earnings ($)',
-                data: [100, 250, 30, 50, 20, 30],
-                borderColor: 'rgb(16, 185, 129)',
-                tension: 0.1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            plugins: {
-                legend: {
-                    labels: {
-                        color: document.documentElement.classList.contains('dark') ? 'rgb(229, 231, 235)' : 'rgb(31, 41, 55)'
-                    }
-                }
-            }
-        }
-    });
-
-    // Toggle dark mode
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-    if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            // Update chart colors when toggling dark mode
-            updateChartColors();
-        });
-    }
-    // Function to update chart colors based on dark mode
-    function updateChartColors() {
-        const isDarkMode = document.documentElement.classList.contains('dark');
-        const textColor = isDarkMode ? 'rgb(229, 231, 235)' : 'rgb(31, 41, 55)';
-        const chart = Chart.getChart('performanceChart');
-        if (chart) {
-            chart.options.plugins.legend.labels.color = textColor;
-            chart.options.scales.x.ticks.color = textColor;
-            chart.options.scales.y.ticks.color = textColor;
-            chart.options.scales.x.grid.color = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
-            chart.options.scales.y.grid.color = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
-            chart.update();
-        }
-    }
-
-    // Initial call to set correct colors
-    updateChartColors();
-
-    // Check for saved theme preference or use system preference
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark');
-    }
-
-    // Add dark mode toggle button to the navbar
-    const navbar = document.querySelector('nav');
-    if (navbar) {
-        const darkModeButton = document.createElement('button');
-        darkModeButton.id = 'dark-mode-toggle';
-        darkModeButton.innerHTML = '🌓';
-        darkModeButton.className = 'px-3 py-1 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700';
-        navbar.appendChild(darkModeButton);
-
-        darkModeButton.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-            updateChartColors();
-        });
-    }
-});
-</script><script>document.addEventListener('DOMContentLoaded', function() {
-    // ... (previous code remains the same)
-
-    // Copy referral code to clipboard
-    const referralCodeElement = document.getElementById('referral-code');
-    const copyReferralButton = document.getElementById('copy-referral');
-    if (referralCodeElement && copyReferralButton) {
-        copyReferralButton.addEventListener('click', () => {
-            copyToClipboard(referralCodeElement.innerText, copyReferralButton);
-        });
-    }
-
-    // Copy affiliate link to clipboard
-    const affiliateLinkElement = document.getElementById('affiliate-link');
-    const copyLinkButton = document.getElementById('copy-link');
-    if (affiliateLinkElement && copyLinkButton) {
-        copyLinkButton.addEventListener('click', () => {
-            copyToClipboard(affiliateLinkElement.value, copyLinkButton);
-        });
-    }
-
-    // Function to copy text to clipboard and show feedback
+    // Copy to clipboard function
     function copyToClipboard(text, button) {
         navigator.clipboard.writeText(text).then(() => {
             const originalText = button.innerText;
@@ -350,7 +194,119 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ... (rest of the code remains the same)
+    // Copy referral code
+    const copyReferralBtn = document.getElementById('copy-referral');
+    if (copyReferralBtn) {
+        copyReferralBtn.addEventListener('click', () => {
+            const referralCode = document.getElementById('referral-code').textContent;
+            copyToClipboard(referralCode, copyReferralBtn);
+        });
+    }
+
+    // Copy affiliate link
+    const copyLinkBtn = document.getElementById('copy-link');
+    if (copyLinkBtn) {
+        copyLinkBtn.addEventListener('click', () => {
+            const affiliateLink = document.getElementById('affiliate-link').value;
+            copyToClipboard(affiliateLink, copyLinkBtn);
+        });
+    }
+
+    // Performance Chart
+    const ctx = document.getElementById('performanceChart');
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Referrals',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderColor: 'rgb(59, 130, 246)',
+                    tension: 0.1
+                }, {
+                    label: 'Earnings ($)',
+                    data: [100, 250, 30, 50, 20, 30],
+                    borderColor: 'rgb(16, 185, 129)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: document.documentElement.classList.contains('dark') ? 'rgb(229, 231, 235)' : 'rgb(31, 41, 55)'
+                        },
+                        grid: {
+                            color: document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: document.documentElement.classList.contains('dark') ? 'rgb(229, 231, 235)' : 'rgb(31, 41, 55)'
+                        },
+                        grid: {
+                            color: document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: document.documentElement.classList.contains('dark') ? 'rgb(229, 231, 235)' : 'rgb(31, 41, 55)'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Dark mode toggle
+    function toggleDarkMode() {
+        document.documentElement.classList.toggle('dark');
+        localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        updateChartColors();
+    }
+
+    function updateChartColors() {
+        const chart = Chart.getChart('performanceChart');
+        if (chart) {
+            const isDark = document.documentElement.classList.contains('dark');
+            const textColor = isDark ? 'rgb(229, 231, 235)' : 'rgb(31, 41, 55)';
+            const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+
+            chart.options.scales.x.ticks.color = textColor;
+            chart.options.scales.y.ticks.color = textColor;
+            chart.options.scales.x.grid.color = gridColor;
+            chart.options.scales.y.grid.color = gridColor;
+            chart.options.plugins.legend.labels.color = textColor;
+            chart.update();
+        }
+    }
+
+    // Check for saved theme preference or use system preference
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+
+    // Add dark mode toggle button to the navbar
+    const navbar = document.querySelector('nav');
+    if (navbar) {
+        const darkModeButton = document.createElement('button');
+        darkModeButton.id = 'dark-mode-toggle';
+        darkModeButton.innerHTML = '🌓';
+        darkModeButton.className = 'px-3 py-1 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700';
+        navbar.appendChild(darkModeButton);
+
+        darkModeButton.addEventListener('click', toggleDarkMode);
+    }
+
+    // Initial call to set correct colors
+    updateChartColors();
 });
 </script>
 {% endblock %}
