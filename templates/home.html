@@ -512,32 +512,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <section id="hero" class="relative min-h-screen flex items-center overflow-hidden">
     <div class="absolute inset-0 z-0">
-        <div id="hero-bg" class="w-full h-full bg-black bg-opacity-40 bg-center bg-cover" style="background-image: url('z.webp'); opacity: 0.7;"></div>
-        <div class="absolute inset-0 bg-gradient-to-br from-black via-transparent to-black opacity-60"></div>
-        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-        <div class="absolute inset-0 bg-dots"></div>
+        <div id="hero-bg" class="w-full h-full bg-center bg-cover" style="background-image: url('z.webp');"></div>
+        <div class="absolute inset-0 bg-black opacity-30"></div> <!-- Slight overlay for better text visibility -->
     </div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-5xl md:text-7xl font-outline mb-4 text-white fade-sides-60 grainy-text">
-            <span class="inline-block bg-gradient-to-r from-blue-400 to-purple-600 px-2">Dominate Your Industry</span>
-            <span class="inline-block bg-gradient-to-r from-purple-600 to-blue-400 px-2"></span>
+        <!-- Hero content -->
+        <h1 class="text-5xl md:text-7xl font-bold mb-4 text-white">
+            <span class="inline-block bg-gradient-to-r from-blue-400 to-purple-600 text-transparent bg-clip-text">Dominate Your Industry</span>
         </h1>
-        <p class="text-xl md:text-3xl mb-8 text-gray-300 max-w-3xl mx-auto fade-sides-60 grainy-text">
+        <p class="text-xl md:text-3xl mb-8 text-gray-200 max-w-3xl mx-auto">
             An business email solution built 
             <span class="relative inline-block">
-                <span class="strike-through text-red-500">for</span>
+                <span class="line-through text-red-500">for</span>
                 <span class="text-green-500 font-bold">by</span>
             </span>
             you
         </p>
-        <p class="text-xl md:text-2xl mb-8 text-gray-300 max-w-3xl mx-auto fade-sides-60 grainy-text">
-            While others <span class="strike-through text-red-500">struggle with outdated tools</span>, 
+        <p class="text-xl md:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto">
+            While others <span class="line-through text-red-500">struggle with outdated tools</span>, 
             you'll wield the power of <span class="text-purple-400">expansion</span>.
         </p>
         <a href="#contact" class="enroll-button scroll-to-contact">
             CLAIM YOUR POWER
-        </a>
-        <div class="mt-12 flex justify-center space-x-12">
+        </a>        <div class="mt-12 flex justify-center space-x-12">
             <div class="text-center">
                 <div class="text-4xl font-outline text-blue-400 fade-sides-60 grainy-text">10K+</div>
                 <div class="text-lg text-gray-400 fade-sides-60 grainy-text">Businesses Revolutionized</div>
@@ -566,9 +563,8 @@ document.addEventListener('DOMContentLoaded', () => {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;800&family=Allura&display=swap');
 
-#hero {
-    font-family: 'Raleway', sans-serif;
-}
+
+      
 
 .cursive {
     font-family: 'Allura', cursive;
@@ -630,10 +626,33 @@ document.addEventListener('DOMContentLoaded', () => {
     100% { width: 100%; }
 }
 
-#hero-bg {
-    animation: pulse 8s ease-in-out infinite;
+#hero {
+    position: relative;
+    font-family: 'Raleway', sans-serif;
 }
 
+#hero-bg {
+    opacity: 1; /* Ensure the background image is fully visible */
+}
+
+.enroll-button {
+    /* Existing styles */
+    background-color: rgba(79, 70, 229, 0.9); /* Slightly transparent background */
+    border: 2px solid #fff;
+    transition: all 0.3s ease;
+}
+
+.enroll-button:hover {
+    background-color: rgba(67, 56, 202, 1); /* Solid background on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Remove any fading or dimming effects */
+#hero::after,
+#hero::before {
+    content: none;
+}
 #hero h1 {
     animation: float 6s ease-in-out infinite;
 }
