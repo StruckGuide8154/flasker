@@ -36,7 +36,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.email }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.referral_code }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ affiliate.stats.total }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">${{ affiliate.stats.total_earnings | default(0, true) | round(2) }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">${{ affiliate.stats.total_earnings }}</td>
 
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <a href="{{ url_for('edit_affiliate', affiliate_id=affiliate.id) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</a>
