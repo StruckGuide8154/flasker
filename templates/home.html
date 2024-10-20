@@ -1099,54 +1099,72 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 
-<section id="testimonials" class="relative py-32 overflow-hidden bg-black">
+<section id="testimonials" class="relative py-32 overflow-hidden bg-black opacity-0 transition-opacity duration-1000">
     <div class="noise-overlay"></div>
     <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-pink-900/20"></div>
     
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-6xl md:text-8xl font-extralight text-center text-white opacity-80 mb-20 tracking-wider leading-tight fade-in-up">
-            Voice of <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">Innovation</span>
+        <h2 class="text-6xl md:text-8xl font-thin text-center text-white opacity-80 mb-20 tracking-wider leading-tight">
+            Voices of <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">Transformation</span>
         </h2>
         
-        <div class="testimonial-slider">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div class="testimonial-card">
                 <div class="card-content">
-                    <p class="text-xl md:text-2xl font-thin text-gray-300 mb-6 leading-relaxed">
-                        "Expansion <span class="text-blue-400 font-normal">OBLITERATED</span> our IT bottlenecks. 40% fewer tickets, 3X faster onboarding. We're saving <span class="text-purple-400 font-normal">100+ hours monthly</span>. It's not ROI, it's a <span class="text-pink-400 font-normal">REVOLUTION</span>."
+                    <div class="quote-icon">"</div>
+                    <p class="text-xl md:text-2xl font-extralight text-gray-300 mb-6 leading-relaxed">
+                        Expansion <span class="text-blue-400 font-light">OBLITERATED</span> our IT bottlenecks. 40% fewer tickets, 3X faster onboarding. We're saving <span class="text-purple-400 font-light">100+ hours monthly</span>. It's not ROI, it's a <span class="text-pink-400 font-light">REVOLUTION</span>.
                     </p>
                     <div class="flex items-center">
                         <div class="testimonial-avatar"></div>
                         <div>
                             <p class="font-light text-white text-lg">Sarah Chen</p>
-                            <p class="text-sm text-gray-400">CTO, Nexus Innovations</p>
+                            <p class="text-sm text-gray-400 font-thin">CTO, Nexus Innovations</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="testimonial-card">
                 <div class="card-content">
-                    <p class="text-xl md:text-2xl font-thin text-gray-300 mb-6 leading-relaxed">
-                        "Expansion catapulted our performance. <span class="text-blue-400 font-normal">25% higher open rates</span>, <span class="text-purple-400 font-normal">35% more click-throughs</span>. 98% inbox placement. For serious marketers, it's <span class="text-pink-400 font-normal">ESSENTIAL</span>."
+                    <div class="quote-icon">"</div>
+                    <p class="text-xl md:text-2xl font-extralight text-gray-300 mb-6 leading-relaxed">
+                        Expansion catapulted our performance. <span class="text-blue-400 font-light">25% higher open rates</span>, <span class="text-purple-400 font-light">35% more click-throughs</span>. 98% inbox placement. For serious marketers, it's <span class="text-pink-400 font-light">ESSENTIAL</span>.
                     </p>
                     <div class="flex items-center">
                         <div class="testimonial-avatar"></div>
                         <div>
                             <p class="font-light text-white text-lg">Michael O'Brien</p>
-                            <p class="text-sm text-gray-400">Director of Digital Marketing, GlobalReach Inc.</p>
+                            <p class="text-sm text-gray-400 font-thin">Director of Digital Marketing, GlobalReach Inc.</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="testimonial-card">
                 <div class="card-content">
-                    <p class="text-xl md:text-2xl font-thin text-gray-300 mb-6 leading-relaxed">
-                        "In 15 years, nothing like Expansion. User-friendly AND secure. Uptime: 95% to <span class="text-blue-400 font-normal">99.99%</span>. Compliance? Streamlined. It's not a game-changer—it's a <span class="text-purple-400 font-normal">NEW GAME</span>."
+                    <div class="quote-icon">"</div>
+                    <p class="text-xl md:text-2xl font-extralight text-gray-300 mb-6 leading-relaxed">
+                        In 15 years, nothing like Expansion. User-friendly AND secure. Uptime: 95% to <span class="text-blue-400 font-light">99.99%</span>. Compliance? Streamlined. It's not a game-changer—it's a <span class="text-purple-400 font-light">NEW GAME</span>.
                     </p>
                     <div class="flex items-center">
                         <div class="testimonial-avatar"></div>
                         <div>
                             <p class="font-light text-white text-lg">Priya Patel</p>
-                            <p class="text-sm text-gray-400">Head of IT Security, SecureFlow Systems</p>
+                            <p class="text-sm text-gray-400 font-thin">Head of IT Security, SecureFlow Systems</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="card-content">
+                    <div class="quote-icon">"</div>
+                    <p class="text-xl md:text-2xl font-extralight text-gray-300 mb-6 leading-relaxed">
+                        Expansion isn't just software—it's a <span class="text-blue-400 font-light">PARADIGM SHIFT</span>. Our team's productivity soared by <span class="text-purple-400 font-light">200%</span>. Client satisfaction? Off the charts. This is the future of business communication.
+                    </p>
+                    <div class="flex items-center">
+                        <div class="testimonial-avatar"></div>
+                        <div>
+                            <p class="font-light text-white text-lg">Alex Rodriguez</p>
+                            <p class="text-sm text-gray-400 font-thin">COO, TechSprint Solutions</p>
                         </div>
                     </div>
                 </div>
@@ -1158,7 +1176,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </section>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400&family=Roboto:wght@100;300&family=Lato:wght@100;300&family=Open+Sans:wght@300;400&display=swap');
 
 #testimonials {
     font-family: 'Raleway', sans-serif;
@@ -1175,34 +1193,30 @@ document.addEventListener('DOMContentLoaded', () => {
     z-index: 1;
 }
 
-.testimonial-slider {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.testimonial-slider::-webkit-scrollbar {
-    display: none;
-}
-
 .testimonial-card {
-    flex: 0 0 100%;
-    scroll-snap-align: start;
-    padding: 2rem;
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    margin-right: 2rem;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
     transition: all 0.5s ease;
+}
+
+.testimonial-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #ff0000, #ff00008c);
 }
 
 .testimonial-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 40px rgba(255, 0, 0, 0.1);
 }
 
 .testimonial-avatar {
@@ -1213,17 +1227,26 @@ document.addEventListener('DOMContentLoaded', () => {
     margin-right: 1rem;
 }
 
-.fade-in-up {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 1s ease forwards;
+.quote-icon {
+    font-family: 'Roboto', sans-serif;
+    font-size: 6rem;
+    position: absolute;
+    top: -20px;
+    left: 10px;
+    color: rgba(255, 255, 255, 0.1);
 }
 
-@keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+h2 {
+    font-family: 'Lato', sans-serif;
+}
+
+.card-content p {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.testimonial-card:hover .quote-icon {
+    color: rgba(255, 0, 0, 0.2);
+    transition: color 0.5s ease;
 }
 
 @keyframes float {
@@ -1236,60 +1259,134 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 
 .testimonial-card:nth-child(2) {
-    animation-delay: -2s;
+    animation-delay: -1.5s;
 }
 
 .testimonial-card:nth-child(3) {
-    animation-delay: -4s;
+      animation-delay: -3s;
+}
+
+.testimonial-card:nth-child(4) {
+    animation-delay: -4.5s;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.testimonial-avatar {
+    animation: pulse 4s ease-in-out infinite;
+}
+
+/* Implicit directive writing effect */
+.testimonial-card::after {
+    content: 'Experience the difference';
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.3);
+    transform: rotate(-5deg);
+}
+
+/* Red line effect */
+.testimonial-card p::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, #ff0000, transparent);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 3rem;
+    }
+    .testimonial-card {
+        padding: 1.5rem;
+    }
+    .quote-icon {
+        font-size: 4rem;
+    }
 }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const slider = document.querySelector('.testimonial-slider');
-    let isDown = false;
-    let startX;
-    let scrollLeft;
+    const testimonialSection = document.getElementById('testimonials');
+    const testimonialCards = document.querySelectorAll('.testimonial-card');
 
-    slider.addEventListener('mousedown', (e) => {
-        isDown = true;
-        slider.classList.add('active');
-        startX = e.pageX - slider.offsetLeft;
-        scrollLeft = slider.scrollLeft;
-    });
-
-    slider.addEventListener('mouseleave', () => {
-        isDown = false;
-        slider.classList.remove('active');
-    });
-
-    slider.addEventListener('mouseup', () => {
-        isDown = false;
-        slider.classList.remove('active');
-    });
-
-    slider.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 2;
-        slider.scrollLeft = scrollLeft - walk;
-    });
-
-    // Intersection Observer for fade-in effect
-    const observer = new IntersectionObserver((entries) => {
+    const fadeInSection = (entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('fade-in-up');
+                testimonialSection.style.opacity = '1';
+                testimonialCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 200);
+                });
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1 });
+    };
 
-    document.querySelectorAll('.testimonial-card, h2').forEach(el => observer.observe(el));
+    const sectionObserver = new IntersectionObserver(fadeInSection, {
+        threshold: 0.1
+    });
+
+    sectionObserver.observe(testimonialSection);
+
+    // Initialize testimonial cards
+    testimonialCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    });
+
+    // Directive writing effect
+    const directiveTexts = [
+        'Transform your business',
+        'Unlock your potential',
+        'Elevate your workflow',
+        'Revolutionize communication'
+    ];
+
+    testimonialCards.forEach((card, index) => {
+        const directive = document.createElement('div');
+        directive.className = 'directive-text';
+        directive.textContent = directiveTexts[index % directiveTexts.length];
+        directive.style.position = 'absolute';
+        directive.style.bottom = '5px';
+        directive.style.right = '10px';
+        directive.style.fontFamily = 'Raleway, sans-serif';
+        directive.style.fontSize = '0.7rem';
+        directive.style.fontWeight = '200';
+        directive.style.color = 'rgba(255, 255, 255, 0.3)';
+        directive.style.transform = 'rotate(-3deg)';
+        card.appendChild(directive);
+    });
+
+    // Hover effect for enhanced engagement
+    testimonialCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-15px) scale(1.03)';
+            card.style.boxShadow = '0 30px 60px rgba(255, 0, 0, 0.2)';
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0) scale(1)';
+            card.style.boxShadow = '0 20px 40px rgba(255, 0, 0, 0.1)';
+        });
+    });
 });
 </script>
-
 
 
 
