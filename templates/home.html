@@ -725,48 +725,78 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <section id="features" class="relative py-20 overflow-hidden bg-gradient-to-br from-gray-900 to-black">
     <div class="absolute inset-0 z-0">
-        <div class="w-full h-full bg-center bg-cover opacity-20" style="background-image: url('c.webp');"></div>
-        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-black/40"></div>
+        <div class="w-full h-full bg-center bg-cover opacity-30" style="background-image: url('c.webp');"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-purple-900/30 to-black/60"></div>
     </div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-4xl md:text-5xl font-thin mb-12 text-center text-white opacity-80">
-            Features that <span class="text-blue-400">Elevate</span> Your <span class="text-purple-400">Workflow</span>
+        <h2 class="text-5xl md:text-6xl font-extrabold mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+            Revolutionize Your Inbox
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="feature-card">
+            <div class="feature-card" data-feature="Swift Delivery">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
                 <h3 class="feature-title">Swift Delivery</h3>
                 <p class="feature-description">
-                    Messages arrive with unmatched speed, <span class="text-green-400">optimizing your communication</span>.
+                    Unmatched speed optimizing your communication flow.
                 </p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card" data-feature="Advanced Encryption">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                </div>
                 <h3 class="feature-title">Advanced Encryption</h3>
                 <p class="feature-description">
-                    Your data becomes an <span class="text-green-400">impenetrable fortress</span>, secured by cutting-edge algorithms.
+                    Fortress-like security with cutting-edge algorithms.
                 </p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card" data-feature="AI-Driven Insights">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                </div>
                 <h3 class="feature-title">AI-Driven Insights</h3>
                 <p class="feature-description">
-                    Our AI <span class="text-green-400">deciphers patterns</span>, offering strategic advantages for engagement.
+                    Strategic advantages through pattern recognition.
                 </p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card" data-feature="Seamless Integration">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
                 <h3 class="feature-title">Seamless Integration</h3>
                 <p class="feature-description">
-                    Your email <span class="text-green-400">integrates effortlessly</span> with your entire digital ecosystem.
+                    Effortless synergy with your digital ecosystem.
                 </p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card" data-feature="Intelligent Automation">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
                 <h3 class="feature-title">Intelligent Automation</h3>
                 <p class="feature-description">
-                    Our system <span class="text-green-400">streamlines tasks</span>, enhancing efficiency with precision.
+                    Precision-driven efficiency for streamlined tasks.
                 </p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card" data-feature="Scalable Infrastructure">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
                 <h3 class="feature-title">Scalable Infrastructure</h3>
                 <p class="feature-description">
-                    Our platform <span class="text-green-400">grows with your ambition</span>, ensuring limitless potential.
+                    Limitless growth potential for your ambitions.
                 </p>
             </div>
         </div>
@@ -778,81 +808,151 @@ document.addEventListener('DOMContentLoaded', () => {
 
 #features {
     font-family: 'Raleway', sans-serif;
+    perspective: 1000px;
 }
 
 .feature-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
-    border-radius: 8px;
-    padding: 1.5rem;
-    transition: all 0.3s ease;
+    border-radius: 15px;
+    padding: 2rem;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transform-style: preserve-3d;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: attr(data-feature);
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #3490dc, #6574cd, #9561e2, #f66d9b);
+    z-index: -1;
+    filter: blur(24px);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .feature-card:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+.feature-icon {
+    background: linear-gradient(135deg, #3490dc, #6574cd);
+    border-radius: 50%;
+    padding: 1rem;
+    display: inline-flex;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1) translateZ(20px);
+}
+
+.feature-icon svg {
+    color: white;
 }
 
 .feature-title {
-    font-size: 1.25rem;
-    font-weight: 300;
+    font-size: 1.5rem;
+    font-weight: 800;
     margin-bottom: 0.5rem;
     color: #ffffff;
-    opacity: 0.9;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-title {
+    transform: translateZ(15px);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .feature-description {
     color: #d1d5db;
-    font-size: 0.875rem;
+    font-size: 1rem;
     line-height: 1.5;
-    font-weight: 100;
+    font-weight: 300;
+    transition: all 0.3s ease;
 }
 
-@keyframes subtle-pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.02); }
+.feature-card:hover .feature-description {
+    transform: translateZ(10px);
 }
 
-.feature-card {
-    animation: subtle-pulse 6s infinite;
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 .feature-card:nth-child(odd) {
-    animation-delay: 3s;
+    animation: float 6s ease-in-out infinite;
+}
+
+.feature-card:nth-child(even) {
+    animation: float 6s ease-in-out infinite reverse;
+}
+
+@keyframes glow {
+    0%, 100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.1); }
+    50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+}
+
+.feature-card {
+    animation: glow 4s infinite alternate;
 }
 
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const featuresSection = document.getElementById('features');
-    const cards = featuresSection.querySelectorAll('.feature-card');
+    const cards = document.querySelectorAll('.feature-card');
 
-    const fadeInUp = (element) => {
-        element.style.transform = 'translateY(0)';
-        element.style.opacity = '1';
+    const handleMouseMove = (e) => {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = (y - centerY) / 10;
+        const rotateY = (centerX - x) / 10;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
     };
+
+    const handleMouseLeave = (e) => {
+        e.currentTarget.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+    };
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', handleMouseMove);
+        card.addEventListener('mouseleave', handleMouseLeave);
+    });
 
     const observer = new IntersectionObserver(
         (entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    fadeInUp(entry.target);
+                    entry.target.classList.add('animate-in');
                 }
             });
         },
         { threshold: 0.1 }
     );
 
-    cards.forEach(card => {
-        card.style.transform = 'translateY(20px)';
-        card.style.opacity = '0';
-        card.style.transition = 'all 0.5s ease-out';
-        observer.observe(card);
-    });
+    cards.forEach(card => observer.observe(card));
 });
 </script>
 
