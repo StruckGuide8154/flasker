@@ -1545,6 +1545,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <section class="relative py-24 overflow-hidden bg-gradient-to-b from-gray-900 via-blue-900 to-purple-900 text-white">
     <div class="absolute inset-0 bg-pattern opacity-10"></div>
+    <div class="noise-overlay"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="mb-12 text-5xl font-extrabold text-center">
             Witness the <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Revolution</span>
@@ -1552,138 +1553,63 @@ document.addEventListener('DOMContentLoaded', () => {
         <p class="text-xl text-center mb-12 max-w-3xl mx-auto">
             While others show you <span class="line-through text-red-400">static screenshots</span>, we invite you to explore the future of email management. Each image is a gateway to unparalleled efficiency.
         </p>
-        <div class="relative">
-            <div class="flex animate-scroll">
+        <div class="gallery-container perspective">
+            <div class="gallery-track">
                 <!-- Gallery items -->
                 <div class="gallery-item group">
-                    <img src="gallery1.png" alt="Admin dashboard" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Command Center</span>
-                        <p class="gallery-description">Where CEOs become visionaries. One glance, infinite insights.</p>
+                    <div class="gallery-item-inner">
+                        <img src="gallery1.png" alt="Admin dashboard" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <span class="gallery-title">Command Center</span>
+                            <p class="gallery-description">Where CEOs become visionaries. One glance, infinite insights.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="gallery-item group">
-                    <img src="gallery2.png" alt="Admin tickets system" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Issue Annihilator</span>
-                        <p class="gallery-description">Problems vanish, solutions materialize. Your support team's secret weapon.</p>
+                    <div class="gallery-item-inner">
+                        <img src="gallery2.png" alt="Admin tickets system" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <span class="gallery-title">Issue Annihilator</span>
+                            <p class="gallery-description">Problems vanish, solutions materialize. Your support team's secret weapon.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="gallery-item group">
-                    <img src="gallery3.png" alt="Compose Email" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Message Architect</span>
-                        <p class="gallery-description">Craft communications that command attention. Every word, a stepping stone to success.</p>
+                    <div class="gallery-item-inner">
+                        <img src="gallery3.png" alt="Compose Email" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <span class="gallery-title">Message Architect</span>
+                            <p class="gallery-description">Craft communications that command attention. Every word, a stepping stone to success.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="gallery-item group">
-                    <img src="gallery4.png" alt="Receive emails" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Inbox Dominator</span>
-                        <p class="gallery-description">Where chaos bows to order. Reclaim hours of your day, effortlessly.</p>
+                    <div class="gallery-item-inner">
+                        <img src="gallery4.png" alt="Receive emails" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <span class="gallery-title">Inbox Dominator</span>
+                            <p class="gallery-description">Where chaos bows to order. Reclaim hours of your day, effortlessly.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="gallery-item group">
-                    <img src="gallery5.png" alt="Light/dark mode" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Visual Mastery</span>
-                        <p class="gallery-description">Day or night, your eyes will thank you. Productivity knows no hour.</p>
+                    <div class="gallery-item-inner">
+                        <img src="gallery5.png" alt="Light/dark mode" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <span class="gallery-title">Visual Mastery</span>
+                            <p class="gallery-description">Day or night, your eyes will thank you. Productivity knows no hour.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="gallery-item group">
-                    <img src="gallery6.png" alt="Admin panel" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Control Nexus</span>
-                        <p class="gallery-description">Unlimited power at your fingertips. Manage with the precision of a maestro.</p>
+                    <div class="gallery-item-inner">
+                        <img src="gallery6.png" alt="Admin panel" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <span class="gallery-title">Control Nexus</span>
+                            <p class="gallery-description">Unlimited power at your fingertips. Manage with the precision of a maestro.</p>
+                        </div>
                     </div>
                 </div>
-                                  <div class="gallery-item group">
-                    <img src="gallery1.png" alt="Admin dashboard" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Command Center</span>
-                        <p class="gallery-description">Where CEOs become visionaries. One glance, infinite insights.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery2.png" alt="Admin tickets system" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Issue Annihilator</span>
-                        <p class="gallery-description">Problems vanish, solutions materialize. Your support team's secret weapon.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery3.png" alt="Compose Email" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Message Architect</span>
-                        <p class="gallery-description">Craft communications that command attention. Every word, a stepping stone to success.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery4.png" alt="Receive emails" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Inbox Dominator</span>
-                        <p class="gallery-description">Where chaos bows to order. Reclaim hours of your day, effortlessly.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery5.png" alt="Light/dark mode" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Visual Mastery</span>
-                        <p class="gallery-description">Day or night, your eyes will thank you. Productivity knows no hour.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery6.png" alt="Admin panel" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Control Nexus</span>
-                        <p class="gallery-description">Unlimited power at your fingertips. Manage with the precision of a maestro.</p>
-                    </div>
-                </div>
-                                  <div class="gallery-item group">
-                    <img src="gallery1.png" alt="Admin dashboard" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Command Center</span>
-                        <p class="gallery-description">Where CEOs become visionaries. One glance, infinite insights.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery2.png" alt="Admin tickets system" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Issue Annihilator</span>
-                        <p class="gallery-description">Problems vanish, solutions materialize. Your support team's secret weapon.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery3.png" alt="Compose Email" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Message Architect</span>
-                        <p class="gallery-description">Craft communications that command attention. Every word, a stepping stone to success.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery4.png" alt="Receive emails" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Inbox Dominator</span>
-                        <p class="gallery-description">Where chaos bows to order. Reclaim hours of your day, effortlessly.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery5.png" alt="Light/dark mode" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Visual Mastery</span>
-                        <p class="gallery-description">Day or night, your eyes will thank you. Productivity knows no hour.</p>
-                    </div>
-                </div>
-                <div class="gallery-item group">
-                    <img src="gallery6.png" alt="Admin panel" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <span class="gallery-title">Control Nexus</span>
-                        <p class="gallery-description">Unlimited power at your fingertips. Manage with the precision of a maestro.</p>
-                    </div>
-                </div>
-                  
-
-                <!-- Repeat the above items to create a seamless loop -->
             </div>
         </div>
         <div class="mt-16 text-center">
@@ -1699,51 +1625,91 @@ document.addEventListener('DOMContentLoaded', () => {
 </section>
 
 <style>
-@keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-400px * 6)); }
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
 }
-.animate-scroll {
-    animation: scroll 60s linear infinite;
-}
-@keyframes blob {
-    0% { transform: translate(0px, 0px) scale(1); }
-    33% { transform: translate(30px, -50px) scale(1.1); }
-    66% { transform: translate(-20px, 20px) scale(0.9); }
-    100% { transform: translate(0px, 0px) scale(1); }
-}
+
 .animate-blob {
-    animation: blob 7s infinite;
+    animation: float 7s infinite;
 }
+
 .animation-delay-2000 {
     animation-delay: 2s;
 }
+
+.bg-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.noise-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/png;base64,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');
+    opacity: 0.02;
+    z-index: 1;
+}
+
+.perspective {
+    perspective: 1000px;
+}
+
+.gallery-container {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+}
+
+.gallery-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
 .gallery-item {
-    flex: 0 0 400px;
-    height: 300px;
-    margin: 8px;
+    flex: 0 0 calc(33.333% - 20px);
+    margin: 0 10px;
+    height: 100%;
     position: relative;
     overflow: hidden;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
+    transform-style: preserve-3d;
 }
-.gallery-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+
+.gallery-item-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
 }
+
+.gallery-item:hover .gallery-item-inner {
+    transform: rotateY(180deg);
+}
+
 .gallery-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease-in-out;
+    backface-visibility: hidden;
 }
-.gallery-item:hover .gallery-image {
-    transform: scale(1.1);
-}
+
 .gallery-overlay {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
@@ -1751,10 +1717,14 @@ document.addEventListener('DOMContentLoaded', () => {
     justify-content: center;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
 }
+
 .gallery-item:hover .gallery-overlay {
     opacity: 1;
 }
+
 .gallery-title {
     color: white;
     font-size: 1.5rem;
@@ -1764,6 +1734,7 @@ document.addEventListener('DOMContentLoaded', () => {
     transform: translateY(-20px);
     transition: transform 0.3s ease-in-out;
 }
+
 .gallery-description {
     color: #a0aec0;
     font-size: 1rem;
@@ -1773,71 +1744,139 @@ document.addEventListener('DOMContentLoaded', () => {
     transition: transform 0.3s ease-in-out;
     max-width: 300px;
 }
+
 .gallery-item:hover .gallery-title,
 .gallery-item:hover .gallery-description {
     transform: translateY(0);
 }
-.bg-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
+
 .enroll-button {
-  display: inline-block;
-  padding: 12px 24px;
-  font-size: 18px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #fff;
-  background-color: transparent;
-  border: 2px solid;
-  border-image: linear-gradient(45deg, #4a0e8f, #0e4a8f) 1;
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  cursor: pointer;
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: transparent;
+    border: 2px solid;
+    border-image: linear-gradient(45deg, #4a0e8f, #0e4a8f) 1;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .enroll-button::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(45deg, #4a0e8f, #0e4a8f);
-  z-index: -1;
-  filter: blur(10px);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #4a0e8f, #0e4a8f);
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .enroll-button:hover::before {
-  opacity: 1;
+    opacity: 1;
 }
 
 .enroll-button:hover {
-  color: #fff;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 20px rgba(74, 14, 143, 0.5);
+    color: #fff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 20px rgba(74, 14, 143, 0.5);
 }
 
 .enroll-button:active {
-  transform: scale(0.98);
+    transform: scale(0.98);
 }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const gallery = document.querySelector('.animate-scroll');
-    gallery.addEventListener('mouseenter', () => {
-        gallery.style.animationPlayState = 'paused';
+    const track = document.querySelector('.gallery-track');
+    const items = document.querySelectorAll('.gallery-item');
+    const itemWidth = items[0].offsetWidth;
+    const trackWidth = itemWidth * items.length;
+    
+    track.style.width = `${trackWidth}px`;
+
+    let currentIndex = 0;
+    let startX;
+    let scrollLeft;
+    let isDown = false;
+
+    // Auto-scroll functionality
+    function autoScroll() {
+        currentIndex = (currentIndex + 1) % items.length;
+        track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+    }
+
+    let scrollInterval = setInterval(autoScroll, 3000);
+
+    // Mouse interaction
+    track.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
+        clearInterval(scrollInterval);
     });
-    gallery.addEventListener('mouseleave', () => {
-        gallery.style.animationPlayState = 'running';
+
+    track.addEventListener('mouseleave', () => {
+        isDown = false;
+        scrollInterval = setInterval(autoScroll, 3000);
+    });
+
+    track.addEventListener('mouseup', () => {
+        isDown = false;
+        scrollInterval = setInterval(autoScroll, 3000);
+    });
+
+    track.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - track.offsetLeft;
+        const walk = (x - startX) * 2;
+        track.scrollLeft = scrollLeft - walk;
+    });
+
+    // 3D rotation effect
+    items.forEach(item => {
+        item.addEventListener('mousemove', (e) => {
+            const { left, top, width, height } = item.getBoundingClientRect();
+            const x = (e.clientX - left) / width;
+            const y = (e.clientY - top) / height;
+            
+            const rotateX = (y - 0.5) * 20;
+            const rotateY = (x - 0.5) * 20;
+            
+            item.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            item.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        });
+    });
+
+    // Parallax background effect
+    const section = document.querySelector('section');
+    section.addEventListener('mousemove', (e) => {
+        const { left, top, width, height } = section.getBoundingClientRect();
+        const x = (e.clientX - left) / width;
+        const y = (e.clientY - top) / height;
+        
+        const moveX = x * 20 - 10;
+        const moveY = y * 20 - 10;
+        
+        document.documentElement.style.setProperty('--move-x', `${moveX}px`);
+        document.documentElement.style.setProperty('--move-y', `${moveY}px`);
     });
 });
 </script>
-
 
                   
 <section id="pricing" class="relative py-24 overflow-hidden bg-gradient-to-b from-gray-900 to-black text-white">
