@@ -37,6 +37,10 @@ from werkzeug.utils import secure_filename
 import stripe
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+import json
+
+
+
 temp_tokens = {}
 
 logging.basicConfig(level=logging.INFO)
@@ -407,6 +411,30 @@ def claim_earnings(affiliate_id):
     flash('Your earnings claim request has been submitted. We will process it shortly.', 'success')
     return redirect(url_for('affiliate'))
 
+def serialize_referrals(referrals):
+    """Converts referral objects into JSON serializable structures."""
+    serialized_referrals = []
+    for referral in referrals:
+        serialized_referrals.append({
+            'email': referral.email,
+            'referral_code': referral.referral_code,
+            'stats': {
+                'total': referral.stats.total,
+                'total_earnings': referral.stats.total_earnings
+            }
+        })
+    return serialized_referrals
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -434,10 +462,11 @@ def affiliate_redirect(referral_code):
 def affiliate():
     if current_user.is_system_user:
         affiliates = Affiliate.query.all()
+        
         if request.method == 'POST':
             email = request.form.get('email')
             referral_code = request.form.get('referral_code')
-            
+
             existing_affiliate = Affiliate.query.filter_by(email=email).first()
             if existing_affiliate:
                 flash('An affiliate with this email already exists.', 'error')
@@ -446,18 +475,37 @@ def affiliate():
                 db.session.add(new_affiliate)
                 db.session.commit()
                 flash('Affiliate added successfully', 'success')
-            
+
             return redirect(url_for('affiliate'))
-        
+
         # Calculate statistics for each affiliate
         for affiliate in affiliates:
             affiliate.stats = get_referral_stats(affiliate.referral_code)
-        
+
+        # Serialize the data to ensure it's JSON serializable
+        try:
+            serialized_affiliates = serialize_referrals(affiliates)
+            print(json.dumps(serialized_affiliates))  # Debugging serialization
+        except TypeError as e:
+            print(f"Serialization error: {e}")
+
         return render_template('affiliate.html', affiliates=affiliates)
+    
     else:
         user_affiliate = Affiliate.query.filter_by(email=current_user.email).first()
         referral_stats = get_referral_stats(user_affiliate.referral_code) if user_affiliate else None
-        return render_template('affiliate.html', user_affiliate=user_affiliate, referral_stats=referral_stats)
+        
+        # Serialize the referral stats if available
+        if referral_stats:
+            try:
+                serialized_stats = serialize_referrals([user_affiliate])
+                print(json.dumps(serialized_stats))  # Debugging serialization
+            except TypeError as e:
+                print(f"Serialization error: {e}")
+        else:
+            serialized_stats = None
+        
+        return render_template('affiliate.html', user_affiliate=user_affiliate, referral_stats=serialized_stats)
 
 @app.before_request
 def track_affiliate():
