@@ -40,6 +40,12 @@ from sendgrid.helpers.mail import Mail
 import json
 import shutil
 from jinja2 import Undefined
+from flask import Flask, render_template, request, jsonify, Response, redirect, url_for
+from functools import wraps
+from datetime import datetime
+import json
+import os
+import secrets
 
 print("test")
 
@@ -53,6 +59,190 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+ADMIN_USER = "gad8g8hbnawdhx"
+ADMIN_PASS = "82q93fdfrdg"
+CONTACTS_FILE = 'contacts.json'
+SESSION_TOKEN = secrets.token_hex(16)  # Generate secure session token
+
+# Ensure required directories exist
+if not os.path.exists('static'):
+    os.makedirs('static')
+
+def require_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if not auth or not check_auth(auth.username, auth.password):
+            return Response(
+                'Access Denied', 401,
+                {'WWW-Authenticate': 'Basic realm="Login Required"'}
+            )
+        return f(*args, **kwargs)
+    return decorated
+
+def check_auth(username, password):
+    return username == ADMIN_USER and password == ADMIN_PASS
+
+def save_contact(data):
+    """Save contact form submission with enhanced data"""
+    contacts = []
+    if os.path.exists(CONTACTS_FILE):
+        with open(CONTACTS_FILE, 'r', encoding='utf-8') as f:
+            try:
+                contacts = json.load(f)
+            except json.JSONDecodeError:
+                contacts = []
+    
+    # Enhanced submission data
+    submission = {
+        'id': secrets.token_hex(8),
+        'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        'name': data.get('name'),
+        'email': data.get('email'),
+        'message': data.get('message'),
+        'ip': request.remote_addr,
+        'user_agent': request.headers.get('User-Agent'),
+        'referrer': request.referrer,
+        'status': 'new'  # For tracking in admin panel
+    }
+    
+    contacts.append(submission)
+    
+    with open(CONTACTS_FILE, 'w', encoding='utf-8') as f:
+        json.dump(contacts, f, indent=4, ensure_ascii=False)
+    
+    return submission['id']
+
+def get_analytics():
+    """Calculate analytics for admin dashboard"""
+    if os.path.exists(CONTACTS_FILE):
+        with open(CONTACTS_FILE, 'r', encoding='utf-8') as f:
+            try:
+                contacts = json.load(f)
+                total = len(contacts)
+                new = sum(1 for c in contacts if c.get('status') == 'new')
+                today = sum(1 for c in contacts if c.get('timestamp', '').startswith(datetime.now().strftime('%Y-%m-%d')))
+                return {
+                    'total_submissions': total,
+                    'new_submissions': new,
+                    'submissions_today': today
+                }
+            except json.JSONDecodeError:
+                pass
+    return {
+        'total_submissions': 0,
+        'new_submissions': 0,
+        'submissions_today': 0
+    }
+
+@app.route('/profreview')
+def homeeee():
+    return render_template('mrk.html')
+
+@app.route('/submit', methods=['POST'])
+def submit():
+    try:
+        data = {
+            'name': request.form.get('name', '').strip(),
+            'email': request.form.get('email', '').strip(),
+            'message': request.form.get('message', '').strip()
+        }
+        
+        # Validate inputs
+        if not all([data['name'], data['email'], data['message']]):
+            return jsonify({
+                'success': False,
+                'message': 'Please fill in all fields'
+            }), 400
+        
+        if '@' not in data['email'] or '.' not in data['email']:
+            return jsonify({
+                'success': False,
+                'message': 'Please provide a valid email address'
+            }), 400
+        
+        # Save submission
+        submission_id = save_contact(data)
+        
+        return jsonify({
+            'success': True,
+            'message': 'Thank you for your message. We will get back to you soon!',
+            'id': submission_id
+        })
+        
+    except Exception as e:
+        print(f"Error in submit: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': 'An error occurred. Please try again later.'
+        }), 500
+
+@app.route('/admin')
+@require_auth
+def admin():
+    """Enhanced admin dashboard"""
+    analytics = get_analytics()
+    
+    # Load contacts with pagination
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+    
+    contacts = []
+    if os.path.exists(CONTACTS_FILE):
+        with open(CONTACTS_FILE, 'r', encoding='utf-8') as f:
+            try:
+                contacts = json.load(f)
+            except json.JSONDecodeError:
+                contacts = []
+    
+    # Sort contacts by timestamp (newest first)
+    contacts.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
+    
+    # Paginate contacts
+    total_pages = (len(contacts) + per_page - 1) // per_page
+    start_idx = (page - 1) * per_page
+    contacts_page = contacts[start_idx:start_idx + per_page]
+    
+    return render_template(
+        'admin.html',
+        contacts=contacts_page,
+        analytics=analytics,
+        page=page,
+        total_pages=total_pages,
+        per_page=per_page
+    )
+
+@app.route('/admin/mark-read/<submission_id>')
+@require_auth
+def mark_read(submission_id):
+    """Mark submission as read"""
+    if os.path.exists(CONTACTS_FILE):
+        with open(CONTACTS_FILE, 'r', encoding='utf-8') as f:
+            contacts = json.load(f)
+            
+        for contact in contacts:
+            if contact.get('id') == submission_id:
+                contact['status'] = 'read'
+                
+        with open(CONTACTS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(contacts, f, indent=4)
+    
+    return redirect(url_for('admin'))
+
+@app.route('/admin/delete/<submission_id>')
+@require_auth
+def delete_submission(submission_id):
+    """Delete submission"""
+    if os.path.exists(CONTACTS_FILE):
+        with open(CONTACTS_FILE, 'r', encoding='utf-8') as f:
+            contacts = json.load(f)
+            
+        contacts = [c for c in c if c.get('id') != submission_id]
+                
+        with open(CONTACTS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(contacts, f, indent=4)
+    
+    return redirect(url_for('admin'))
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
