@@ -58,7 +58,7 @@ load_dotenv()
 
 CLAUDE_API_KEY = os.getenv('CLAUDE_API_KEY')
 
-print("test")
+print("testa")
 
 
 temp_tokens = {}
