@@ -73,7 +73,7 @@ SESSION_TOKEN = secrets.token_hex(16)  # Generate secure session token
 # Initialize clients and tools
 tools = CustomTools()
 openai_client = openai.OpenAI(api_key="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")
-claude_client = anthropic.Anthropic(api_key="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")
+claude_client = anthropic.Anthropic(api_key="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")
 
 def format_messages_for_claude(history, system_prompt):
     formatted_messages = []
