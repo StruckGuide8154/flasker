@@ -1,0 +1,14 @@
+{
+    "google": {
+        "command": "/google",
+        "url": "https://www.google.com/search?q=",
+        "description": "Search Google",
+        "enabled": true
+    },
+    "wiki": {
+        "command": "/wiki",
+        "url": "https://en.wikipedia.org/wiki/Special:Search?search=",
+        "description": "Search Wikipedia",
+        "enabled": true
+    }
+}
