@@ -57,7 +57,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 CLAUDE_API_KEY = os.getenv('CLAUDE_API_KEY')
-OPENAI_KEY = os.getenv('OPENAI_KEY')
+OPENAI_API_KEY = os.getenv('OPENAI_KEY')
 
 print("testa")
 
@@ -79,7 +79,7 @@ SESSION_TOKEN = secrets.token_hex(16)  # Generate secure session token
 # Initialize clients and tools
 tools = CustomTools()
 
-openai_client = openai.OpenAI(api_key=OPENAI_KEY)
+openai_client = openai.OpenAI(api_key=OPENAI_API_KEY)
 claude_client = anthropic.Anthropic(api_key=CLAUDE_API_KEY)
 
 def format_messages_for_claude(history, system_prompt):
