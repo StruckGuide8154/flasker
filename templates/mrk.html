@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Premium digital marketing solutions for restaurants and small businesses in Nottingham. Transform your online presence with strategic marketing.">
+    <meta name="keywords" content="restaurant marketing, small business marketing, digital marketing nottingham, social media management">
+    <title>Expansion Marketing | Digital Growth Experts</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@200;300;400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-dark: #0A0A0A;
+            --color-darker: #050505;
+            --color-light: #F4F0EA;
+            --color-accent: #E5D5B7;
+            --color-accent-light: #F2E6D5;
+            --color-text: #FFFFFF;
+            --color-text-muted: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Core Styles */
+        body {
+            background-color: var(--color-dark);
+            color: var(--color-text);
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-display {
+            font-family: 'Marcellus', serif;
+        }
+
+        /* Loader */
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: var(--color-darker);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-logo {
+            font-family: 'Marcellus', serif;
+            font-size: 2rem;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 2px;
+            background: rgba(229, 213, 183, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loader-progress {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: var(--color-accent);
+            transition: width 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            transition: all 0.3s ease;
+            padding: 1.5rem 0;
+        }
+
+        .nav.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+        }
+
+        .nav-link {
+            position: relative;
+            color: var(--color-text);
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 1px;
+            background: var(--color-accent);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            opacity: 1;
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.3);
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(10, 10, 10, 0.7) 0%,
+                var(--color-dark) 100%
+            );
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards 0.7s;
+        }
+
+        /* Service Cards */
+        .service-card {
+            background: rgba(17, 17, 17, 0.5);
+            border: 1px solid rgba(229, 213, 183, 0.1);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-accent);
+            background: rgba(17, 17, 17, 0.8);
+        }
+
+        /* Process Steps */
+        .process-step {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-accent);
+        }
+
+        .process-step::after {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 1rem;
+            width: 2px;
+            height: calc(100% + 2rem);
+            background: linear-gradient(
+                to bottom,
+                var(--color-accent),
+                transparent
+            );
+        }
+
+        /* Form Styles */
+        .form-input {
+            background: rgba(17, 17, 17, 0.5);
+            border: 1px solid rgba(229, 213, 183, 0.1);
+            color: var(--color-text);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            background: rgba(17, 17, 17, 0.8);
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background: var(--color-accent);
+            color: var(--color-darker);
+            font-weight: 400;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-accent-light);
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stats */
+        .stat-number {
+            font-family: 'Marcellus', serif;
+            color: var(--color-accent);
+            font-size: 3rem;
+        }
+
+        .stat-label {
+            color: var(--color-text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1.5s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+.bg-decoration {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.03;
+    mix-blend-mode: overlay;
+}
+
+.decoration-dots {
+    background-image: radial-gradient(var(--color-accent) 1px, transparent 2px);
+    background-size: 50px 50px;
+}
+
+.decoration-grid {
+    background-image: linear-gradient(var(--color-accent) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--color-accent) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.02;
+}
+
+.decoration-gradient {
+    background: radial-gradient(circle at center, var(--color-accent) 0%, transparent 70%);
+    filter: blur(80px);
+    opacity: 0.05;
+}
+
+/* Enhanced Hero Title */
+.hero-title-main {
+    font-size: clamp(4rem, 15vw, 8rem);
+    line-height: 1;
+    color: var(--color-text);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+}
+
+.hero-title-sub {
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--color-text-muted);
+    font-weight: 200;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+}
+
+/* Scroll Gesture */
+.scroll-gesture {
+    width: 24px;
+    height: 40px;
+    border: 2px solid var(--color-accent);
+    border-radius: 12px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.scroll-gesture::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    width: 4px;
+    height: 8px;
+    background: var(--color-accent);
+    border-radius: 2px;
+    transform: translateX(-50%);
+    animation: scrollGesture 2s infinite;
+}
+
+@keyframes scrollGesture {
+    0% { transform: translate(-50%, 0); opacity: 1; }
+    100% { transform: translate(-50%, 12px); opacity: 0; }
+}
+
+/* Additional Decorative Elements */
+.floating-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.floating-shape {
+    position: absolute;
+    background: var(--color-accent);
+    opacity: 0.03;
+    border-radius: 50%;
+    animation: float 20s infinite;
+}
+
+.shape-1 { top: 10%; left: 10%; width: 300px; height: 300px; animation-delay: 0s; }
+.shape-2 { top: 60%; right: 15%; width: 400px; height: 400px; animation-delay: -5s; }
+.shape-3 { bottom: 20%; left: 20%; width: 200px; height: 200px; animation-delay: -10s; }
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-20px, 20px) rotate(90deg); }
+    50% { transform: translate(20px, -20px) rotate(180deg); }
+    75% { transform: translate(-20px, -20px) rotate(270deg); }
+}
+/* Add these refined decorative styles */
+.bg-dots {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(229, 213, 183, 0.1) 0.5px, transparent 0.5px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(circle at center, transparent 30%, black 70%);
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.ambient-shapes {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.ambient-shape {
+    position: absolute;
+    background: linear-gradient(45deg, var(--color-accent), transparent);
+    filter: blur(80px);
+    opacity: 0.03;
+    border-radius: 50%;
+}
+
+.line-decoration {
+    position: relative;
+    overflow: hidden;
+}
+
+.line-decoration::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--color-accent),
+        transparent
+    );
+    opacity: 0.1;
+}
+
+.corner-lines {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+}
+
+.corner-lines::before,
+.corner-lines::after {
+    content: '';
+    position: absolute;
+    background: var(--color-accent);
+    opacity: 0.1;
+}
+
+.corner-lines::before {
+    width: 1px;
+    height: 100%;
+}
+
+.corner-lines::after {
+    width: 100%;
+    height: 1px;
+}
+
+/* Corner positions */
+.corner-top-left {
+    top: 0;
+    left: 0;
+}
+
+.corner-top-right {
+    top: 0;
+    right: 0;
+    transform: rotate(90deg);
+}
+
+.corner-bottom-left {
+    bottom: 0;
+    left: 0;
+    transform: rotate(-90deg);
+}
+
+.corner-bottom-right {
+    bottom: 0;
+    right: 0;
+    transform: rotate(180deg);
+}
+
+.section-divider {
+    position: relative;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    opacity: 0.1;
+    margin: 4rem 0;
+}
+
+.section-divider::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    opacity: 0.3;
+}
+
+/* Subtle animated lines */
+.animated-lines {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    opacity: 0.1;
+}
+
+.animated-line {
+    position: absolute;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-accent);
+    animation: lineRise 8s infinite;
+}
+
+@keyframes lineRise {
+    0% { height: 0; opacity: 0; }
+    50% { height: 100px; opacity: 0.5; }
+    100% { height: 0; opacity: 0; }
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Loader -->
+    <div class="loader">
+        <div class="loader-content">
+            <div class="loader-logo">expansion</div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+    </div>
+<div class="bg-dots"></div>
+<div class="ambient-shapes">
+    <div class="ambient-shape" style="top: 20%; left: 10%; width: 600px; height: 600px;"></div>
+    <div class="ambient-shape" style="top: 60%; right: 15%; width: 500px; height: 500px;"></div>
+    <div class="ambient-shape" style="bottom: 10%; left: 30%; width: 400px; height: 400px;"></div>
+</div>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between">
+                <a href="#" class="font-display text-2xl text-accent">
+                    expansion
+                </a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="nav-link">Home</a>
+                    <a href="#services" class="nav-link">Services</a>
+                    <a href="#process" class="nav-link">Process</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+<!-- Replace your existing hero section -->
+<section class="hero">
+    <!-- Background Decorations -->
+    <div class="floating-shapes">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </div>
+    
+    <div class="bg-decoration decoration-dots absolute inset-0 opacity-5"></div>
+    <div class="bg-decoration decoration-grid absolute inset-0"></div>
+    <div class="bg-decoration decoration-gradient absolute inset-0"></div>
+    
+    <div class="hero-bg">
+        <img src="/static/a.png" alt="Hero Background">
+        <div class="absolute inset-0 bg-gradient-to-b from-dark/80 via-dark/90 to-dark"></div>
+    </div>
+
+    <div class="container mx-auto px-6 relative z-10">
+        <div class="text-center max-w-4xl mx-auto">
+            <div class="space-y-4 mb-12">
+                <h1 class="hero-title-main font-display fade-up" data-delay="0.2">
+                    Expansion
+                </h1>
+                <p class="hero-title-sub font-light tracking-widest fade-up" data-delay="0.4">
+                    Marketing
+                </p>
+            </div>
+            <p class="text-text-muted text-xl mb-12 fade-up" data-delay="0.6">
+                Elevating Restaurants & Small Businesses Through Strategic Digital Marketing
+            </p>
+            <a href="#contact" class="btn-primary inline-block fade-up" data-delay="0.8">
+                Start Your Journey
+            </a>
+        </div>
+    </div>
+
+    <!-- Scroll Gesture -->
+    <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-6 fade-up" data-delay="1">
+        <div class="scroll-gesture"></div>
+    </div>
+
+
+</section><div class="animated-lines">
+    <div class="animated-line" style="left: 15%; animation-delay: 0s;"></div>
+    <div class="animated-line" style="left: 35%; animation-delay: 2s;"></div>
+    <div class="animated-line" style="left: 55%; animation-delay: 4s;"></div>
+    <div class="animated-line" style="left: 75%; animation-delay: 6s;"></div>
+</div>
+
+    <!-- Services Section -->
+    <section id="services" class="py-32 bg-darker">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl mb-4">Strategic Solutions</h2>
+                <p class="text-text-muted max-w-2xl mx-auto">
+                    Transform your digital presence with data-driven strategies
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Restaurant Marketing -->
+                <div class="service-card fade-up">
+                    <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
+                                  d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-display mb-4">Restaurant Marketing</h3>
+                    <ul class="space-y-3 text-text-muted">
+                        <li class="flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
+                            Online Menu Optimization
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
+                            Local SEO & Discovery
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
+                            Social Media Management
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
+                            Review Management
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Digital Strategy -->
+                <div class="service-card fade-up" style="animation-delay: 0.2s;">
+                    <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
+                                  d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-display mb-4">Digital Strategy</h3>
+                    <ul class="space-y-3 text-text-muted">
+                        <li class="flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
+                            Brand Development
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
+                            Content Strategy
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
+                            Performance Analytics
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>Market Research
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Growth Marketing -->
+                <div class="service-card fade-up" style="animation-delay: 0.4s;">
+                    <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
+                                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-display mb-4">Growth Marketing</h3>
+                    <ul class="space-y-3 text-text-muted">
+                        <li class="flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
+                            Lead Generation
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
+                            Conversion Optimization
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
+                            Email Marketing
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
+                            Retargeting Campaigns
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </section><div class="animated-lines">
+    <div class="animated-line" style="left: 15%; animation-delay: 0s;"></div>
+    <div class="animated-line" style="left: 35%; animation-delay: 2s;"></div>
+    <div class="animated-line" style="left: 55%; animation-delay: 4s;"></div>
+    <div class="animated-line" style="left: 75%; animation-delay: 6s;"></div>
+</div>
+
+    <!-- Process Section -->
+    <section id="process" class="py-32">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl mb-4">Our Process</h2>
+                <p class="text-text-muted max-w-2xl mx-auto">
+                    A proven approach to digital growth
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-20">
+                <!-- Timeline -->
+                <div class="space-y-16">
+                    <div class="process-step fade-up">
+                        <h3 class="text-xl font-display text-accent mb-4">Discovery</h3>
+                        <p class="text-text-muted">
+                            Understanding your business goals, target audience, and current market position. 
+                            We analyze your unique challenges and opportunities.
+                        </p>
+                    </div>
+
+                    <div class="process-step fade-up">
+                        <h3 class="text-xl font-display text-accent mb-4">Strategy</h3>
+                        <p class="text-text-muted">
+                            Developing a comprehensive digital marketing strategy tailored to your 
+                            specific needs and industry requirements.
+                        </p>
+                    </div>
+
+                    <div class="process-step fade-up">
+                        <h3 class="text-xl font-display text-accent mb-4">Implementation</h3>
+                        <p class="text-text-muted">
+                            Executing the strategy with precision across all chosen channels, 
+                            ensuring consistent brand messaging.
+                        </p>
+                    </div>
+
+                    <div class="process-step fade-up">
+                        <h3 class="text-xl font-display text-accent mb-4">Growth & Optimization</h3>
+                        <p class="text-text-muted">
+                            Continuously monitoring performance and optimizing strategies 
+                            for maximum impact and sustainable growth.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="sticky top-32 space-y-16">
+                    <div class="fade-up">
+                        <div class="stat-number" data-value="500">0</div>
+                        <div class="stat-label">Successful Campaigns</div>
+                    </div>
+
+                    <div class="fade-up" style="animation-delay: 0.2s;">
+                        <div class="stat-number" data-value="95">0</div>
+                        <div class="stat-label">Client Satisfaction Rate</div>
+                    </div>
+
+                    <div class="fade-up" style="animation-delay: 0.4s;">
+                        <div class="stat-number" data-value="150">0</div>
+                        <div class="stat-label">Active Clients</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section><div class="animated-lines">
+    <div class="animated-line" style="left: 15%; animation-delay: 0s;"></div>
+    <div class="animated-line" style="left: 35%; animation-delay: 2s;"></div>
+    <div class="animated-line" style="left: 55%; animation-delay: 4s;"></div>
+    <div class="animated-line" style="left: 75%; animation-delay: 6s;"></div>
+</div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 bg-darker">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl mb-4">Get in Touch</h2>
+                <p class="text-text-muted max-w-2xl mx-auto">
+                    Start your digital growth journey today
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-16 max-w-6xl mx-auto">
+                <!-- Contact Info -->
+                <div class="space-y-8">
+                    <div class="p-8 bg-dark/50 rounded-lg border border-accent/10">
+                        <h3 class="font-display text-2xl mb-6">Contact Details</h3>
+                        <div class="space-y-6">
+                            <a href="mailto:contact@expansion.ltd" 
+                               class="flex items-center text-text-muted hover:text-accent transition-colors">
+                                <span class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mr-4">
+                                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
+                                              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                    </svg>
+                                </span>
+                                contact@expansion.ltd
+                            </a>
+
+                            <a href="tel:+44 7368860275" 
+                               class="flex items-center text-text-muted hover:text-accent transition-colors">
+                                <span class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mr-4">
+                                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
+                                              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                    </svg>
+                                </span>
+                                +44 7368860275
+                            </a>
+
+                            <div class="flex items-center text-text-muted">
+                                <span class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mr-4">
+                                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
+                                              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
+                                              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                </span>
+                                Nottingham, United Kingdom
+                            </div>
+                        </div>
+
+                        <!-- Social Links -->
+                        <div class="mt-8 pt-8 border-t border-accent/10">
+                            <div class="flex space-x-4">
+                                <a href="https://www.facebook.com/profile.php?id=61567491572929" 
+                                   target="_blank"
+                                   class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center 
+                                          hover:bg-accent/20 transition-colors">
+                                    <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://www.linkedin.com/in/expansion-marketing-72b089335/" 
+                                   target="_blank"
+                                   class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center 
+                                          hover:bg-accent/20 transition-colors">
+                                    <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+                                        <circle cx="4" cy="4" r="2"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <form id="contactForm" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-text-muted mb-2" for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required
+                               class="form-input w-full">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-text-muted mb-2" for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required
+                               class="form-input w-full">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-text-muted mb-2" for="message">Your Message</label>
+                        <textarea id="message" name="message" rows="4" required
+                                  class="form-input w-full"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary w-full">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+
+
+    </section><div class="animated-lines">
+    <div class="animated-line" style="left: 15%; animation-delay: 0s;"></div>
+    <div class="animated-line" style="left: 35%; animation-delay: 2s;"></div>
+    <div class="animated-line" style="left: 55%; animation-delay: 4s;"></div>
+    <div class="animated-line" style="left: 75%; animation-delay: 6s;"></div>
+</div>
+
+    <script>
+        // Loading Screen
+        window.addEventListener('load', () => {
+            const loader = document.querySelector('.loader');
+            const progress = document.querySelector('.loader-progress');
+            
+            // Simulate loading progress
+            let width = 0;
+            const interval = setInterval(() => {
+                width += Math.random() * 30;
+                if (width > 100) {
+                    width = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loader.classList.add('hidden');
+                    }, 500);
+                }
+                progress.style.width = width + '%';
+            }, 200);
+        });
+
+        // Navigation Scroll Effect
+        const nav = document.querySelector('.nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Fade Up Animation
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Stats Counter Animation
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const value = parseInt(entry.target.getAttribute('data-value'));
+                    animateValue(entry.target, 0, value, 2000);
+                    statObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-number').forEach(stat => {
+            statObserver.observe(stat);
+        });
+
+        // Form Handling
+// Replace your form handling code with this
+const form = document.getElementById('contactForm');
+if (form) {
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (!submitBtn) return;
+
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = 'Sending...';
+        submitBtn.disabled = true;
+
+        try {
+            const formData = new FormData(form);
+            const response = await fetch('/submit', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                form.innerHTML = `
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
+                            <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-display text-accent mb-2">Message Sent!</h3>
+                        <p class="text-text-muted">Thank you for reaching out. We'll get back to you soon.</p>
+                    </div>
+                `;
+            } else {
+                throw new Error(result.message || 'Something went wrong');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
+            alert('An error occurred. Please try again.');
+        }
+    });
+}        // Enhanced Scroll Animations
+        const scrollElements = document.querySelectorAll('.service-card, .process-step');
+
+        const elementInView = (el, dividend = 1) => {
+            const elementTop = el.getBoundingClientRect().top;
+            return (
+                elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+            );
+        };
+
+        const handleScrollAnimation = () => {
+            scrollElements.forEach((el) => {
+                if (elementInView(el, 1.25)) {
+                    el.classList.add('fade-up', 'visible');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', () => {
+            handleScrollAnimation();
+        });
+
+        // Initialize on page load
+        handleScrollAnimation();
+
+        // Add hover effect to service cards
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroImg = document.querySelector('.hero-bg');
+            if (heroImg) {
+                heroImg.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+// Add to your existing JavaScript
+function createAnimatedLines() {
+    const linesContainer = document.querySelector('.animated-lines');
+    if (!linesContainer) return;
+
+    for (let i = 0; i < 8; i++) {
+        const line = document.createElement('div');
+        line.className = 'animated-line';
+        line.style.left = `${Math.random() * 100}%`;
+        line.style.animationDelay = `${Math.random() * 8}s`;
+        line.style.height = `${Math.random() * 100 + 50}px`;
+        linesContainer.appendChild(line);
+    }
+}
+
+createAnimatedLines();
+    </script>
+</body>
+</html>
