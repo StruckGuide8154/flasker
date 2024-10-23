@@ -46,6 +46,12 @@ from datetime import datetime
 import json
 import os
 import secrets
+from flask import Flask, render_template, request, jsonify, Response, stream_with_context
+import openai
+import anthropic
+import json
+from custom_tools import CustomTools
+
 
 print("test")
 
@@ -63,6 +69,198 @@ ADMIN_USER = "gad8g8hbnawdhx"
 ADMIN_PASS = "82q93fdfrdg"
 CONTACTS_FILE = 'contacts.json'
 SESSION_TOKEN = secrets.token_hex(16)  # Generate secure session token
+
+# Initialize clients and tools
+tools = CustomTools()
+openai_client = openai.OpenAI(api_key="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")
+claude_client = anthropic.Anthropic(api_key="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")
+
+def format_messages_for_claude(history, system_prompt):
+    formatted_messages = []
+    if system_prompt:
+        formatted_messages.append({"role": "system", "content": system_prompt})
+    for msg in history:
+        formatted_messages.append({
+            "role": msg["role"],
+            "content": msg["content"]
+        })
+    return formatted_messages
+
+def stream_claude_response(message, history, system_prompt):
+    messages = format_messages_for_claude(history, system_prompt)
+    
+    try:
+        # Create a messages stream with Claude
+        with claude_client.messages.stream(
+            model="claude-3-sonnet-20240229",
+            messages=messages,
+            max_tokens=4096
+        ) as stream:
+            # Stream the response text
+            for text in stream.text_stream:
+                yield f"data: {json.dumps({'delta': text})}\n\n"
+                
+    except Exception as e:
+        error_msg = str(e)
+        yield f"data: {json.dumps({'error': error_msg})}\n\n"
+
+def stream_openai_response(model, message, history, system_prompt):
+    messages = []
+    if system_prompt:
+        messages.append({"role": "system", "content": system_prompt})
+    for h in history:
+        messages.append({"role": h["role"], "content": h["content"]})
+    
+    try:
+        stream = openai_client.chat.completions.create(
+            model=model,
+            messages=messages,
+            stream=True,
+            temperature=0.7,
+            max_tokens=4096
+        )
+        
+        for chunk in stream:
+            if chunk.choices[0].delta.content is not None:
+                yield f"data: {json.dumps({'delta': chunk.choices[0].delta.content})}\n\n"
+    
+    except Exception as e:
+        error_msg = str(e)
+        yield f"data: {json.dumps({'error': error_msg})}\n\n"
+        
+@app.route('/tools', methods=['GET'])
+def get_tools():
+    return jsonify(tools.tools)
+
+@app.route('/tools', methods=['POST'])
+def add_tool():
+    tool_data = request.json
+    tool_id = tool_data.pop('id', None)
+    if not tool_id:
+        return jsonify({'error': 'Tool ID required'}), 400
+    
+    tools.tools[tool_id] = tool_data
+    tools.save_tools()
+    return jsonify({'success': True})
+
+@app.route('/tools/<tool_id>', methods=['DELETE'])
+def delete_tool(tool_id):
+    if tool_id in tools.tools:
+        del tools.tools[tool_id]
+        tools.save_tools()
+        return jsonify({'success': True})
+    return jsonify({'error': 'Tool not found'}), 404
+
+@app.route('/tools/<tool_id>', methods=['PUT'])
+def update_tool(tool_id):
+    if tool_id not in tools.tools:
+        return jsonify({'error': 'Tool not found'}), 404
+    
+    tool_data = request.json
+    tools.tools[tool_id].update(tool_data)
+    tools.save_tools()
+    return jsonify({'success': True})
+
+@app.route('/custom-instructions', methods=['GET', 'POST'])
+def handle_custom_instructions():
+    instruction_file = 'custom_instructions.json'
+    if request.method == 'GET':
+        try:
+            with open(instruction_file, 'r') as f:
+                return jsonify(json.load(f))
+        except FileNotFoundError:
+            return jsonify({'instructions': ''})
+    else:
+        instructions = request.json.get('instructions', '')
+        with open(instruction_file, 'w') as f:
+            json.dump({'instructions': instructions}, f)
+        return jsonify({'success': True})
+
+def process_message(message):
+    # Check if message starts with a tool command
+    first_word = message.split()[0] if message else ''
+    if first_word in [tool['command'] for tool in tools.tools.values()]:
+        command = first_word
+        query = message[len(command):].strip()
+        return tools.execute_tool(command, query)
+    return message
+
+# Update the existing chat endpoint to handle tools
+@app.route('/chat', methods=['POST'])
+def chat():
+    try:
+        data = request.json
+        model = data['model']
+        message = data['message']
+        chat_history = data.get('history', [])
+        system_prompt = data.get('systemPrompt', '')
+        custom_instructions = data.get('customInstructions', '')
+
+        # Process message for tools
+        processed_message = process_message(message)
+        if processed_message != message:
+            # If the message was processed by a tool, return the result directly
+            def generate():
+                yield f"data: {json.dumps({'delta': processed_message})}\n\n"
+            return Response(stream_with_context(generate()), content_type='text/event-stream')
+
+        # Combine system prompt with custom instructions
+        combined_prompt = f"{system_prompt}\n\nCustom Instructions:\n{custom_instructions}" if custom_instructions else system_prompt
+
+        if 'claude' in model.lower():
+            return Response(
+                stream_with_context(stream_claude_response(message, chat_history, combined_prompt)),
+                content_type='text/event-stream'
+            )
+        else:
+            return Response(
+                stream_with_context(stream_openai_response(model, message, chat_history, combined_prompt)),
+                content_type='text/event-stream'
+            )
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/zgbai')
+def indesdfsdfsdfx():
+    return render_template('ai.html')
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file provided'}), 400
+    
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No file selected'}), 400
+
+    try:
+        # Handle text files
+        if file.filename.lower().endswith(('.txt', '.md', '.py', '.json')):
+            content = file.read().decode('utf-8')
+            return jsonify({
+                'success': True,
+                'type': 'text',
+                'data': content
+            })
+        
+        # Handle images - convert to base64
+        elif file.filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.webp')):
+            content = file.read()
+            import base64
+            img_base64 = base64.b64encode(content).decode('utf-8')
+            mime_type = file.content_type or 'image/jpeg'
+            return jsonify({
+                'success': True,
+                'type': 'image',
+                'data': f"data:{mime_type};base64,{img_base64}"
+            })
+        
+        return jsonify({'error': 'Unsupported file type'}), 400
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # Ensure required directories exist
 if not os.path.exists('static'):
