@@ -355,7 +355,7 @@ def get_analytics():
     }
 
 @app.route('/')
-def home():
+def homhe():
     return render_template('mrk.html')
 
 @app.route('/submit', methods=['POST'])
