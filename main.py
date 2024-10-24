@@ -275,6 +275,15 @@ def upload_file():
 if not os.path.exists('static'):
     os.makedirs('static')
 
+ADMIN_USER = "gad8g8hbnawdhx"
+ADMIN_PASS = "82q93fdfrdg"
+CONTACTS_FILE = 'contacts.json'
+SESSION_TOKEN = secrets.token_hex(16)  # Generate secure session token
+
+# Ensure required directories exist
+if not os.path.exists('static'):
+    os.makedirs('static')
+
 def require_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -305,7 +314,10 @@ def save_contact(data):
         'id': secrets.token_hex(8),
         'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         'name': data.get('name'),
+        'lastName': data.get('lastName'),
         'email': data.get('email'),
+        'phone': data.get('phone'),
+        'restaurant': data.get('restaurant'),
         'message': data.get('message'),
         'ip': request.remote_addr,
         'user_agent': request.headers.get('User-Agent'),
@@ -342,8 +354,8 @@ def get_analytics():
         'submissions_today': 0
     }
 
-@app.route('/profreview')
-def homeeee():
+@app.route('/')
+def home():
     return render_template('mrk.html')
 
 @app.route('/submit', methods=['POST'])
@@ -351,12 +363,15 @@ def submit():
     try:
         data = {
             'name': request.form.get('name', '').strip(),
+            'lastName': request.form.get('lastName', '').strip(),
             'email': request.form.get('email', '').strip(),
+            'phone': request.form.get('phone', '').strip(),
+            'restaurant': request.form.get('restaurant', '').strip(),
             'message': request.form.get('message', '').strip()
         }
         
         # Validate inputs
-        if not all([data['name'], data['email'], data['message']]):
+        if not all([data['name'], data['lastName'], data['email'], data['phone'], data['restaurant'], data['message']]):
             return jsonify({
                 'success': False,
                 'message': 'Please fill in all fields'
@@ -378,7 +393,39 @@ def submit():
         })
         
     except Exception as e:
-        print(f"Error in submit: {str(e)}")
+        print(f"An error occurred: {str(e)}")
+        return jsonify({
+            'success': False,
+            'message': 'An unexpected error occurred. Please try again later.'
+        }), 500
+
+@app.route('/newsletter', methods=['POST'])
+def newsletter():
+    try:
+        email = request.form.get('email', '').strip()
+        
+        # Validate email
+        if not email:
+            return jsonify({
+                'success': False,
+                'message': 'Please provide an email address'
+            }), 400
+        
+        if '@' not in email or '.' not in email:
+            return jsonify({
+                'success': False,
+                'message': 'Please provide a valid email address'
+            }), 400
+        
+        # TODO: Add newsletter subscription logic here
+        
+        return jsonify({
+            'success': True,
+            'message': 'Thank you for subscribing to our newsletter!'
+        })
+        
+    except Exception as e:
+        print(f"Error in newsletter: {str(e)}")
         return jsonify({
             'success': False,
             'message': 'An error occurred. Please try again later.'
@@ -420,7 +467,7 @@ def admin():
     )
 
 @app.route('/admin/mark-read/<submission_id>')
-@require_auth
+@require_auth  
 def mark_read(submission_id):
     """Mark submission as read"""
     if os.path.exists(CONTACTS_FILE):
@@ -444,12 +491,13 @@ def delete_submission(submission_id):
         with open(CONTACTS_FILE, 'r', encoding='utf-8') as f:
             contacts = json.load(f)
             
-        contacts = [c for c in c if c.get('id') != submission_id]
+        contacts = [c for c in contacts if c.get('id') != submission_id]
                 
         with open(CONTACTS_FILE, 'w', encoding='utf-8') as f:
             json.dump(contacts, f, indent=4)
     
     return redirect(url_for('admin'))
+
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
@@ -1332,7 +1380,7 @@ def handle_file():
             f.write(request.data.decode('utf-8'))
         return jsonify({'message': 'File saved successfully'})
 
-@app.route('/')
+@app.route('/mailsolutions')
 def homer():
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
