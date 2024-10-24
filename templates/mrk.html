@@ -3,38 +3,461 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Premium digital marketing solutions for restaurants and small businesses in Nottingham. Transform your online presence with strategic marketing.">
-    <meta name="keywords" content="restaurant marketing, small business marketing, digital marketing nottingham, social media management">
-    <title>Expansion Marketing | Digital Growth Experts</title>
+    <meta name="description" content="Nottingham's premier restaurant & hospitality marketing agency. Boost bookings, increase table turnover, and maximize your restaurant's revenue with data-driven marketing strategies.">
+    <meta name="keywords" content="restaurant marketing nottingham, hospitality marketing, food photography, menu optimization, restaurant social media">
+    <title>Expansion Marketing | Restaurant & Hospitality Growth Specialists</title>
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@200;300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
 
     <style>
+        /* Enhanced color palette with more variables */
         :root {
             --color-dark: #0A0A0A;
             --color-darker: #050505;
             --color-light: #F4F0EA;
             --color-accent: #E5D5B7;
+            --color-accent-dark: #D4C4A6;
             --color-accent-light: #F2E6D5;
+            --color-accent-hover: #C9B9A0;
             --color-text: #FFFFFF;
             --color-text-muted: rgba(255, 255, 255, 0.8);
+            --color-success: #4CAF50;
+            --color-warning: #FFC107;
+            --color-error: #FF5252;
+            --gradient-primary: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
         }
 
-        /* Core Styles */
+        /* Enhanced Core Styles */
         body {
             background-color: var(--color-dark);
             color: var(--color-text);
             font-family: 'Outfit', sans-serif;
             overflow-x: hidden;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
         }
 
         .font-display {
             font-family: 'Marcellus', serif;
         }
 
-        /* Loader */
+        /* Enhanced Decorative Elements */
+        .gradient-border {
+            position: relative;
+            border: 1px solid transparent;
+            background: linear-gradient(var(--color-dark), var(--color-dark)) padding-box,
+                        var(--gradient-primary) border-box;
+            transition: var(--transition-normal);
+        }
+
+        .gradient-border:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .glowing-border {
+            position: relative;
+        }
+
+        .glowing-border::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: var(--transition-normal);
+            z-index: -1;
+            border-radius: inherit;
+            filter: blur(8px);
+        }
+
+        .glowing-border:hover::after {
+            opacity: 0.5;
+        }
+
+        /* Enhanced Background Patterns */
+        .pattern-grid {
+            background-image: linear-gradient(rgba(229, 213, 183, 0.1) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(229, 213, 183, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: center center;
+        }
+
+        .pattern-dots {
+            background-image: radial-gradient(rgba(229, 213, 183, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Enhanced Floating Elements */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Enhanced Card Styles */
+        .service-card {
+            background: rgba(17, 17, 17, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 213, 183, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: var(--transition-normal);
+            z-index: -1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--color-accent);
+        }
+
+        .service-card:hover::before {
+            opacity: 0.05;
+        }
+
+        /* Enhanced Button Styles */
+        .btn-primary {
+            background: var(--color-accent);
+            color: var(--color-darker);
+            font-weight: 500;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: var(--transition-normal);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-accent-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        /* Enhanced Input Styles */
+        .form-input {
+            background: rgba(17, 17, 17, 0.5);
+            border: 1px solid rgba(229, 213, 183, 0.1);
+            color: var(--color-text);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            transition: var(--transition-normal);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 2px rgba(229, 213, 183, 0.1);
+            background: rgba(17, 17, 17, 0.8);
+        }
+
+        /* Enhanced FAQ Accordion */
+        .faq-item {
+            border-bottom: 1px solid rgba(229, 213, 183, 0.1);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .faq-question:hover {
+            color: var(--color-accent);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition-normal);
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+
+        /* Enhanced Statistics Counter */
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+            border-radius: 1rem;
+            background: rgba(17, 17, 17, 0.5);
+            border: 1px solid rgba(229, 213, 183, 0.1);
+            transition: var(--transition-normal);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: var(--transition-normal);
+            z-index: -1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-accent);
+        }
+
+        .stat-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .stat-number {
+            font-family: 'Marcellus', serif;
+            font-size: 3rem;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            position: relative;
+        }
+
+        .stat-label {
+            color: var(--color-text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Enhanced Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(
+                to bottom,
+                var(--color-accent),
+                transparent
+            );
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: var(--color-accent);
+            box-shadow: 0 0 0 4px rgba(229, 213, 183, 0.1);
+        }
+
+        /* Enhanced Navigation */
+        .nav {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(229, 213, 183, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: var(--transition-normal);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            right: 1rem;
+            bottom: -1px;
+            height: 2px;
+            background: var(--color-accent);
+            transform: scaleX(0);
+            transition: var(--transition-normal);
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-accent);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-accent-dark);
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-text {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 10px;
+            background-color: #444;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0;
+            height: 100%;
+            background-color: #fff;
+            transition: width 0.5s ease-out;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #222;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #666;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #999;
+        }
+
+        /* Enhanced Testimonials */
+        .testimonial-card {
+            position: relative;
+            padding: 2rem;
+            background: rgba(17, 17, 17, 0.5);
+            border-radius: 1rem;
+            border: 1px solid rgba(229, 213, 183, 0.1);
+            transition: var(--transition-normal);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-size: 4rem;
+            font-family: 'Marcellus', serif;
+            color: var(--color-accent);
+            opacity: 0.2;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-accent);
+        }
+
+        /* Ambient Background Animation */
+        .ambient-background {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .ambient-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--color-accent);
+            opacity: 0.1;
+            filter: blur(50px);
+            animation: ambientFloat 20s infinite;
+        }
+
+        @keyframes ambientFloat {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(10%, 10%); }
+            50% { transform: translate(-10%, 5%); }
+            75% { transform: translate(5%, -10%); }
+        }
         .loader {
             position: fixed;
             inset: 0;
@@ -62,7 +485,18 @@
             margin-bottom: 1rem;
             opacity: 0;
             transform: translateY(20px);
-            animation: fadeInUp 0.5s ease forwards;
+            animation: fadeInUp 0.5s ease forwards 0.2s; /* Added delay */
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .loader-bar {
@@ -71,6 +505,17 @@
             background: rgba(229, 213, 183, 0.1);
             position: relative;
             overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards 0.5s; /* Added delay */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .loader-progress {
@@ -82,468 +527,30 @@
             background: var(--color-accent);
             transition: width 0.5s ease;
         }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .content {
+            display: none;
         }
-
-        /* Navigation */
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 50;
-            transition: all 0.3s ease;
-            padding: 1.5rem 0;
-        }
-
-        .nav.scrolled {
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
-        }
-
-        .nav-link {
-            position: relative;
-            color: var(--color-text);
-            opacity: 0.8;
-            transition: opacity 0.3s;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -2px;
-            width: 100%;
-            height: 1px;
-            background: var(--color-accent);
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.3s ease;
-        }
-
-        .nav-link:hover {
-            opacity: 1;
-        }
-
-        .nav-link:hover::after {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
-
-        /* Hero Section */
-        .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-        }
-
-        .hero-bg img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.3);
-        }
-
-        .hero-bg::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                to bottom,
-                rgba(10, 10, 10, 0.7) 0%,
-                var(--color-dark) 100%
-            );
-        }
-
-        .hero-title {
-            font-size: clamp(3rem, 8vw, 6rem);
-            line-height: 1;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards 0.5s;
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards 0.7s;
-        }
-
-        /* Service Cards */
-        .service-card {
-            background: rgba(17, 17, 17, 0.5);
-            border: 1px solid rgba(229, 213, 183, 0.1);
-            border-radius: 0.5rem;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--color-accent);
-            background: rgba(17, 17, 17, 0.8);
-        }
-
-        /* Process Steps */
-        .process-step {
-            position: relative;
-            padding-left: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .process-step::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.5rem;
+        
+        ::-webkit-scrollbar {
             width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--color-accent);
         }
 
-        .process-step::after {
-            content: '';
-            position: absolute;
-            left: 3px;
-            top: 1rem;
-            width: 2px;
-            height: calc(100% + 2rem);
-            background: linear-gradient(
-                to bottom,
-                var(--color-accent),
-                transparent
-            );
+        ::-webkit-scrollbar-track {
+            background-color: #222;
         }
 
-        /* Form Styles */
-        .form-input {
-            background: rgba(17, 17, 17, 0.5);
-            border: 1px solid rgba(229, 213, 183, 0.1);
-            color: var(--color-text);
-            padding: 1rem;
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
+        ::-webkit-scrollbar-thumb {
+            background-color: #666;
+            border-radius: 4px;
         }
 
-        .form-input:focus {
-            outline: none;
-            border-color: var(--color-accent);
-            background: rgba(17, 17, 17, 0.8);
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #999;
         }
-
-        /* Button Styles */
-        .btn-primary {
-            background: var(--color-accent);
-            color: var(--color-darker);
-            font-weight: 400;
-            padding: 1rem 2rem;
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background: var(--color-accent-light);
-            transform: translateY(-2px);
-        }
-
-        /* Animations */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Stats */
-        .stat-number {
-            font-family: 'Marcellus', serif;
-            color: var(--color-accent);
-            font-size: 3rem;
-        }
-
-        .stat-label {
-            color: var(--color-text-muted);
-            margin-top: 0.5rem;
-        }
-
-        /* Scroll Indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 1.5s;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-.bg-decoration {
-    position: absolute;
-    pointer-events: none;
-    opacity: 0.03;
-    mix-blend-mode: overlay;
-}
-
-.decoration-dots {
-    background-image: radial-gradient(var(--color-accent) 1px, transparent 2px);
-    background-size: 50px 50px;
-}
-
-.decoration-grid {
-    background-image: linear-gradient(var(--color-accent) 1px, transparent 1px),
-                      linear-gradient(90deg, var(--color-accent) 1px, transparent 1px);
-    background-size: 50px 50px;
-    opacity: 0.02;
-}
-
-.decoration-gradient {
-    background: radial-gradient(circle at center, var(--color-accent) 0%, transparent 70%);
-    filter: blur(80px);
-    opacity: 0.05;
-}
-
-/* Enhanced Hero Title */
-.hero-title-main {
-    font-size: clamp(4rem, 15vw, 8rem);
-    line-height: 1;
-    color: var(--color-text);
-    font-weight: 300;
-    letter-spacing: -0.02em;
-}
-
-.hero-title-sub {
-    font-size: clamp(2rem, 5vw, 3rem);
-    color: var(--color-text-muted);
-    font-weight: 200;
-    letter-spacing: 0.1em;
-    opacity: 0.7;
-}
-
-/* Scroll Gesture */
-.scroll-gesture {
-    width: 24px;
-    height: 40px;
-    border: 2px solid var(--color-accent);
-    border-radius: 12px;
-    position: relative;
-    margin: 0 auto;
-}
-
-.scroll-gesture::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 8px;
-    width: 4px;
-    height: 8px;
-    background: var(--color-accent);
-    border-radius: 2px;
-    transform: translateX(-50%);
-    animation: scrollGesture 2s infinite;
-}
-
-@keyframes scrollGesture {
-    0% { transform: translate(-50%, 0); opacity: 1; }
-    100% { transform: translate(-50%, 12px); opacity: 0; }
-}
-
-/* Additional Decorative Elements */
-.floating-shapes {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-}
-
-.floating-shape {
-    position: absolute;
-    background: var(--color-accent);
-    opacity: 0.03;
-    border-radius: 50%;
-    animation: float 20s infinite;
-}
-
-.shape-1 { top: 10%; left: 10%; width: 300px; height: 300px; animation-delay: 0s; }
-.shape-2 { top: 60%; right: 15%; width: 400px; height: 400px; animation-delay: -5s; }
-.shape-3 { bottom: 20%; left: 20%; width: 200px; height: 200px; animation-delay: -10s; }
-
-@keyframes float {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(-20px, 20px) rotate(90deg); }
-    50% { transform: translate(20px, -20px) rotate(180deg); }
-    75% { transform: translate(-20px, -20px) rotate(270deg); }
-}
-/* Add these refined decorative styles */
-.bg-dots {
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(rgba(229, 213, 183, 0.1) 0.5px, transparent 0.5px);
-    background-size: 24px 24px;
-    mask-image: radial-gradient(circle at center, transparent 30%, black 70%);
-    opacity: 0.3;
-    pointer-events: none;
-}
-
-.ambient-shapes {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    opacity: 0.4;
-    pointer-events: none;
-}
-
-.ambient-shape {
-    position: absolute;
-    background: linear-gradient(45deg, var(--color-accent), transparent);
-    filter: blur(80px);
-    opacity: 0.03;
-    border-radius: 50%;
-}
-
-.line-decoration {
-    position: relative;
-    overflow: hidden;
-}
-
-.line-decoration::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        var(--color-accent),
-        transparent
-    );
-    opacity: 0.1;
-}
-
-.corner-lines {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    pointer-events: none;
-}
-
-.corner-lines::before,
-.corner-lines::after {
-    content: '';
-    position: absolute;
-    background: var(--color-accent);
-    opacity: 0.1;
-}
-
-.corner-lines::before {
-    width: 1px;
-    height: 100%;
-}
-
-.corner-lines::after {
-    width: 100%;
-    height: 1px;
-}
-
-/* Corner positions */
-.corner-top-left {
-    top: 0;
-    left: 0;
-}
-
-.corner-top-right {
-    top: 0;
-    right: 0;
-    transform: rotate(90deg);
-}
-
-.corner-bottom-left {
-    bottom: 0;
-    left: 0;
-    transform: rotate(-90deg);
-}
-
-.corner-bottom-right {
-    bottom: 0;
-    right: 0;
-    transform: rotate(180deg);
-}
-
-.section-divider {
-    position: relative;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
-    opacity: 0.1;
-    margin: 4rem 0;
-}
-
-.section-divider::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 8px;
-    height: 8px;
-    background: var(--color-accent);
-    border-radius: 50%;
-    opacity: 0.3;
-}
-
-/* Subtle animated lines */
-.animated-lines {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    opacity: 0.1;
-}
-
-.animated-line {
-    position: absolute;
-    bottom: 0;
-    width: 1px;
-    background: var(--color-accent);
-    animation: lineRise 8s infinite;
-}
-
-@keyframes lineRise {
-    0% { height: 0; opacity: 0; }
-    50% { height: 100px; opacity: 0.5; }
-    100% { height: 0; opacity: 0; }
-}
 
     </style>
 </head>
 <body>
-
-    <!-- Loader -->
     <div class="loader">
         <div class="loader-content">
             <div class="loader-logo">expansion</div>
@@ -552,330 +559,566 @@
             </div>
         </div>
     </div>
-<div class="bg-dots"></div>
-<div class="ambient-shapes">
-    <div class="ambient-shape" style="top: 20%; left: 10%; width: 600px; height: 600px;"></div>
-    <div class="ambient-shape" style="top: 60%; right: 15%; width: 500px; height: 500px;"></div>
-    <div class="ambient-shape" style="bottom: 10%; left: 30%; width: 400px; height: 400px;"></div>
-</div>
+    <!-- Ambient Background -->
+    <div class="ambient-background">
+        <div class="ambient-circle" style="width: 600px; height: 600px; top: -300px; left: -300px;"></div>
+        <div class="ambient-circle" style="width: 800px; height: 800px; bottom: -400px; right: -400px;"></div>
+    </div>
+
     <!-- Navigation -->
-    <nav class="nav" id="nav">
-        <div class="container mx-auto px-6">
-            <div class="flex items-center justify-between">
-                <a href="#" class="font-display text-2xl text-accent">
-                    expansion
-                </a>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#" class="nav-link">Home</a>
-                    <a href="#services" class="nav-link">Services</a>
-                    <a href="#process" class="nav-link">Process</a>
-                    <a href="#contact" class="nav-link">Contact</a>
+<nav class="nav fixed w-full z-50 transition-all duration-300">
+    <div class="container mx-auto px-6">
+        <div class="flex items-center justify-between h-10">
+            <a href="#" class="font-display text-xl tracking-wider">
+                expansion
+            </a>
+            <div class="hidden md:flex space-x-6">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden p-2 rounded-lg hover:bg-accent/10 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pattern-grid">
+        <!-- Decorative Elements -->
+        <div class="absolute inset-0 pattern-dots opacity-20"></div>
+        <div class="absolute top-1/4 -left-12 w-96 h-96 bg-accent/5 rounded-full filter blur-3xl floating"></div>
+        <div class="absolute bottom-1/4 -right-12 w-96 h-96 bg-accent/5 rounded-full filter blur-3xl floating" style="animation-delay: -3s;"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 class="font-display text-6xl md:text-7xl lg:text-8xl mb-6 leading-tight">
+                    expansion <span class="text-accent"></span>
+                </h1>
+                <p class="text-xl md:text-2xl text-text-muted mb-8 max-w-3xl mx-auto">
+marketing
+                </p>
+                <div class="flex flex-col md:flex-row gap-4 justify-center">
+                    <a href="#contact" class="btn-primary">
+                        Book Free Strategy Call
+                    </a>
+                    <a href="#case-studies" class="px-8 py-4 rounded-lg border border-accent/20 hover:border-accent transition-colors">
+                        View Success Stories
+                    </a>
+                </div>
+
+                <!-- Key Benefits -->
+                <div class="grid md:grid-cols-3 gap-8 mt-16">
+                    <div class="p-6 rounded-lg gradient-border">
+                        <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-display mb-2">Quick Results</h3>
+                        <p class="text-text-muted">See increased bookings within your first month</p>
+                    </div>
+                    
+                    <div class="p-6 rounded-lg gradient-border">
+                        <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-display mb-2">Data-Driven</h3>
+                        <p class="text-text-muted">Clear metrics and ROI reporting</p>
+                    </div>
+
+                    <div class="p-6 rounded-lg gradient-border">
+                        <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-display mb-2">Industry Experts</h3>
+                        <p class="text-text-muted">Specialized in hospitality marketing</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-<!-- Replace your existing hero section -->
-<section class="hero">
-    <!-- Background Decorations -->
-    <div class="floating-shapes">
-        <div class="floating-shape shape-1"></div>
-        <div class="floating-shape shape-2"></div>
-        <div class="floating-shape shape-3"></div>
-    </div>
-    
-    <div class="bg-decoration decoration-dots absolute inset-0 opacity-5"></div>
-    <div class="bg-decoration decoration-grid absolute inset-0"></div>
-    <div class="bg-decoration decoration-gradient absolute inset-0"></div>
-    
-    <div class="hero-bg">
-        <img src="/static/a.png" alt="Hero Background">
-        <div class="absolute inset-0 bg-gradient-to-b from-dark/80 via-dark/90 to-dark"></div>
-    </div>
-
-    <div class="container mx-auto px-6 relative z-10">
-        <div class="text-center max-w-4xl mx-auto">
-            <div class="space-y-4 mb-12">
-                <h1 class="hero-title-main font-display fade-up" data-delay="0.2">
-                    Expansion
-                </h1>
-                <p class="hero-title-sub font-light tracking-widest fade-up" data-delay="0.4">
-                    Marketing
-                </p>
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+            <div class="w-6 h-10 border-2 border-accent rounded-full p-1">
+                <div class="w-1.5 h-1.5 bg-accent rounded-full animate-bounce mx-auto"></div>
             </div>
-            <p class="text-text-muted text-xl mb-12 fade-up" data-delay="0.6">
-                Elevating Restaurants & Small Businesses Through Strategic Digital Marketing
-            </p>
-            <a href="#contact" class="btn-primary inline-block fade-up" data-delay="0.8">
-                Start Your Journey
-            </a>
+            <span class="text-text-muted mt-2 text-sm">Scroll to explore</span>
         </div>
-    </div>
+    </section>
 
-    <!-- Scroll Gesture -->
-    <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-6 fade-up" data-delay="1">
-        <div class="scroll-gesture"></div>
-    </div>
-
-
-</section><div class="animated-lines">
-    <div class="animated-line" style="left: 15%; animation-delay: 0s;"></div>
-    <div class="animated-line" style="left: 35%; animation-delay: 2s;"></div>
-    <div class="animated-line" style="left: 55%; animation-delay: 4s;"></div>
-    <div class="animated-line" style="left: 75%; animation-delay: 6s;"></div>
-</div>
-
-    <!-- Services Section -->
-    <section id="services" class="py-32 bg-darker">
+    <!-- Results Section -->
+    <section class="py-24 bg-darker relative overflow-hidden">
+        <div class="absolute inset-0 pattern-dots opacity-10"></div>
+        
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="font-display text-4xl mb-4">Strategic Solutions</h2>
+                <span class="text-accent text-sm tracking-wider uppercase mb-2 block">Our Impact</span>
+                <h2 class="font-display text-4xl md:text-5xl mb-4">Real Results for Real Restaurants</h2>
                 <p class="text-text-muted max-w-2xl mx-auto">
-                    Transform your digital presence with data-driven strategies
+                    We've helped restaurants across Nottingham transform their digital presence and boost their revenue
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="stat-card">
+                    <div class="stat-number" data-value="187">0</div>
+                    <div class="stat-label">Average Monthly Bookings Increase</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number" data-value="43">0</div>
+                    <span class="text-accent text-2xl">%</span>
+                    <div class="stat-label">Revenue Growth for Clients</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number" data-value="120">0</div>
+                    <span class="text-accent text-2xl">k+</span>
+                    <div class="stat-label">Social Media Followers Gained</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number" data-value="94">0</div>
+                    <span class="text-accent text-2xl">%</span>
+                    <div class="stat-label">Client Retention Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 pattern-grid opacity-10"></div>
+        
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-accent text-sm tracking-wider uppercase mb-2 block">Our Services</span>
+                <h2 class="font-display text-4xl md:text-5xl mb-4">Tailored Solutions for Restaurants</h2>
+                <p class="text-text-muted max-w-2xl mx-auto">
+                    From social media management to reservation optimization, we provide everything you need to thrive in the digital age
                 </p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Restaurant Marketing -->
-                <div class="service-card fade-up">
+                <!-- Social Media Management -->
+                <div class="service-card">
                     <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-6">
                         <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
-                                  d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-display mb-4">Restaurant Marketing</h3>
-                    <ul class="space-y-3 text-text-muted">
+                    <h3 class="text-xl font-display mb-4">Social Media Management</h3>
+                    <p class="text-text-muted mb-6">
+                        Expert content creation and community management that showcases your restaurant's personality and drives engagement.
+                    </p>
+                    <ul class="space-y-3">
                         <li class="flex items-center">
-                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
-                            Online Menu Optimization
+                            <svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Professional food photography
                         </li>
                         <li class="flex items-center">
-                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
-                            Local SEO & Discovery
+                            <svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Engaging content calendar
                         </li>
                         <li class="flex items-center">
-                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
-                            Social Media Management
+                            <svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Community engagement
                         </li>
                         <li class="flex items-center">
-                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
-                            Review Management
+                            <svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Performance analytics
                         </li>
                     </ul>
                 </div>
 
-                <!-- Digital Strategy -->
-                <div class="service-card fade-up" style="animation-delay: 0.2s;">
+                <!-- Reservation System Optimization -->
+                <div class="service-card">
                     <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-6">
                         <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
-                                  d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-display mb-4">Digital Strategy</h3>
-                    <ul class="space-y-3 text-text-muted">
+                    <h3 class="text-xl font-display mb-4">Reservation Optimization</h3>
+                    <p class="text-text-muted mb-6">
+                        Streamline your booking process and maximize table turnover with our integrated reservation system solutions.
+                    </p>
+                    <ul class="space-y-3">
                         <li class="flex items-center">
-                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
-                            Brand Development
+                            <svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            System integration
                         </li>
                         <li class="flex items-center">
-                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
-                            Content Strategy
+                            <svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Booking flow optimization
                         </li>
                         <li class="flex items-center">
-                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
-                            Performance Analytics
+                            <svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            No-show reduction
                         </li>
                         <li class="flex items-center">
-                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>Market Research
+                            <svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Table management
                         </li>
                     </ul>
                 </div>
 
-                <!-- Growth Marketing -->
-                <div class="service-card fade-up" style="animation-delay: 0.4s;">
+                <!-- Local SEO & Discovery -->
+                <div class="service-card">
                     <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-6">
                         <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
-                                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-display mb-4">Growth Marketing</h3>
-                    <ul class="space-y-3 text-text-muted">
+                    <h3 class="text-xl font-display mb-4">Local SEO & Discovery</h3>
+                    <p class="text-text-muted mb-6">
+                        Dominate local search results and attract more nearby diners with our targeted SEO strategies.
+                    </p>
+                    <ul class="space-y-3">
                         <li class="flex items-center">
-                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
-                            Lead Generation
+                            <svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Google Business optimization
                         </li>
                         <li class="flex items-center">
-                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
-                            Conversion Optimization
+                            <svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Local citation building
                         </li>
                         <li class="flex items-center">
-                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
-                            Email Marketing
+                            <svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Review management
                         </li>
                         <li class="flex items-center">
-                            <span class="w-1.5 h-1.5 rounded-full bg-accent mr-3"></span>
-                            Retargeting Campaigns
+                            <svg class="w-5 h-5 text-accent mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Local keyword targeting
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
+    </section>
 
-
-    </section><div class="animated-lines">
-    <div class="animated-line" style="left: 15%; animation-delay: 0s;"></div>
-    <div class="animated-line" style="left: 35%; animation-delay: 2s;"></div>
-    <div class="animated-line" style="left: 55%; animation-delay: 4s;"></div>
-    <div class="animated-line" style="left: 75%; animation-delay: 6s;"></div>
-</div>
-
-    <!-- Process Section -->
-    <section id="process" class="py-32">
+    <!-- Case Studies Section -->
+    <section id="case-studies" class="py-24 bg-darker relative overflow-hidden">
+        <div class="absolute inset-0 pattern-grid opacity-10"></div>
+        
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="font-display text-4xl mb-4">Our Process</h2>
+                <span class="text-accent text-sm tracking-wider uppercase mb-2 block">Success Stories</span>
+                <h2 class="font-display text-4xl md:text-5xl mb-4">Transforming Restaurants</h2>
                 <p class="text-text-muted max-w-2xl mx-auto">
-                    A proven approach to digital growth
+                    See how we've helped local restaurants increase bookings and revenue
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-20">
-                <!-- Timeline -->
-                <div class="space-y-16">
-                    <div class="process-step fade-up">
-                        <h3 class="text-xl font-display text-accent mb-4">Discovery</h3>
-                        <p class="text-text-muted">
-                            Understanding your business goals, target audience, and current market position. 
-                            We analyze your unique challenges and opportunities.
-                        </p>
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Case Study 1 -->
+                <div class="case-study-card p-8 rounded-2xl gradient-border">
+                    <div class="mb-6">
+                        <span class="text-accent text-sm">Italian Restaurant</span>
+                        <h3 class="font-display text-2xl mt-2">La Bella Vita</h3>
                     </div>
-
-                    <div class="process-step fade-up">
-                        <h3 class="text-xl font-display text-accent mb-4">Strategy</h3>
-                        <p class="text-text-muted">
-                            Developing a comprehensive digital marketing strategy tailored to your 
-                            specific needs and industry requirements.
-                        </p>
-                    </div>
-
-                    <div class="process-step fade-up">
-                        <h3 class="text-xl font-display text-accent mb-4">Implementation</h3>
-                        <p class="text-text-muted">
-                            Executing the strategy with precision across all chosen channels, 
-                            ensuring consistent brand messaging.
-                        </p>
-                    </div>
-
-                    <div class="process-step fade-up">
-                        <h3 class="text-xl font-display text-accent mb-4">Growth & Optimization</h3>
-                        <p class="text-text-muted">
-                            Continuously monitoring performance and optimizing strategies 
-                            for maximum impact and sustainable growth.
-                        </p>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-medium mb-2">Challenge</h4>
+                            <p class="text-text-muted">Struggling with mid-week bookings and low social media engagement</p>
+                        </div>
+                        <div>
+                            <h4 class="font-medium mb-2">Solution</h4>
+                            <p class="text-text-muted">Implemented targeted social media campaign and booking optimization strategy</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-4 bg-accent/5 rounded-lg">
+                                <div class="text-2xl font-display text-accent">156%</div>
+                                <p class="text-sm text-text-muted">Booking Increase</p>
+                            </div>
+                            <div class="p-4 bg-accent/5 rounded-lg">
+                                <div class="text-2xl font-display text-accent">£12.4k</div>
+                                <p class="text-sm text-text-muted">Revenue Growth</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Stats -->
-                <div class="sticky top-32 space-y-16">
-                    <div class="fade-up">
-                        <div class="stat-number" data-value="500">0</div>
-                        <div class="stat-label">Successful Campaigns</div>
+                <!-- Case Study 2 -->
+                <div class="case-study-card p-8 rounded-2xl gradient-border">
+                    <div class="mb-6">
+                        <span class="text-accent text-sm">Gastro Pub</span>
+                        <h3 class="font-display text-2xl mt-2">The Royal Oak</h3>
                     </div>
-
-                    <div class="fade-up" style="animation-delay: 0.2s;">
-                        <div class="stat-number" data-value="95">0</div>
-                        <div class="stat-label">Client Satisfaction Rate</div>
-                    </div>
-
-                    <div class="fade-up" style="animation-delay: 0.4s;">
-                        <div class="stat-number" data-value="150">0</div>
-                        <div class="stat-label">Active Clients</div>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-medium mb-2">Challenge</h4>
+                            <p class="text-text-muted">Limited online presence and outdated booking system</p>
+                        </div>
+                        <div>
+                            <h4 class="font-medium mb-2">Solution</h4>
+                            <p class="text-text-muted">Complete digital transformation with new website and reservation system</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-4 bg-accent/5 rounded-lg">
+                                <div class="text-2xl font-display text-accent">89%</div>
+                                <p class="text-sm text-text-muted">Online Bookings</p>
+                            </div>
+                            <div class="p-4 bg-accent/5 rounded-lg">
+                                <div class="text-2xl font-display text-accent">4.8★</div>
+                                <p class="text-sm text-text-muted">Review Score</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-
-    </section><div class="animated-lines">
-    <div class="animated-line" style="left: 15%; animation-delay: 0s;"></div>
-    <div class="animated-line" style="left: 35%; animation-delay: 2s;"></div>
-    <div class="animated-line" style="left: 55%; animation-delay: 4s;"></div>
-    <div class="animated-line" style="left: 75%; animation-delay: 6s;"></div>
-</div>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-32 bg-darker">
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 pattern-dots opacity-10"></div>
+        
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="font-display text-4xl mb-4">Get in Touch</h2>
+                <span class="text-accent text-sm tracking-wider uppercase mb-2 block">FAQ</span>
+                <h2 class="font-display text-4xl md:text-5xl mb-4">Common Questions</h2>
                 <p class="text-text-muted max-w-2xl mx-auto">
-                    Start your digital growth journey today
+                    Everything you need to know about working with us
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto space-y-6">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item">
+                    <button class="faq-question w-full text-left">
+                        <span class="font-display text-xl">What makes you different from other agencies?</span>
+                        <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="text-text-muted">
+                            We exclusively focus on restaurants and hospitality businesses in Nottingham. Our team includes former restaurant managers and food industry professionals who understand the unique challenges of running a restaurant. We provide specialized solutions like menu optimization, food photography, and reservation system integration.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item">
+                    <button class="faq-question w-full text-left">
+                        <span class="font-display text-xl">How long until we see results?</span>
+                        <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="text-text-muted">
+                            Most clients see an increase in bookings within the first month. Our social media campaigns typically show significant engagement growth within 2-3 weeks. For SEO and broader digital presence improvements, you'll see progressive results over 3-6 months.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item">
+                    <button class="faq-question w-full text-left">
+                        <span class="font-display text-xl">What's your pricing structure?</span>
+                        <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="text-text-muted">
+                            We offer flexible packages starting from £500/month, tailored to your restaurant's size and needs. All packages include a dedicated account manager, monthly performance reports, and regular strategy reviews. We work on rolling monthly contracts with no long-term commitments.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item">
+                    <button class="faq-question w-full text-left">
+                        <span class="font-display text-xl">Do you handle photography?</span>
+                        <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="text-text-muted">
+                            Yes! We have in-house food photographers who specialize in restaurant photography. We provide monthly photoshoots for menu items, ambiance shots, and behind-the-scenes content for social media. All photos are optimized for different platforms and usage types.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item">
+                    <button class="faq-question w-full text-left">
+                        <span class="font-display text-xl">How do you measure success?</span>
+                        <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="text-text-muted">
+                            We track multiple KPIs including booking rates, table turnover, social media engagement, website traffic, and revenue growth. You'll receive detailed monthly reports showing all metrics and their impact on your bottom line.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="faq-item">
+                    <button class="faq-question w-full text-left">
+                        <span class="font-display text-xl">What's the onboarding process?</span>
+                        <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="text-text-muted">
+                            After the initial consultation, we conduct a thorough audit of your current digital presence. We then create a customized strategy plan, set up tracking systems, and begin implementation within 7 days. You'll have a dedicated account manager guiding you through every step.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Contact Section -->
+    <section id="contact" class="py-24 bg-darker relative overflow-hidden">
+        <div class="absolute inset-0 pattern-dots opacity-10"></div>
+        
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-accent text-sm tracking-wider uppercase mb-2 block">Get Started</span>
+                <h2 class="font-display text-4xl md:text-5xl mb-4">Transform Your Restaurant</h2>
+                <p class="text-text-muted max-w-2xl mx-auto">
+                    Book your free strategy call and discover how we can help grow your business
                 </p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-16 max-w-6xl mx-auto">
                 <!-- Contact Info -->
                 <div class="space-y-8">
-                    <div class="p-8 bg-dark/50 rounded-lg border border-accent/10">
-                        <h3 class="font-display text-2xl mb-6">Contact Details</h3>
+                    <div class="p-8 bg-dark/50 rounded-lg border border-accent/10 glowing-border">
+                        <h3 class="font-display text-2xl mb-6">Let's Talk</h3>
                         <div class="space-y-6">
                             <a href="mailto:contact@expansion.ltd" 
-                               class="flex items-center text-text-muted hover:text-accent transition-colors">
-                                <span class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mr-4">
-                                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                               class="flex items-center text-text-muted hover:text-accent transition-colors group">
+                                <span class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mr-4 group-hover:bg-accent/20 transition-colors">
+                                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
                                               d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                     </svg>
                                 </span>
-                                contact@expansion.ltd
+                                <div>
+                                    <span class="block text-sm text-text-muted">Email Us At</span>
+                                    <span class="block text-lg">contact@expansion.ltd</span>
+                                </div>
                             </a>
 
                             <a href="tel:+44 7368860275" 
-                               class="flex items-center text-text-muted hover:text-accent transition-colors">
-                                <span class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mr-4">
-                                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                               class="flex items-center text-text-muted hover:text-accent transition-colors group">
+                                <span class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mr-4 group-hover:bg-accent/20 transition-colors">
+                                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
                                               d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                                     </svg>
                                 </span>
-                                +44 7368860275
+                                <div>
+                                    <span class="block text-sm text-text-muted">Call Us At</span>
+                                    <span class="block text-lg">+44 7368860275</span>
+                                </div>
                             </a>
 
-                            <div class="flex items-center text-text-muted">
-                                <span class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center mr-4">
-                                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="flex items-center text-text-muted group">
+                                <span class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mr-4">
+                                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
                                               d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
                                               d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     </svg>
                                 </span>
-                                Nottingham, United Kingdom
+                                <div>
+                                    <span class="block text-sm text-text-muted">Visit Us At</span>
+                                    <span class="block text-lg">Nottingham, United Kingdom</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Working Hours -->
+                        <div class="mt-8 pt-8 border-t border-accent/10">
+                            <h4 class="font-display text-xl mb-4">Working Hours</h4>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-text-muted">
+                                    <span>Monday - Friday</span>
+                                    <span>9:00 - 18:00</span>
+                                </div>
+                                <div class="flex justify-between text-text-muted">
+                                    <span>Saturday</span>
+                                    <span>10:00 - 16:00</span>
+                                </div>
+                                <div class="flex justify-between text-text-muted">
+                                    <span>Sunday</span>
+                                    <span>Closed</span>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Social Links -->
                         <div class="mt-8 pt-8 border-t border-accent/10">
+                            <h4 class="font-display text-xl mb-4">Connect With Us</h4>
                             <div class="flex space-x-4">
                                 <a href="https://www.facebook.com/profile.php?id=61567491572929" 
                                    target="_blank"
-                                   class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center 
-                                          hover:bg-accent/20 transition-colors">
-                                    <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                                   class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center 
+                                          hover:bg-accent/20 transition-colors group">
+                                    <svg class="w-6 h-6 text-accent group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
                                     </svg>
                                 </a>
                                 <a href="https://www.linkedin.com/in/expansion-marketing-72b089335/" 
                                    target="_blank"
-                                   class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center 
-                                          hover:bg-accent/20 transition-colors">
-                                    <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                                   class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center 
+                                          hover:bg-accent/20 transition-colors group">
+                                    <svg class="w-6 h-6 text-accent group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
                                         <circle cx="4" cy="4" r="2"/>
+                                    </svg>
+                                </a>
+                                <a href="https://instagram.com/expansion.marketing" 
+                                   target="_blank"
+                                   class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center 
+                                          hover:bg-accent/20 transition-colors group">
+                                    <svg class="w-6 h-6 text-accent group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 0 1-1.153 1.772 4.915 4.915 0 0 1-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 0 1-1.772-1.153 4.904 4.904 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 0 1 1.153-1.772A4.897 4.897 0 0 1 5.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.25a1.25 1.25 0 0 0-2.5 0 1.25 1.25 0 0 0 2.5 0zM12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6z"/>
                                     </svg>
                                 </a>
                             </div>
@@ -885,39 +1128,315 @@
 
                 <!-- Contact Form -->
                 <form id="contactForm" class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-medium text-text-muted mb-2" for="name">Your Name</label>
-                        <input type="text" id="name" name="name" required
-                               class="form-input w-full">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-text-muted mb-2" for="firstName">First Name</label>
+<input type="text" id="name" name="name" required class="form-input w-full">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-muted mb-2" for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required
+                                   class="form-input w-full">
+                        </div>
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-text-muted mb-2" for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required
+<input type="email" id="email" name="email" required 
                                class="form-input w-full">
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-text-muted mb-2" for="message">Your Message</label>
-                        <textarea id="message" name="message" rows="4" required
-                                  class="form-input w-full"></textarea>
+                        <label class="block text-sm font-medium text-text-muted mb-2" for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required
+                               class="form-input w-full">
                     </div>
 
-                    <button type="submit" class="btn-primary w-full">
-                        Send Message
+                    <div>
+                        <label class="block text-sm font-medium text-text-muted mb-2" for="restaurant">Restaurant Name</label>
+                        <input type="text" id="restaurant" name="restaurant" required
+                               class="form-input w-full">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-text-muted mb-2" for="message">How can we help?</label>
+                        <textarea id="message" name="message" rows="4" required
+<textarea id="message" name="message" rows="4" required class="form-input w-full"></textarea>
+
+                    </div>
+
+                    <button type="submit" class="btn-primary w-full group">
+                        <span class="flex items-center justify-center">
+                            Send Message
+                            <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                            </svg>
+                        </span>
                     </button>
                 </form>
             </div>
         </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 bg-dark relative overflow-hidden">
+        <div class="absolute inset-0 pattern-grid opacity-5"></div>
+        
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12">
+                <!-- Brand -->
+                <div class="space-y-4">
+                    <h3 class="font-display text-2xl">expansion</h3>
+                    <p class="text-text-muted">
+                        Transforming restaurants through strategic digital marketing and innovative solutions.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="space-y-4">
+                    <h4 class="font-display text-lg">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#services" class="text-text-muted hover:text-accent transition-colors">Services</a></li>
+                        <li><a href="#case-studies" class="text-text-muted hover:text-accent transition-colors">Case Studies</a></li>
+                        <li><a href="#faq" class="text-text-muted hover:text-accent transition-colors">FAQ</a></li>
+                        <li><a href="#contact" class="text-text-muted hover:text-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div class="space-y-4">
+                    <h4 class="font-display text-lg">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-text-muted hover:text-accent transition-colors">Social Media Management</a>
+<li><a href="#" class="text-text-muted hover:text-accent transition-colors">Reservation System</a></li>
+                        <li><a href="#" class="text-text-muted hover:text-accent transition-colors">Local SEO</a></li>
+                        <li><a href="#" class="text-text-muted hover:text-accent transition-colors">Food Photography</a></li>
+                        <li><a href="#" class="text-text-muted hover:text-accent transition-colors">Menu Optimization</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="space-y-4">
+                    <h4 class="font-display text-lg">Stay Updated</h4>
+                    <p class="text-text-muted">Subscribe to our newsletter for industry insights and tips.</p>
+                    <form id="newsletterForm" class="space-y-4">
+                        <div class="relative">
+                            <input type="email" placeholder="Enter your email" required
+                                   class="form-input w-full pr-12">
+                            <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center hover:bg-accent/20 transition-colors">
+                                <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="mt-12 pt-8 border-t border-accent/10">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                    <div class="text-text-muted text-sm">
+                        © 2024 Expansion Marketing. All rights reserved.
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-text-muted hover:text-accent text-sm transition-colors">Privacy Policy</a>
+                        <a href="#" class="text-text-muted hover:text-accent text-sm transition-colors">Terms of Service</a>
+                        <a href="#" class="text-text-muted hover:text-accent text-sm transition-colors">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced Loading Screen
+        document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.querySelector('.loader');
+            const progress = document.querySelector('.loader-progress');
+            
+            let width = 0;
+            const interval = setInterval(() => {
+                width += Math.random() * 30;
+                if (width > 100) {
+                    width = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loader.style.opacity = '0';
+                        setTimeout(() => {
+                            loader.style.display = 'none';
+                        }, 500);
+                    }, 500);
+                }
+                progress.style.width = width + '%';
+            }, 200);
+        });
+
+        // Enhanced Navigation
+        const nav = document.querySelector('.nav');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('py-4', 'shadow-lg');
+                nav.classList.remove('py-6');
+            } else {
+                nav.classList.remove('py-4', 'shadow-lg');
+                nav.classList.add('py-6');
+            }
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Enhanced FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            const icon = question.querySelector('svg');
+            
+            question.addEventListener('click', () => {
+                const isOpen = item.classList.contains('active');
+                
+                // Close all FAQ items
+                faqItems.forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                    otherItem.querySelector('svg').style.transform = 'rotate(0deg)';
+                    otherItem.querySelector('.faq-answer').style.maxHeight = '0';
+                });
+                
+                // Open clicked item if it was closed
+                if (!isOpen) {
+                    item.classList.add('active');
+                    icon.style.transform = 'rotate(180deg)';
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+            });
+        });
+
+const contactForm = document.getElementById('contactForm');
+const newsletterForm = document.getElementById('newsletterForm');
+
+async function handleForm(form, successMessage, endpoint) {
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+
+        // Show loading state
+        submitBtn.innerHTML = `
+            <div class="flex items-center justify-center">
+                <svg class="w-5 h-5 mr-3 -ml-1 text-accent animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Submitting...</span>
+            </div>
+        `;
+        submitBtn.disabled = true;
+
+        try {
+            const formData = new FormData(form);
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Show success message
+                form.innerHTML = `
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
+                            <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-display text-accent mb-2">${successMessage}</h3>
+                        <p class="text-text-muted">We'll be in touch soon!</p>
+                    </div>
+                `;
+            } else {
+                throw new Error(data.message);
+            }
+        } catch (error) {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            alert(`An error occurred: ${error.message}`);
+        }
+    });
+}
+
+if (contactForm) {
+    handleForm(contactForm, 'Message Sent Successfully!', '/submit');
+}
+if (newsletterForm) {
+    handleForm(newsletterForm, 'Subscribed Successfully!', '/newsletter');
+}
 
 
-    </section><div class="animated-lines">
-    <div class="animated-line" style="left: 15%; animation-delay: 0s;"></div>
-    <div class="animated-line" style="left: 35%; animation-delay: 2s;"></div>
-    <div class="animated-line" style="left: 55%; animation-delay: 4s;"></div>
-    <div class="animated-line" style="left: 75%; animation-delay: 6s;"></div>
-</div>
+        // Statistics Animation
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
 
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('stat-number')) {
+                        const value = parseInt(entry.target.dataset.value);
+                        animateValue(entry.target, 0, value, 2000);
+                        observer.unobserve(entry.target);
+                    } else {
+                        entry.target.classList.add('visible');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up, .stat-number').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Parallax Effect
+        document.addEventListener('scroll', () => {
+            const parallaxElements = document.querySelectorAll('.parallax');
+            parallaxElements.forEach(element => {
+                const speed = element.dataset.speed || 0.5;
+                const yPos = -(window.pageYOffset * speed);
+                element.style.transform = `translate3d(0, ${yPos}px, 0)`;
+            });
+        });
+
+    </script>
     <script>
         // Loading Screen
         window.addEventListener('load', () => {
@@ -938,182 +1457,6 @@
                 progress.style.width = width + '%';
             }, 200);
         });
-
-        // Navigation Scroll Effect
-        const nav = document.querySelector('.nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
-
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Fade Up Animation
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-up').forEach(element => {
-            observer.observe(element);
-        });
-
-        // Stats Counter Animation
-        function animateValue(obj, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                obj.innerHTML = Math.floor(progress * (end - start) + start);
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        const statObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const value = parseInt(entry.target.getAttribute('data-value'));
-                    animateValue(entry.target, 0, value, 2000);
-                    statObserver.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.stat-number').forEach(stat => {
-            statObserver.observe(stat);
-        });
-
-        // Form Handling
-// Replace your form handling code with this
-const form = document.getElementById('contactForm');
-if (form) {
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const submitBtn = form.querySelector('button[type="submit"]');
-        if (!submitBtn) return;
-
-        const originalText = submitBtn.innerText;
-        submitBtn.innerText = 'Sending...';
-        submitBtn.disabled = true;
-
-        try {
-            const formData = new FormData(form);
-            const response = await fetch('/submit', {
-                method: 'POST',
-                body: formData
-            });
-            
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            
-            const result = await response.json();
-            
-            if (result.success) {
-                form.innerHTML = `
-                    <div class="text-center">
-                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
-                            <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-display text-accent mb-2">Message Sent!</h3>
-                        <p class="text-text-muted">Thank you for reaching out. We'll get back to you soon.</p>
-                    </div>
-                `;
-            } else {
-                throw new Error(result.message || 'Something went wrong');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            submitBtn.innerText = originalText;
-            submitBtn.disabled = false;
-            alert('An error occurred. Please try again.');
-        }
-    });
-}        // Enhanced Scroll Animations
-        const scrollElements = document.querySelectorAll('.service-card, .process-step');
-
-        const elementInView = (el, dividend = 1) => {
-            const elementTop = el.getBoundingClientRect().top;
-            return (
-                elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
-            );
-        };
-
-        const handleScrollAnimation = () => {
-            scrollElements.forEach((el) => {
-                if (elementInView(el, 1.25)) {
-                    el.classList.add('fade-up', 'visible');
-                }
-            });
-        };
-
-        window.addEventListener('scroll', () => {
-            handleScrollAnimation();
-        });
-
-        // Initialize on page load
-        handleScrollAnimation();
-
-        // Add hover effect to service cards
-        document.querySelectorAll('.service-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-10px)';
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0)';
-            });
-        });
-
-        // Parallax effect for hero section
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const heroImg = document.querySelector('.hero-bg');
-            if (heroImg) {
-                heroImg.style.transform = `translateY(${scrolled * 0.5}px)`;
-            }
-        });
-// Add to your existing JavaScript
-function createAnimatedLines() {
-    const linesContainer = document.querySelector('.animated-lines');
-    if (!linesContainer) return;
-
-    for (let i = 0; i < 8; i++) {
-        const line = document.createElement('div');
-        line.className = 'animated-line';
-        line.style.left = `${Math.random() * 100}%`;
-        line.style.animationDelay = `${Math.random() * 8}s`;
-        line.style.height = `${Math.random() * 100 + 50}px`;
-        linesContainer.appendChild(line);
-    }
-}
-
-createAnimatedLines();
     </script>
 </body>
 </html>
