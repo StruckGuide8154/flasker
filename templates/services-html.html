@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nottingham's premier restaurant & hospitality marketing. Boost bookings, increase table turnover, and maximize your restaurant's revenue with data-driven marketing strategies.">
+    <meta name="keywords" content="restaurant marketing nottingham, hospitality marketing, food photography, menu optimization, restaurant social media">
+    <title>Expansion Marketing | Restaurant & Hospitality Growth Specialists</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        /* Enhanced color palette with more variables */
+        :root {
+            --color-dark: #0A0A0A;
+            --color-darker: #050505;
+            --color-light: #F4F0EA;
+            --color-accent: #E5D5B7;
+            --color-accent-dark: #D4C4A6;
+            --color-accent-light: #F2E6D5;
+            --color-accent-hover: #C9B9A0;
+            --color-text: #FFFFFF;
+            --color-text-muted: rgba(255, 255, 255, 0.8);
+            --color-success: #4CAF50;
+            --color-warning: #FFC107;
+            --color-error: #FF5252;
+            --gradient-primary: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        /* Enhanced Core Styles */
+        body {
+            background-color: var(--color-dark);
+            color: var(--color-text);
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .font-display {
+            font-family: 'Marcellus', serif;
+        }
+
+        /* Enhanced Decorative Elements */
+        .gradient-border {
+            position: relative;
+            border: 1px solid transparent;
+            background: linear-gradient(var(--color-dark), var(--color-dark)) padding-box,
+                        var(--gradient-primary) border-box;
+            transition: var(--transition-normal);
+        }
+
+        .gradient-border:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .glowing-border {
+            position: relative;
+        }
+
+        .glowing-border::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: var(--transition-normal);
+            z-index: -1;
+            border-radius: inherit;
+            filter: blur(8px);
+        }
+
+        .glowing-border:hover::after {
+            opacity: 0.5;
+        }
+
+        /* Enhanced Background Patterns */
+        .pattern-grid {
+            background-image: linear-gradient(rgba(229, 213, 183, 0.1) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(229, 213, 183, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: center center;
+        }
+
+        .pattern-dots {
+            background-image: radial-gradient(rgba(229, 213, 183, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Enhanced Floating Elements */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Enhanced Card Styles */
+        .service-card {
+            background: rgba(17, 17, 17, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 213, 183, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: var(--transition-normal);
+            z-index: -1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--color-accent);
+        }
+
+        .service-card:hover::before {
+            opacity: 0.05;
+        }
+
+        /* Enhanced Button Styles */
+        .btn-primary {
+            background: var(--color-accent);
+            color: var(--color-darker);
+            font-weight: 500;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: var(--transition-normal);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-accent-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        /* Enhanced Input Styles */
+        .form-input {
+            background: rgba(17, 17, 17, 0.5);
+            border: 1px solid rgba(229, 213, 183, 0.1);
+            color: var(--color-text);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            transition: var(--transition-normal);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 2px rgba(229, 213, 183, 0.1);
+            background: rgba(17, 17, 17, 0.8);
+        }
+
+        /* Enhanced FAQ Accordion */
+        .faq-item {
+            border-bottom: 1px solid rgba(229, 213, 183, 0.1);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .faq-question:hover {
+            color: var(--color-accent);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition-normal);
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+
+        /* Enhanced Statistics Counter */
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+            border-radius: 1rem;
+            background: rgba(17, 17, 17, 0.5);
+            border: 1px solid rgba(229, 213, 183, 0.1);
+            transition: var(--transition-normal);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: var(--transition-normal);
+            z-index: -1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-accent);
+        }
+
+        .stat-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .stat-number {
+            font-family: 'Marcellus', serif;
+            font-size: 3rem;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            position: relative;
+        }
+
+        .stat-label {
+            color: var(--color-text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Enhanced Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(
+                to bottom,
+                var(--color-accent),
+                transparent
+            );
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: var(--color-accent);
+            box-shadow: 0 0 0 4px rgba(229, 213, 183, 0.1);
+        }
+
+        /* Enhanced Navigation */
+        .nav {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(229, 213, 183, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: var(--transition-normal);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            right: 1rem;
+            bottom: -1px;
+            height: 2px;
+            background: var(--color-accent);
+            transform: scaleX(0);
+            transition: var(--transition-normal);
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-accent);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-accent-dark);
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-text {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 10px;
+            background-color: #444;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0;
+            height: 100%;
+            background-color: #fff;
+            transition: width 0.5s ease-out;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #222;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #666;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #999;
+        }
+
+        /* Enhanced Testimonials */
+        .testimonial-card {
+            position: relative;
+            padding: 2rem;
+            background: rgba(17, 17, 17, 0.5);
+            border-radius: 1rem;
+            border: 1px solid rgba(229, 213, 183, 0.1);
+            transition: var(--transition-normal);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-size: 4rem;
+            font-family: 'Marcellus', serif;
+            color: var(--color-accent);
+            opacity: 0.2;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-accent);
+        }
+
+        /* Ambient Background Animation */
+        .ambient-background {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .ambient-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--color-accent);
+            opacity: 0.1;
+            filter: blur(50px);
+            animation: ambientFloat 20s infinite;
+        }
+
+        @keyframes ambientFloat {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(10%, 10%); }
+            50% { transform: translate(-10%, 5%); }
+            75% { transform: translate(5%, -10%); }
+        }
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: var(--color-darker);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-logo {
+            font-family: 'Marcellus', serif;
+            font-size: 2rem;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards 0.2s; /* Added delay */
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 2px;
+            background: rgba(229, 213, 183, 0.1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards 0.5s; /* Added delay */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .loader-progress {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: var(--color-accent);
+            transition: width 0.5s ease;
+        }
+        .content {
+            display: none;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #222;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #666;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #999;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="loader">
+        <div class="loader-content">
+            <div class="loader-logo">expansion</div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Ambient Background -->
+    <div class="ambient-background">
+        <div class="ambient-circle" style="width: 600px; height: 600px; top: -300px; left: -300px;"></div>
+        <div class="ambient-circle" style="width: 800px; height: 800px; bottom: -400px; right: -400px;"></div>
+    </div>
+
+    <!-- Navigation -->
+<nav class="nav fixed w-full z-50 transition-all duration-300">
+    <div class="container mx-auto px-6">
+        <div class="flex items-center justify-between h-10">
+            <a href="#" class="font-display text-xl tracking-wider">
+                expansion
+            </a>
+            <div class="hidden md:flex space-x-6">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden p-2 rounded-lg hover:bg-accent/10 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+
+
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 pattern-grid opacity-50" style="mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0) 100%);"></div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-accent opacity-20 rounded-full filter blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-accent opacity-10 rounded-full filter blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+    <div class="absolute inset-0 pattern-dots opacity-10" style="mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0) 100%);"></div>
+
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <span class="text-accent text-sm tracking-wider uppercase mb-2 block">Our Services</span>
+                <h1 class="font-display text-6xl md:text-7xl lg:text-8xl mb-6 leading-tight">
+                    Anything From <span class="text-accent">£49</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-text-muted mb-12 max-w-3xl mx-auto">
+                    Just tell us what you need - we'll make it happen
+                </p>
+
+                <!-- Category Pills -->
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button class="category-pill">Yes. We have it</button>                    <button class="category-pill">    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14"/>
+        <path d="M12 5l7 7-7 7"/>
+    </svg></button>
+
+                    <button class="category-pill">social media</button>
+                    <button class="category-pill">photography</button>
+                    <button class="category-pill active">marketing</button>
+<button class="category-pill active">    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5"/>
+        <path d="M12 5l-7 7 7 7"/>
+    </svg></button><button class="category-pill active">all in one place.</button>
+                </div>
+            </div>
+        </div>
+    </section>
+<div class="scroll-prompt">
+    <svg class="scroll-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 13l5 5 5-5"/>
+        <path d="M7 6l5 5 5-5"/>
+    </svg>
+</div>
+
+<style>
+    .scroll-prompt {
+        position: absolute;
+        left: 50%;
+        bottom: 2rem;
+        transform: translateX(-50%);
+        color: var(--color-accent);
+        opacity: 0.6;
+        z-index: 10;
+    }
+
+    .scroll-arrow {
+        animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+        }
+        40% {
+            transform: translateY(-10px);
+        }
+        60% {
+            transform: translateY(-5px);
+        }
+    }
+</style>
+<section class="relative overflow-hidden bg-dark min-h-screen">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 pattern-grid opacity-5" style="mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0) 100%);"></div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-accent opacity-20 rounded-full filter blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-accent opacity-10 rounded-full filter blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+    <div class="absolute inset-0 pattern-dots opacity-10" style="mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 70%, rgba(0,0,0,0) 100%);"></div>
+
+    <div class="container mx-auto px-6 py-24 relative z-10">
+        <!-- Hero Content -->
+        <div class="max-w-4xl mx-auto text-center mb-12">
+            <!-- Badge -->
+            <div class="inline-flex items-center px-3 py-1 rounded-full bg-accent bg-opacity-10 text-accent mb-6">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                </svg>
+                Restaurant Marketing Specialists
+            </div>
+
+            <!-- Main Heading -->
+            <h1 class="text-5xl md:text-6xl font-display mb-6 leading-tight text-white">
+                Transform Your Restaurant's Digital Presence
+            </h1>
+
+            <!-- Subheading -->
+            <p class="text-xl text-text-muted mb-8 leading-relaxed">
+                From social media management to complete marketing overhauls, we offer customized solutions starting at just £49. Whatever your vision, we'll make it happen.
+            </p>
+
+            <!-- Highlights -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <div class="flex items-center space-x-2 text-text-muted">
+                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Full-service marketing from £49</span>
+                </div>
+                <div class="flex items-center space-x-2 text-text-muted">
+                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Custom packages for every budget</span>
+                </div>
+                <div class="flex items-center space-x-2 text-text-muted">
+                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Industry-leading expertise</span>
+                </div>
+                <div class="flex items-center space-x-2 text-text-muted">
+                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Guaranteed results or money back</span>
+                </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+<a href="#services" class="btn-primary inline-flex items-center justify-center">
+    View Services
+    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+    </svg>
+</a>
+<a href="mailto:request@expansion.ltd" class="gradient-border inline-flex items-center justify-center px-8 py-3 rounded-lg text-accent border border-accent/20 hover:bg-accent/10 transition-all">
+    Get In Touch
+</a>
+            </div>
+        </div>
+
+        <!-- Feature Cards -->
+        <div class="grid md:grid-cols-3 gap-6 mt-16">
+            <!-- Tailored Solutions Card -->
+            <div class="service-card">
+                <div class="rounded-full w-12 h-12 bg-accent/10 flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                    </svg>
+                </div>
+                <h3 class="font-display text-xl mb-2">Tailored Solutions</h3>
+                <p class="text-text-muted">Custom marketing strategies designed specifically for your restaurant's needs and goals.</p>
+            </div>
+
+            <!-- Affordable Packages Card -->
+            <div class="service-card">
+                <div class="rounded-full w-12 h-12 bg-accent/10 flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h3 class="font-display text-xl mb-2">Affordable Packages</h3>
+                <p class="text-text-muted">Flexible pricing options starting at £49, with packages to suit any budget.</p>
+            </div>
+
+            <!-- Rapid Results Card -->
+            <div class="service-card">
+                <div class="rounded-full w-12 h-12 bg-accent/10 flex items-center justify-center mb-4">
+                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <h3 class="font-display text-xl mb-2">Rapid Results</h3>
+                <p class="text-text-muted">See measurable improvements in your digital presence within the first month.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="scroll-prompt">
+    <svg class="scroll-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 13l5 5 5-5"/>
+        <path d="M7 6l5 5 5-5"/>
+    </svg>
+</div>
+
+<style>
+    .scroll-prompt {
+        position: absolute;
+        left: 50%;
+        bottom: 2rem;
+        transform: translateX(-50%);
+        color: var(--color-accent);
+        opacity: 0.6;
+        z-index: 10;
+    }
+
+    .scroll-arrow {
+        animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+        }
+        40% {
+            transform: translateY(-10px);
+        }
+        60% {
+            transform: translateY(-5px);
+        }
+    }
+</style>
+
+
+<section id="services" class="relative min-h-screen bg-dark overflow-hidden">
+    <div class="absolute inset-0 pattern-dots opacity-10"></div>
+    
+    <div class="container mx-auto px-6 py-24 relative">
+        <div class="text-center mb-16">
+            <span class="text-accent text-sm tracking-wider uppercase mb-2 block">Our Services</span>
+            <h2 class="font-display text-4xl md:text-5xl mb-4">Starting From £49</h2>
+            <p class="text-text-muted max-w-2xl mx-auto mb-8">
+                Tell us what you need - we'll make it happen. No rigid packages, just results.
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="filter-btn active px-8 py-3 rounded-full transition-all bg-accent/90 text-darker font-medium shadow-lg hover:bg-accent" data-filter="all">
+                    All Services
+                </button>
+                <button class="filter-btn px-8 py-3 rounded-full transition-all bg-darker border-2 border-accent/20 text-accent hover:border-accent/50 hover:bg-accent/5 font-medium shadow-lg" data-filter="social">
+                    Social Media
+                </button>
+                <button class="filter-btn px-8 py-3 rounded-full transition-all bg-darker border-2 border-accent/20 text-accent hover:border-accent/50 hover:bg-accent/5 font-medium shadow-lg" data-filter="photo">
+                    Photography
+                </button>
+                <button class="filter-btn px-8 py-3 rounded-full transition-all bg-darker border-2 border-accent/20 text-accent hover:border-accent/50 hover:bg-accent/5 font-medium shadow-lg" data-filter="marketing">
+                    Marketing
+                </button>
+            </div>
+        </div>
+
+        <div class="max-w-3xl mx-auto space-y-6 relative">
+            <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-dark pointer-events-none"></div>
+            
+            <div class="service-item" data-categories="photo">
+                <button class="service-question w-full text-left p-6 bg-dark/50 backdrop-blur-sm border border-accent/10 rounded-lg flex justify-between items-center">
+                    <h3 class="font-display text-xl">Professional Food Photography</h3>
+                    <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div class="service-content hidden">
+                    <div class="p-6 pt-0 text-text-muted">
+                        <p>We'll send our professional photographer to your restaurant to capture stunning, high-resolution photos of your menu items. These aren't just pictures – they're carefully crafted images that make your food irresistible. Perfect for menus, social media, and marketing materials. You'll receive both web-optimized and print-ready versions of every shot.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-item" data-categories="social">
+                <button class="service-question w-full text-left p-6 bg-dark/50 backdrop-blur-sm border border-accent/10 rounded-lg flex justify-between items-center">
+                    <h3 class="font-display text-xl">Social Media Management</h3>
+                    <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div class="service-content hidden">
+                    <div class="p-6 pt-0 text-text-muted">
+                        <p>We'll take full control of your social media presence, posting three times weekly across Instagram, Facebook, and TikTok. Every post is professionally designed and written to engage your audience. We'll manage your stories, respond to comments, and handle all community engagement. You'll receive monthly reports showing exactly how your social presence is growing.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-item" data-categories="marketing">
+                <button class="service-question w-full text-left p-6 bg-dark/50 backdrop-blur-sm border border-accent/10 rounded-lg flex justify-between items-center">
+                    <h3 class="font-display text-xl">Reservation System Setup</h3>
+                    <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div class="service-content hidden">
+                    <div class="p-6 pt-0 text-text-muted">
+                        <p>We'll implement and configure a complete booking system for your restaurant. This includes setting up automated confirmation emails, reminder texts, and no-show prevention. We'll train your staff on the system and optimize your table management to maximize covers during peak times.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-item" data-categories="photo">
+                <button class="service-question w-full text-left p-6 bg-dark/50 backdrop-blur-sm border border-accent/10 rounded-lg flex justify-between items-center">
+                    <h3 class="font-display text-xl">Video Content Creation</h3>
+                    <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div class="service-content hidden">
+                    <div class="p-6 pt-0 text-text-muted">
+                        <p>Our videography team will spend a full day at your restaurant creating compelling video content. We'll capture everything from chef specials and cooking processes to ambient atmosphere shots and drone footage of your location. Perfect for social media, website headers, and promotional campaigns.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-item" data-categories="marketing">
+                <button class="service-question w-full text-left p-6 bg-dark/50 backdrop-blur-sm border border-accent/10 rounded-lg flex justify-between items-center">
+                    <h3 class="font-display text-xl">Local SEO & Online Presence</h3>
+                    <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div class="service-content hidden">
+                    <div class="p-6 pt-0 text-text-muted">
+                        <p>We'll optimize your Google Business Profile, manage your online reviews, and ensure your restaurant appears at the top of local search results. This includes weekly updates to your business listing, professional responses to all reviews, and targeted local SEO strategies to increase your visibility in Nottingham.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-item" data-categories="marketing,social">
+                <button class="service-question w-full text-left p-6 bg-dark/50 backdrop-blur-sm border border-accent/10 rounded-lg flex justify-between items-center">
+                    <h3 class="font-display text-xl">Event Promotion & Coverage</h3>
+                    <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div class="service-content hidden">
+                    <div class="p-6 pt-0 text-text-muted">
+                        <p>For special events, we'll handle everything from pre-event promotion to live coverage. Our team will create buzz with targeted social campaigns, capture professional photos and videos during the event, and provide real-time social media updates. Includes collaboration with local influencers to maximize reach.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-12">
+<p class="text-text-muted mb-6">
+    Need something specific? We'll create a custom solution for you.
+</p>
+<a href="mailto:request@expansion.ltd" class="btn-primary inline-flex items-center justify-center">
+    Get In Touch
+    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+    </svg>
+</a>
+
+        </div>
+    </div>
+
+    <style>
+        .service-item {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        .service-item.filtering {
+            transform: scale(0.95);
+            opacity: 0;
+        }
+        
+        .service-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .service-item.active .service-content {
+            max-height: 500px;
+            transition: max-height 0.5s ease-in;
+        }
+        
+        .service-item.active .service-question svg {
+            transform: rotate(180deg);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const serviceItems = document.querySelectorAll('.service-item');
+            const serviceQuestions = document.querySelectorAll('.service-question');
+
+            serviceQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const serviceItem = question.closest('.service-item');
+                    const content = serviceItem.querySelector('.service-content');
+                    
+                    if (serviceItem.classList.contains('active')) {
+                        serviceItem.classList.remove('active');
+                        content.classList.add('hidden');
+                    } else {
+                        document.querySelectorAll('.service-item.active').forEach(item => {
+                            item.classList.remove('active');
+                            item.querySelector('.service-content').classList.add('hidden');
+                        });
+                        
+                        serviceItem.classList.add('active');
+                        content.classList.remove('hidden');
+                    }
+                });
+            });
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const filter = button.getAttribute('data-filter');
+                    
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('active', 'bg-accent/90', 'text-darker');
+                        btn.classList.add('bg-darker', 'border-accent/20', 'text-accent');
+                    });
+                    button.classList.add('active', 'bg-accent/90', 'text-darker');
+                    button.classList.remove('bg-darker', 'border-accent/20', 'text-accent');
+
+                    serviceItems.forEach(item => {
+                        item.classList.add('filtering');
+                    });
+
+                    setTimeout(() => {
+                        serviceItems.forEach(item => {
+                            const categories = item.getAttribute('data-categories').split(',');
+                            const shouldShow = filter === 'all' || categories.includes(filter);
+                            
+                            item.style.display = shouldShow ? 'block' : 'none';
+                            if (shouldShow) {
+                                setTimeout(() => {
+                                    item.classList.remove('filtering');
+                                }, 50);
+                            }
+                        });
+                    }, 300);
+                });
+            });
+        });
+    </script>
+</section>
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="py-16 bg-dark relative overflow-hidden">
+        <div class="absolute inset-0 pattern-grid opacity-5"></div>
+        
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12">
+                <!-- Brand -->
+                <div class="space-y-4">
+                    <h3 class="font-display text-2xl">expansion</h3>
+                    <p class="text-text-muted">
+                        Transforming restaurants through strategic digital marketing and innovative solutions.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="space-y-4">
+                    <h4 class="font-display text-lg">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#services" class="text-text-muted hover:text-accent transition-colors">Services</a></li>
+                        <li><a href="#case-studies" class="text-text-muted hover:text-accent transition-colors">Case Studies</a></li>
+                        <li><a href="#faq" class="text-text-muted hover:text-accent transition-colors">FAQ</a></li>
+<a href="mailto:request@expansion.ltd" class="[original-classes]">Get In Touch</a>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div class="space-y-4">
+                    <h4 class="font-display text-lg">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-text-muted hover:text-accent transition-colors">Social Media Management</a>
+<li><a href="#" class="text-text-muted hover:text-accent transition-colors">Reservation System</a></li>
+                        <li><a href="#" class="text-text-muted hover:text-accent transition-colors">Local SEO</a></li>
+                        <li><a href="#" class="text-text-muted hover:text-accent transition-colors">Food Photography</a></li>
+                        <li><a href="#" class="text-text-muted hover:text-accent transition-colors">Menu Optimization</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="space-y-4">
+                    <h4 class="font-display text-lg">Stay Updated</h4>
+                    <p class="text-text-muted">Subscribe to our newsletter for industry insights and tips.</p>
+                    <form id="newsletterForm" class="space-y-4">
+                        <div class="relative">
+                            <input type="email" placeholder="Enter your email" required
+                                   class="form-input w-full pr-12">
+                            <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center hover:bg-accent/20 transition-colors">
+                                <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="mt-12 pt-8 border-t border-accent/10">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                    <div class="text-text-muted text-sm">
+                        © 2024 Expansion Marketing. All rights reserved.
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-text-muted hover:text-accent text-sm transition-colors">Privacy Policy</a>
+                        <a href="#" class="text-text-muted hover:text-accent text-sm transition-colors">Terms of Service</a>
+                        <a href="#" class="text-text-muted hover:text-accent text-sm transition-colors">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced Loading Screen
+        document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.querySelector('.loader');
+            const progress = document.querySelector('.loader-progress');
+            
+            let width = 0;
+            const interval = setInterval(() => {
+                width += Math.random() * 30;
+                if (width > 100) {
+                    width = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loader.style.opacity = '0';
+                        setTimeout(() => {
+                            loader.style.display = 'none';
+                        }, 500);
+                    }, 500);
+                }
+                progress.style.width = width + '%';
+            }, 200);
+        });
+
+        // Enhanced Navigation
+        const nav = document.querySelector('.nav');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('py-4', 'shadow-lg');
+                nav.classList.remove('py-6');
+            } else {
+                nav.classList.remove('py-4', 'shadow-lg');
+                nav.classList.add('py-6');
+            }
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Enhanced FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            const icon = question.querySelector('svg');
+            
+            question.addEventListener('click', () => {
+                const isOpen = item.classList.contains('active');
+                
+                // Close all FAQ items
+                faqItems.forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                    otherItem.querySelector('svg').style.transform = 'rotate(0deg)';
+                    otherItem.querySelector('.faq-answer').style.maxHeight = '0';
+                });
+                
+                // Open clicked item if it was closed
+                if (!isOpen) {
+                    item.classList.add('active');
+                    icon.style.transform = 'rotate(180deg)';
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+            });
+        });
+
+const contactForm = document.getElementById('contactForm');
+const newsletterForm = document.getElementById('newsletterForm');
+
+async function handleForm(form, successMessage, endpoint) {
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+
+        // Show loading state
+        submitBtn.innerHTML = `
+            <div class="flex items-center justify-center">
+                <svg class="w-5 h-5 mr-3 -ml-1 text-accent animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Submitting...</span>
+            </div>
+        `;
+        submitBtn.disabled = true;
+
+        try {
+            const formData = new FormData(form);
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Show success message
+                form.innerHTML = `
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-accent/10 flex items-center justify-center">
+                            <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-display text-accent mb-2">${successMessage}</h3>
+                        <p class="text-text-muted">We'll be in touch soon!</p>
+                    </div>
+                `;
+            } else {
+                throw new Error(data.message);
+            }
+        } catch (error) {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            alert(`An error occurred: ${error.message}`);
+        }
+    });
+}
+
+if (contactForm) {
+    handleForm(contactForm, 'Message Sent Successfully!', '/submit');
+}
+if (newsletterForm) {
+    handleForm(newsletterForm, 'Subscribed Successfully!', '/newsletter');
+}
+
+
+        // Statistics Animation
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('stat-number')) {
+                        const value = parseInt(entry.target.dataset.value);
+                        animateValue(entry.target, 0, value, 2000);
+                        observer.unobserve(entry.target);
+                    } else {
+                        entry.target.classList.add('visible');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up, .stat-number').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Parallax Effect
+        document.addEventListener('scroll', () => {
+            const parallaxElements = document.querySelectorAll('.parallax');
+            parallaxElements.forEach(element => {
+                const speed = element.dataset.speed || 0.5;
+                const yPos = -(window.pageYOffset * speed);
+                element.style.transform = `translate3d(0, ${yPos}px, 0)`;
+            });
+        });
+
+    </script>
+    <script>
+        // Loading Screen
+        window.addEventListener('load', () => {
+            const loader = document.querySelector('.loader');
+            const progress = document.querySelector('.loader-progress');
+            
+            // Simulate loading progress
+            let width = 0;
+            const interval = setInterval(() => {
+                width += Math.random() * 30;
+                if (width > 100) {
+                    width = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loader.classList.add('hidden');
+                    }, 500);
+                }
+                progress.style.width = width + '%';
+            }, 200);
+        });
+    </script>
+</body>
+</html>
