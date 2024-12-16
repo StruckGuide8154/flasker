@@ -772,7 +772,9 @@ def track_affiliate():
 @app.route('/thanks')
 def thanks():
     return render_template('thanks.html')
-
+@app.route('/services')
+def servicess():
+    return render_template('services-html.html')
 
 with app.app_context():
     db.create_all()
