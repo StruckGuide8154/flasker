@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+    
+{% block content %}
+    <h2>Exchange Details</h2>
+    <div class="card">
+       <div class="card-header">
+            Exchange Details
+      </div>
+        <div class="card-body">
+             <p><strong>ID:</strong> {{ exchange.id }}</p>
+             <p><strong>Name:</strong> {{ exchange.name }}</p>
+             <p><strong>Active:</strong> {{ "Yes" if exchange.active else "No"}}</p>
+        </div>
+       <div class="card-footer">
+          <a href="{{ url_for('exchanges') }}" class="btn btn-secondary">Back to Exchanges</a>
+         <a href="{{ url_for('edit_exchange', exchange_id=exchange.id) }}" class="btn btn-primary">Edit Exchange</a>
+        </div>
+    </div>
+{% endblock %}

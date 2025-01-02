@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">Generated Alertatron Script</div>
+            <div class="card-body">
+                <pre class="bg-dark p-3 rounded""><code>{{ script }}</code></pre>
+                <button class="btn btn-primary" onclick="copyScript()">Copy to Clipboard</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function copyScript() {
+    const scriptText = document.querySelector('pre code').innerText;
+    navigator.clipboard.writeText(scriptText).then(() => {
+        alert('Script copied to clipboard!');
+    }).catch(err => {
+        console.error('Failed to copy script:', err);
+        alert('Failed to copy script to clipboard');
+    });
+}
+</script>
+{% endblock %}

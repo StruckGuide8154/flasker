@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+    
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+       <div class="card">
+          <div class="card-header">Create new trade from signal</div>
+          <div class="card-body">
+              <form method="POST">
+                   <div class="mb-3">
+                       <label for="signal" class="form-label">Signal</label>
+                      <select class="form-control" id="signal" name="signal" required>
+                       <option value="(autodetect)">(autodetect)</option>
+                      </select>
+                  </div>
+                  <div class="mb-3">
+                       <label for="message" class="form-label">message</label>
+                      <textarea class="form-control" id="message" name="message" rows="5"></textarea>
+                 </div>
+                 <button type="submit" class="btn btn-primary">Create</button>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+     </div>
+  </div>
+</div>
+{% endblock %}

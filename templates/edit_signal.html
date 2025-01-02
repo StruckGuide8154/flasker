@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+    
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Edit Signal</div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ signal.name }}" required>
+                     </div>
+                     <div class="mb-3 form-check">
+                         <input type="checkbox" class="form-check-input" id="active" name="active" {% if signal.active %}checked{% endif %}>
+                        <label class="form-check-label" for="active">Active</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    
+                    <a href="{{ url_for('signals') }}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

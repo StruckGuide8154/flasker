@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+<div class="col-md-8">
+<div class="card">
+<div class="card-header">Edit code template 'Stop Loss and Trail Alerts' for exchange '{{exchange_name}}'</div>
+<div class="card-body">
+<p>This code template is not editable on this version, future versions will support it</p>
+<a href="{{ url_for('code_templates', exchange_name=exchange_name) }}" class="btn btn-secondary">Back to Code Templates</a>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

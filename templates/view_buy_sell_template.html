@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+    
+{% block content %}
+   <h2>View code template 'Buy Sell' for exchange '{{exchange_name}}'</h2>
+    <div class="card">
+      <div class="card-header">
+            Buy Sell
+       </div>
+       <div class="card-body">
+         <pre>
+            <code>
+            ##COINTICKER## ##DIRECTION## ##SIGNAL##. ##TPSUMMARY##
+            ##ENTRYDOLLAR## Entry Price
+            Risk ##PRESETRISKPERCENT##%
+            signal from ##SIGNAL##
+            MARKET ##DIRECTION##
+            ##TPDESCRIPTION##
+            ##SLDESCRIPTION##
+            ##INDIVIDUALACCOUNTORDERS##
+             #rb
+             #bot
+            </code>
+        </pre>
+        </div>
+        <div class="card-footer">
+           <a href="{{ url_for('code_templates', exchange_name=exchange_name) }}" class="btn btn-secondary">Back to Code Templates</a>
+           <a href="{{ url_for('edit_buy_sell_template', exchange_name=exchange_name) }}" class="btn btn-primary">Edit Code Template</a>
+        </div>
+    </div>
+{% endblock %}

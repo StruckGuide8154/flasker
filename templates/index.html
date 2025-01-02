@@ -1,26 +1,107 @@
-<!doctype html>
-<html lang="en">
-  <head>
-      <meta charset="utf-8">
-      <meta name="description" content="alphasec">
-      <meta name="author" content="alphasec">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>alphasec</title>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-      <link rel="stylesheet" href="static/css/styles.css">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:500&display=swap">
-      <link rel="icon" href="static/favicon.ico" type="image/x-icon">
-  </head>
-  <body>
-    <div class="row">
-      <h1 class="h1">alphasec</h1>
-    </div>
-    <div class="row">
-      <div>
-      </div>
-    </div>
-    <div class="row">
-      <span class="text-muted small">alphasec © 2024. All rights reserved.</span>
-    </div>
-  </body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 class="text-2xl font-semibold mb-4">Your Trades</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for trade in trades %}
+        <div class="trade-card">
+             <div class="card-header cursor-pointer" onclick="showTradeDetails({{ trade.id }})">
+                <h5 class="m-0 font-medium">{{ trade.coin_ticker }} - {{ trade.direction }}</h5>
+             </div>
+             <div class="card-body p-4">
+                  <p class="mb-2"> <span class="font-medium">Entry:</span> {{ trade.entry_price|format_number }}</p>
+                    <p class="mb-2"><span class="font-medium">Stop Loss:</span> {{ trade.stop_loss|format_number }}</p>
+                   <p class="mb-2"><span class="font-medium">Leverage:</span> {{ trade.leverage|format_number }}x</p>
+                   <p class="mb-2"><span class="font-medium">Quantity:</span> {{ trade.quantity|format_number }}</p>
+             </div>
+            <div class="card-footer">
+                   <a href="{{ url_for('generate_script', trade_id=trade.id) }}" class="btn btn-primary btn-sm">Generate Script</a>
+                    <span class="text-sm float-right">Created: {{ trade.created_date.strftime('%Y-%m-%d %H:%M:%S') }}</span>
+             </div>
+         </div>
+        
+        <div id="tradeModal{{ trade.id }}" class="modal" style="display:none;">
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                       <h5 class="modal-title">Trade [{{ trade.id }}]: {{ trade.coin_ticker }} {{trade.direction}}</h5>
+                         <button type="button" class="btn-close" onclick="hideTradeDetails({{trade.id}})"></button>
+                    </div>
+                     <div class="modal-body flex flex-wrap">
+                         <div class="w-1/2 p-4">
+                              <h3 class="mb-3 font-semibold">General</h3>
+                                 <p class="mb-2"><strong>ID:</strong> {{ trade.id }}</p>
+                                 <p class="mb-2"><strong>Status:</strong> draft</p>
+                                <p class="mb-2"><strong>Coin Ticker:</strong> {{ trade.coin_ticker }}</p>
+                                 <p class="mb-2"><strong>Direction:</strong> {{ trade.direction }}</p>
+                                <p class="mb-2"><strong>Signal:</strong> -</p>
+                                 <p class="mb-2"><strong>Accounts:</strong> ScalpPickleMachine</p>
+                                <p class="mb-2"><strong>Created By:</strong> {{ current_user.username }}</p>
+                                 <p class="mb-2"><strong>Created Date:</strong> {{ trade.created_date.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                                 <p class="mb-2"><strong>notes:</strong> Just keep the target 0.6-1.5 and final at 3 MYRO LONG NOW 0.251. T=$1. SL FOR RM 0.08</p>
+
+                              <div class="mt-4">
+                                     <div class="bg-gray-700 rounded-md p-4">
+                                       <p class="mb-2"><strong>preset risk:</strong> <span id="presetRisk1">14.95 %</span></p>
+                                        <p class="mb-2"><strong>margin:</strong> 22.53 %</p>
+                                         <p class="mb-2"><strong>entry:</strong> ${{"%.4f"|format(trade.entry_price)}}</p>
+                                     </div>
+                                     <div class="mt-4 bg-gray-700 rounded-md p-4">
+                                          <p class="mb-2"><strong>cume risk:</strong> <span id="cumeRisk1">14.95%</span></p>
+                                         <p class="mb-2"><strong>average entry:</strong> ${{"%.4f"|format(trade.entry_price)}}</p>
+                                       <p class="mb-2"><strong>dist to SL:</strong> 66.36 %</p>
+                                         <p class="mb-2"><strong>cume quantity:</strong> {{ "%.4f"|format(trade.quantity) }}</p>
+                                        <p class="mb-2"><strong>initial margin:</strong>  $107.13</p>
+                                  </div>
+                             </div>
+                         </div>
+                         <div class="w-1/2 p-4">
+                              <h3 class="mb-3 font-semibold">Setup</h3>
+                              <p class="mb-2"><strong>leverage:</strong> {{ trade.leverage }}</p>
+                              <p class="mb-2"><strong>stop loss:</strong> {{ trade.stop_loss }}</p>
+                              <p class="mb-2"><strong>TS trigger:</strong> $0.48</p>
+                               <p class="mb-2"><strong>control acct:</strong>  ScalpPickleMachine ($4,755)</p>
+                               <p class="mb-2"><strong>total risk:</strong> 16.95 %</p>
+
+                             <div class="mt-4">
+                                    <h4 class="mb-3 font-semibold">Entry Points</h4>
+                                    <table class="table text-sm">
+                                        <thead>
+                                             <tr class="bg-gray-700">
+                                               <th>index</th>
+                                               <th>distance</th>
+                                               <th>target</th>
+                                              <th>size</th>
+                                              <th>qty</th>
+                                               <th>$PNL TP</th>
+                                                <th>%PNL %BAL</th>
+                                              <th>%PNL SUM %BAL</th>
+                                           </tr>
+                                       </thead>
+                                       <tbody>
+                                          {% for tp in trade.tp_targets %}
+                                              <tr class="bg-gray-700">
+                                                <td>{{ loop.index }}</td>
+                                                 <td> 152.31%</td>
+                                                 <td>${{tp.price}}</td>
+                                                <td> 30.0%</td>
+                                                <td>1,351,516</td>
+                                               <td>$489.52</td>
+                                                 <td>10.29%</td>
+                                               <td>10.29%</td>
+                                          </tr>
+                                           {% endfor %}
+                                        </tbody>
+                                     </table>
+                             </div>
+                         </div>
+                     </div>
+                   <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="hideTradeDetails({{trade.id}})">Close</button>
+                    </div>
+                 </div>
+             </div>
+        </div>
+    {% endfor %}
+     </div>
+{% endblock %}

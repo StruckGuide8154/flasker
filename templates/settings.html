@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+    
+{% block content %}
+    <h2>Settings</h2>
+    <div class="card">
+        <div class="card-header">Settings</div>
+       <div class="card-body">
+            <p><strong>Default Control Account:</strong> ScalpPickleMachine</p>
+       </div>
+       <div class="card-footer">
+             <a href="{{ url_for('settings_edit') }}" class="btn btn-primary">Edit</a>
+      </div>
+  </div>
+{% endblock %}

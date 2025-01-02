@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+    
+{% block content %}
+   <h2>View code template 'Clear Alerts' for exchange '{{exchange_name}}'</h2>
+    <div class="card">
+        <div class="card-header">
+             Clear Alerts
+       </div>
+      <div class="card-body">
+           <pre>
+               <code>
+                 ##COINTICKER## ##DIRECTION## CANCEL ALL ALERT AT stop loss ##STOPLOSSDOLLAR##
+                 >>CLEAR ALL ALERTS<<
+                 ##INDIVIDUALACCOUNTCLEARALERTS##
+                #bot
+                #rb
+                </code>
+            </pre>
+         </div>
+        <div class="card-footer">
+         <a href="{{ url_for('code_templates', exchange_name=exchange_name) }}" class="btn btn-secondary">Back to Code Templates</a>
+          <a href="{{ url_for('edit_clear_alerts_template', exchange_name=exchange_name) }}" class="btn btn-primary">Edit Code Template</a>
+        </div>
+    </div>
+{% endblock %}

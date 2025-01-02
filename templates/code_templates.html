@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+    
+{% block content %}
+    <h2>Code Templates for {{exchange_name}} Exchange</h2>
+        <table class="table">
+        <thead>
+            <tr>
+                 <th>Name</th>
+                <th>Actions</th>
+           </tr>
+         </thead>
+        <tbody>
+                <tr>
+                  <td>Buy Sell</td>
+                   <td> <a href="{{ url_for('edit_buy_sell_template', exchange_name=exchange_name) }}" class="btn btn-sm btn-secondary">Edit</a>
+                       <a href="{{ url_for('view_buy_sell_template', exchange_name=exchange_name) }}" class="btn btn-sm btn-info">View</a></td>
+              </tr>
+                 <tr>
+                  <td>Clear Alerts</td>
+                   <td><a href="{{ url_for('edit_clear_alerts_template', exchange_name=exchange_name) }}" class="btn btn-sm btn-secondary">Edit</a>
+                       <a href="{{ url_for('view_clear_alerts_template', exchange_name=exchange_name) }}" class="btn btn-sm btn-info">View</a></td>
+              </tr>
+                <tr>
+                   <td>Entry Fill</td>
+                   <td><a href="{{ url_for('edit_entry_fill_template', exchange_name=exchange_name) }}" class="btn btn-sm btn-secondary">Edit</a>
+                       <a href="{{ url_for('view_entry_fill_template', exchange_name=exchange_name) }}" class="btn btn-sm btn-info">View</a></td>
+                 </tr>
+                 <tr>
+                    <td>Reset TP</td>
+                     <td><a href="{{ url_for('edit_reset_tp_template', exchange_name=exchange_name) }}" class="btn btn-sm btn-secondary">Edit</a>
+                        <a href="{{ url_for('view_reset_tp_template', exchange_name=exchange_name) }}" class="btn btn-sm btn-info">View</a></td>
+                  </tr>
+                   <tr>
+                   <td>Stop Loss and Trail Alerts</td>
+                     <td> <a href="{{ url_for('edit_stop_loss_trail_alerts_template', exchange_name=exchange_name) }}" class="btn btn-sm btn-secondary">Edit</a>
+                         <a href="{{ url_for('view_stop_loss_trail_alerts_template', exchange_name=exchange_name) }}" class="btn btn-sm btn-info">View</a></td>
+               </tr>
+         </tbody>
+        </table>
+{% endblock %}

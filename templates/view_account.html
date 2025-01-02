@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+    
+{% block content %}
+ <h2>Account Details</h2>
+    <div class="card">
+        <div class="card-header">
+             Account Details
+        </div>
+      <div class="card-body">
+            <p><strong>ID:</strong> {{ account.id }}</p>
+            <p><strong>Name:</strong> {{ account.name }}</p>
+             <p><strong>Exchange:</strong> {{ account.exchange }}</p>
+            <p><strong>Balance:</strong> {{ account.balance }}</p>
+            <p><strong>Active:</strong> {{ "Yes" if account.active else "No"}}</p>
+       </div>
+       <div class="card-footer">
+           <a href="{{ url_for('accounts') }}" class="btn btn-secondary">Back to Accounts</a>
+           <a href="{{ url_for('edit_account', account_id=account.id) }}" class="btn btn-primary">Edit Account</a>
+       </div>
+   </div>
+{% endblock %}

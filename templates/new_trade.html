@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">New Trade</div>
+            <div class="card-body">
+                <form method="POST" id="tradeForm">
+                    <div class="mb-3">
+                        <label for="coin_ticker" class="form-label">Coin Ticker</label>
+                        <input type="text" class="form-control" id="coin_ticker" name="coin_ticker" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="entry_price" class="form-label">Entry Price</label>
+                        <input type="number" step="any" class="form-control" id="entry_price" name="entry_price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="stop_loss" class="form-label">Stop Loss</label>
+                        <input type="number" step="any" class="form-control" id="stop_loss" name="stop_loss" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="leverage" class="form-label">Leverage</label>
+                        <input type="number" step="any" class="form-control" id="leverage" name="leverage" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" step="any" class="form-control" id="quantity" name="quantity" required>
+                    </div>
+                    
+                    <div id="tp_targets">
+                        <h5>Take Profit Targets</h5>
+                        <div class="tp-target mb-3">
+                            <div class="row">
+                                <div class="col">
+                                    <label class="form-label">Price</label>
+                                    <input type="number" step="any" class="form-control" name="tp_price[]">
+                                </div>
+                                <div class="col">
+                                    <label class="form-label">Percentage</label>
+                                    <input type="number" step="any" class="form-control" name="tp_percentage[]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-secondary mb-3" id="add_tp">Add Take Profit Target</button>
+                    <button type="submit" class="btn btn-primary">Create Trade</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('add_tp').addEventListener('click', function() {
+    const tpTargets = document.getElementById('tp_targets');
+    const newTarget = document.createElement('div');
+    newTarget.className = 'tp-target mb-3';
+    newTarget.innerHTML = `
+        <div class="row">
+            <div class="col">
+                <label class="form-label">Price</label>
+                <input type="number" step="any" class="form-control" name="tp_price[]">
+            </div>
+            <div class="col">
+                <label class="form-label">Percentage</label>
+                <input type="number" step="any" class="form-control" name="tp_percentage[]">
+            </div>
+            <div class="col-auto">
+                <label class="form-label"> </label>
+                <button type="button" class="btn btn-danger d-block" onclick="this.closest('.tp-target').remove()">Remove</button>
+            </div>
+        </div>
+    `;
+    tpTargets.appendChild(newTarget);
+});
+</script>
+{% endblock %}
