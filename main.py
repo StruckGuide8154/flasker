@@ -58,7 +58,498 @@ load_dotenv()
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 CLAUDE_API_KEY = os.getenv('CLAUDE_API_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///trading.db'
+db = SQLAlchemy(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
 
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Helper Functions
+def calculate_trade_size(trade):
+    """Calculate the total trade size."""
+    return trade.quantity * trade.entry_price
+
+def calculate_risk_percentage(trade):
+    """Calculate the risk percentage for the trade."""
+    price_diff = abs(trade.entry_price - trade.stop_loss)
+    return (price_diff / trade.entry_price) * 100 * trade.leverage
+
+def calculate_margin(trade):
+    """Calculate required margin."""
+    return (trade.quantity * trade.entry_price) / trade.leverage
+
+def calculate_risk_amount(trade):
+    """Calculate the dollar risk amount."""
+    price_diff = abs(trade.entry_price - trade.stop_loss)
+    return trade.quantity * price_diff
+
+def format_number(value):
+    """Format numbers with appropriate decimal places."""
+    if isinstance(value, float):
+        return f"{value:.4f}".rstrip('0').rstrip('.')
+    return value
+
+def determine_direction(trade):
+    """Automatically determine direction based on entry and stop loss prices"""
+    if trade.entry_price > trade.stop_loss:
+        return "long"
+    return "short"
+
+def generate_alertatron_script(trade):
+    """Generate Alertatron script based on trade parameters."""
+    trade_size = calculate_trade_size(trade)
+    risk_percentage = calculate_risk_percentage(trade)
+    direction = determine_direction(trade)
+    
+    script_lines = [
+        f"##COINTICKER## {trade.coin_ticker}",
+        f"##DIRECTION## {direction.upper()}",
+        f"##ENTRYDOLLAR## Entry Price: {format_number(trade.entry_price)}",
+        f"Risk: {format_number(risk_percentage)}%",
+        f"Stop Loss: {format_number(trade.stop_loss)}",
+        f"Leverage: {format_number(trade.leverage)}x\n",
+        f"Margin Amount: ${format_number(calculate_margin(trade))}",
+        f"Risk Amount: ${format_number(calculate_risk_amount(trade))}",
+        "",
+        "##TPDESCRIPTION##",
+    ]
+    
+    tp_lines = []
+    for i, tp in enumerate(sorted(trade.tp_targets, key=lambda x: x.percentage), start=1):
+           tp_lines.append(f"limit(side={'sell' if direction == 'long' else 'buy'}, amount={format_number(trade.quantity/len(trade.tp_targets))}, offset=e{format_number(tp.percentage)}%);")
+           script_lines.append(f"Take Profit {i} - Target: ${format_number(tp.price)}, percentage: {format_number(tp.percentage)}%" )
+
+    script_lines.append(f"\nstopOrder(side={'sell' if direction == 'long' else 'buy'}, amount={format_number(trade.quantity)}, offset=e1%, trigger=last);")
+
+    script_lines.extend(tp_lines)
+    
+    script_lines.extend([
+        "\n##INDIVIDUALACCOUNTORDERS##",
+        "#rb",
+        "#bot"
+    ])
+    
+    return "\n".join(script_lines)
+
+# Database Models
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password_hash = db.Column(db.String(120), nullable=False)
+    trades = db.relationship('Trade', backref='user', lazy=True)
+
+class Trade(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    coin_ticker = db.Column(db.String(10), nullable=False)
+    direction = db.Column(db.String(10), nullable=False) # Auto direction so keeping
+    entry_price = db.Column(db.Float, nullable=False)
+    stop_loss = db.Column(db.Float, nullable=False)
+    leverage = db.Column(db.Float, nullable=False)
+    quantity = db.Column(db.Float, nullable=False)
+    tp_targets = db.relationship('TakeProfit', backref='trade', lazy=True)
+    created_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    
+class TakeProfit(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    trade_id = db.Column(db.Integer, db.ForeignKey('trade.id'), nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    percentage = db.Column(db.Float, nullable=False)
+
+class Account(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True, nullable=False)
+    exchange = db.Column(db.String(80), nullable=False)
+    balance = db.Column(db.Float, nullable=False, default=0.0)
+    active = db.Column(db.Boolean, default=False)
+
+class Exchange(db.Model):
+     id = db.Column(db.Integer, primary_key=True)
+     name = db.Column(db.String(80), unique=True, nullable=False)
+     active = db.Column(db.Boolean, default=False)
+
+class Signal(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True, nullable=False)
+    active = db.Column(db.Boolean, default=False)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+# Routes
+@app.route('/trr')
+@login_required
+def index():
+    trades = Trade.query.filter_by(user_id=current_user.id).order_by(Trade.created_date.desc()).all()
+    return render_template('index.html', trades=trades)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        user = User.query.filter_by(username=username).first()
+        
+        if user and check_password_hash(user.password_hash, password):
+            login_user(user)
+            return redirect(url_for('index'))
+        flash('Invalid username or password')
+        logging.info(f"Login attempt failed for user: {username}")
+    return render_template('login.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        if User.query.filter_by(username=username).first():
+            flash('Username already exists')
+            logging.warning(f"Registration failed. Username already exists: {username}")
+            return redirect(url_for('register'))
+            
+        user = User(username=username, password_hash=generate_password_hash(password))
+        db.session.add(user)
+        db.session.commit()
+        flash('Registration successful')
+        logging.info(f"New user registered: {username}")
+        return redirect(url_for('login'))
+    return render_template('register.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    logging.info(f"User logged out: {current_user.username}")
+    return redirect(url_for('login'))
+
+@app.route('/trade/new', methods=['GET', 'POST'])
+@login_required
+def new_trade():
+    if request.method == 'POST':
+         try:
+                entry_price = float(request.form.get('entry_price'))
+                stop_loss = float(request.form.get('stop_loss'))
+                trade = Trade(
+                    user_id=current_user.id,
+                    coin_ticker=request.form.get('coin_ticker'),
+                    direction = "auto",
+                    entry_price=entry_price,
+                    stop_loss=stop_loss,
+                    leverage=float(request.form.get('leverage')),
+                    quantity=float(request.form.get('quantity'))
+                 )
+                db.session.add(trade)
+                db.session.commit()
+                
+                # Add take profit targets
+                tp_prices = request.form.getlist('tp_price[]')
+                tp_percentages = request.form.getlist('tp_percentage[]')
+                
+                for price, percentage in zip(tp_prices, tp_percentages):
+                    if price and percentage:
+                        tp = TakeProfit(
+                            trade_id=trade.id,
+                            price=float(price),
+                            percentage=float(percentage)
+                        )
+                        db.session.add(tp)
+                
+                db.session.commit()
+                flash('Trade created successfully')
+                logging.info(f"New trade created successfully for user: {current_user.username} and tradeID: {trade.id}")
+                return redirect(url_for('index'))
+         except Exception as e:
+             flash(f'Error creating trade: {e}')
+             logging.error(f"Error creating trade for user: {current_user.username} due to: {e}")
+             db.session.rollback()
+             return redirect(url_for('index'))
+    return render_template('new_trade.html')
+
+@app.route('/generate_script/<int:trade_id>')
+@login_required
+def generate_script(trade_id):
+    trade = Trade.query.get_or_404(trade_id)
+    if trade.user_id != current_user.id:
+        flash('Unauthorized access')
+        logging.warning(f"Unauthorized access attempt to tradeID: {trade_id} by user: {current_user.username}")
+        return redirect(url_for('index'))
+        
+    script = generate_alertatron_script(trade)
+    logging.info(f"Alertatron script generated for tradeID: {trade_id} by user: {current_user.username}")
+    return render_template('script.html', script=script)
+
+# New Routes for Managing Accounts, Exchanges, Signals and Code Templates
+@app.route('/accounts')
+@login_required
+def accounts():
+    accounts = Account.query.all()
+    return render_template('accounts.html', accounts=accounts)
+
+@app.route('/accounts/create', methods=['GET', 'POST'])
+@login_required
+def create_account():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        exchange = request.form.get('exchange')
+        balance = request.form.get('balance')
+        active = request.form.get('active') == 'on'
+
+        try:
+           account = Account(name=name, exchange=exchange, balance=float(balance), active=active)
+           db.session.add(account)
+           db.session.commit()
+           flash('Account created successfully')
+           return redirect(url_for('accounts'))
+        except Exception as e:
+            flash(f'Error creating account: {e}')
+            db.session.rollback()
+            return redirect(url_for('accounts'))
+    return render_template('create_account.html')
+
+@app.route('/accounts/<int:account_id>', methods=['GET'])
+@login_required
+def view_account(account_id):
+    account = Account.query.get_or_404(account_id)
+    return render_template('view_account.html', account=account)
+
+@app.route('/accounts/<int:account_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_account(account_id):
+    account = Account.query.get_or_404(account_id)
+    if request.method == 'POST':
+        account.name = request.form.get('name')
+        account.exchange = request.form.get('exchange')
+        account.balance = float(request.form.get('balance'))
+        account.active = request.form.get('active') == 'on'
+
+        try:
+           db.session.commit()
+           flash('Account updated successfully')
+           return redirect(url_for('accounts'))
+        except Exception as e:
+           flash(f'Error updating account: {e}')
+           db.session.rollback()
+           return redirect(url_for('accounts'))
+    return render_template('edit_account.html', account=account)
+
+@app.route('/exchanges')
+@login_required
+def exchanges():
+    exchanges = Exchange.query.all()
+    return render_template('exchanges.html', exchanges=exchanges)
+
+@app.route('/exchanges/create', methods=['GET', 'POST'])
+@login_required
+def create_exchange():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        active = request.form.get('active') == 'on'
+        try:
+           exchange = Exchange(name=name, active=active)
+           db.session.add(exchange)
+           db.session.commit()
+           flash('Exchange created successfully')
+           return redirect(url_for('exchanges'))
+        except Exception as e:
+            flash(f'Error creating exchange: {e}')
+            db.session.rollback()
+            return redirect(url_for('exchanges'))
+    return render_template('create_exchange.html')
+
+@app.route('/exchanges/<int:exchange_id>', methods=['GET'])
+@login_required
+def view_exchange(exchange_id):
+    exchange = Exchange.query.get_or_404(exchange_id)
+    return render_template('view_exchange.html', exchange=exchange)
+
+@app.route('/exchanges/<int:exchange_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_exchange(exchange_id):
+    exchange = Exchange.query.get_or_404(exchange_id)
+    if request.method == 'POST':
+        exchange.name = request.form.get('name')
+        exchange.active = request.form.get('active') == 'on'
+        try:
+           db.session.commit()
+           flash('Exchange updated successfully')
+           return redirect(url_for('exchanges'))
+        except Exception as e:
+            flash(f'Error updating exchange: {e}')
+            db.session.rollback()
+            return redirect(url_for('exchanges'))
+    return render_template('edit_exchange.html', exchange=exchange)
+
+@app.route('/signals')
+@login_required
+def signals():
+    signals = Signal.query.all()
+    return render_template('signals.html', signals=signals)
+
+@app.route('/signals/create', methods=['GET', 'POST'])
+@login_required
+def create_signal():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        active = request.form.get('active') == 'on'
+        try:
+            signal = Signal(name=name, active=active)
+            db.session.add(signal)
+            db.session.commit()
+            flash('Signal created successfully')
+            return redirect(url_for('signals'))
+        except Exception as e:
+            flash(f'Error creating signal: {e}')
+            db.session.rollback()
+            return redirect(url_for('signals'))
+    return render_template('create_signal.html')
+
+@app.route('/signals/<int:signal_id>', methods=['GET'])
+@login_required
+def view_signal(signal_id):
+    signal = Signal.query.get_or_404(signal_id)
+    return render_template('view_signal.html', signal=signal)
+
+@app.route('/signals/<int:signal_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_signal(signal_id):
+    signal = Signal.query.get_or_404(signal_id)
+    if request.method == 'POST':
+        signal.name = request.form.get('name')
+        signal.active = request.form.get('active') == 'on'
+        try:
+           db.session.commit()
+           flash('Signal updated successfully')
+           return redirect(url_for('signals'))
+        except Exception as e:
+            flash(f'Error updating signal: {e}')
+            db.session.rollback()
+            return redirect(url_for('signals'))
+    return render_template('edit_signal.html', signal=signal)
+
+@app.route('/codeTemplates/<string:exchange_name>')
+@login_required
+def code_templates(exchange_name):
+    
+    return render_template('code_templates.html', exchange_name=exchange_name)
+
+@app.route('/codeTemplates/<string:exchange_name>/buySell')
+@login_required
+def view_buy_sell_template(exchange_name):
+    return render_template('view_buy_sell_template.html', exchange_name=exchange_name)
+
+@app.route('/codeTemplates/<string:exchange_name>/clearAlerts')
+@login_required
+def view_clear_alerts_template(exchange_name):
+    return render_template('view_clear_alerts_template.html', exchange_name=exchange_name)
+
+@app.route('/codeTemplates/<string:exchange_name>/entryFill')
+@login_required
+def view_entry_fill_template(exchange_name):
+      return render_template('view_entry_fill_template.html', exchange_name=exchange_name)
+
+@app.route('/codeTemplates/<string:exchange_name>/resetTp')
+@login_required
+def view_reset_tp_template(exchange_name):
+    return render_template('view_reset_tp_template.html', exchange_name=exchange_name)
+
+@app.route('/codeTemplates/<string:exchange_name>/stopLossAndTrailAlerts')
+@login_required
+def view_stop_loss_trail_alerts_template(exchange_name):
+      return render_template('view_stop_loss_trail_alerts_template.html', exchange_name=exchange_name)
+
+@app.route('/codeTemplates/<string:exchange_name>/buySell/edit', methods=['GET', 'POST'])
+@login_required
+def edit_buy_sell_template(exchange_name):
+       if request.method == "POST":
+            # No editable code on this version
+            return redirect(url_for('code_templates', exchange_name=exchange_name))
+       
+       return render_template('edit_buy_sell_template.html', exchange_name=exchange_name)
+
+@app.route('/codeTemplates/<string:exchange_name>/clearAlerts/edit', methods=['GET', 'POST'])
+@login_required
+def edit_clear_alerts_template(exchange_name):
+    if request.method == "POST":
+          # No editable code on this version
+          return redirect(url_for('code_templates', exchange_name=exchange_name))
+
+    return render_template('edit_clear_alerts_template.html', exchange_name=exchange_name)
+
+@app.route('/codeTemplates/<string:exchange_name>/entryFill/edit', methods=['GET', 'POST'])
+@login_required
+def edit_entry_fill_template(exchange_name):
+    if request.method == "POST":
+          # No editable code on this version
+         return redirect(url_for('code_templates', exchange_name=exchange_name))
+         
+    return render_template('edit_entry_fill_template.html', exchange_name=exchange_name)
+
+@app.route('/codeTemplates/<string:exchange_name>/resetTp/edit', methods=['GET', 'POST'])
+@login_required
+def edit_reset_tp_template(exchange_name):
+     if request.method == "POST":
+          # No editable code on this version
+         return redirect(url_for('code_templates', exchange_name=exchange_name))
+         
+     return render_template('edit_reset_tp_template.html', exchange_name=exchange_name)
+
+@app.route('/codeTemplates/<string:exchange_name>/stopLossAndTrailAlerts/edit', methods=['GET', 'POST'])
+@login_required
+def edit_stop_loss_trail_alerts_template(exchange_name):
+     if request.method == "POST":
+          # No editable code on this version
+         return redirect(url_for('code_templates', exchange_name=exchange_name))
+
+     return render_template('edit_stop_loss_trail_alerts_template.html', exchange_name=exchange_name)
+
+@app.route('/settings', methods=['GET', 'POST'])
+@login_required
+def settings():
+    return render_template('settings.html')
+     
+@app.route('/settings/edit', methods=['GET', 'POST'])
+@login_required
+def settings_edit():
+     if request.method == 'POST':
+         
+         return redirect(url_for('settings'))
+
+     return render_template('settings_edit.html')
+
+@app.route('/trade/new_from_signal', methods=['GET', 'POST'])
+@login_required
+def new_trade_from_signal():
+    if request.method == 'POST':
+        # Implement the logic to process the signal data and create trade here
+        # For this example I will use the autodetect system and just display the alert
+        message = request.form.get('message')
+        flash(f'New Trade From Signal - Message: {message}')
+
+        logging.info(f'New Trade from Signal triggered by user: {current_user.username}')
+
+        # Redirect back to index or a trade detail page.
+        return redirect(url_for('index'))
+
+    return render_template('new_trade_from_signal.html')
+
+# Error handlers
+@app.errorhandler(404)
+def not_found_error(error):
+    logging.error(f'404 error: {error}')
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    logging.error(f'500 error: {error}')
+    return render_template('500.html'), 500
+
+# Custom template filters
+app.jinja_env.filters['format_number'] = format_number
 
 print("testa")
 
