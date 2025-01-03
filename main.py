@@ -65,6 +65,28 @@ login_manager.login_view = 'login'
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+print("testa")
+
+
+temp_tokens = {}
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = os.urandom(24)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+ADMIN_USER = "gad8g8hbnawdhx"
+ADMIN_PASS = "82q93fdfrdg"
+CONTACTS_FILE = 'contacts.json'
+SESSION_TOKEN = secrets.token_hex(16)  # Generate secure session token
+
+# Initialize clients and tools
+tools = CustomTools()
+
+openai_client = openai.OpenAI(api_key=OPENAI_API_KEY)
+claude_client = anthropic.Anthropic(api_key=CLAUDE_API_KEY)
 
 # Helper Functions
 def calculate_trade_size(trade):
@@ -551,28 +573,6 @@ def internal_error(error):
 # Custom template filters
 app.jinja_env.filters['format_number'] = format_number
 
-print("testa")
-
-
-temp_tokens = {}
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.urandom(24)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-ADMIN_USER = "gad8g8hbnawdhx"
-ADMIN_PASS = "82q93fdfrdg"
-CONTACTS_FILE = 'contacts.json'
-SESSION_TOKEN = secrets.token_hex(16)  # Generate secure session token
-
-# Initialize clients and tools
-tools = CustomTools()
-
-openai_client = openai.OpenAI(api_key=OPENAI_API_KEY)
-claude_client = anthropic.Anthropic(api_key=CLAUDE_API_KEY)
 
 
 def format_messages_for_claude(history, system_prompt):
