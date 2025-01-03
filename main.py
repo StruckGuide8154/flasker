@@ -256,7 +256,7 @@ def register():
 
 @app.route('/logoutt')
 @login_required
-def logout():
+def logoutt():
     logout_user()
     logging.info(f"User logged out: {current_user.username}")
     return redirect(url_for('login'))
