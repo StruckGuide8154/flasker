@@ -221,8 +221,8 @@ def index():
     trades = Trade.query.filter_by(user_id=current_user.id).order_by(Trade.created_date.desc()).all()
     return render_template('index.html', trades=trades)
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route('/loginr', methods=['GET', 'POST'])
+def loginer():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -235,7 +235,7 @@ def login():
         logging.info(f"Login attempt failed for user: {username}")
     return render_template('login.html')
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/registerr', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form.get('username')
@@ -254,7 +254,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html')
 
-@app.route('/logout')
+@app.route('/logoutt')
 @login_required
 def logout():
     logout_user()
