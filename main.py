@@ -55,6 +55,19 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
+temp_tokens = {}
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = os.urandom(24)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+ADMIN_USER = "gad8g8hbnawdhx"
+ADMIN_PASS = "82q93fdfrdg"
+CONTACTS_FILE = 'contacts.json'
+SESSION_TOKEN = secrets.token_hex(16)  # Generate secure session token
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 CLAUDE_API_KEY = os.getenv('CLAUDE_API_KEY')
