@@ -54,7 +54,7 @@ from custom_tools import CustomTools
 import os
 
 
-load_dotenv()
+
 temp_tokens = {}
 
 logging.basicConfig(level=logging.INFO)
