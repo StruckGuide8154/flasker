@@ -1,24 +1,438 @@
-{% extends "base.html" %}
-
-{% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Mail Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #4895ef;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+        }
+        
+        .card {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            padding: 30px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .card-header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        .company-logo {
+            margin-bottom: 15px;
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+        }
+        
+        .card-header h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        
+        .card-header p {
+            font-size: 15px;
+            color: var(--gray);
+        }
+        
+        .card-body {
+            padding: 35px 40px;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 16px;
+            color: var(--gray);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 16px 14px 45px;
+            font-size: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: var(--white);
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
+        }
+        
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .password-toggle:hover {
+            color: var(--primary);
+        }
+        
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember-me input {
+            margin-right: 8px;
+            accent-color: var(--primary);
+        }
+        
+        .remember-me label {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .forgot-password {
+            font-size: 14px;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .forgot-password:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(67, 97, 238, 0.4);
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .alert-danger {
+            background-color: rgba(247, 37, 133, 0.1);
+            border-left: 4px solid var(--danger);
+            color: var(--danger);
+        }
+        
+        .alert-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+        }
+        
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: #dee2e6;
+        }
+        
+        .divider span {
+            padding: 0 15px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #dee2e6;
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline:hover {
+            background-color: #f1f3f5;
+            border-color: #ced4da;
+        }
+        
+        .btn-outline i {
+            margin-right: 8px;
+        }
+        
+        .card-footer {
+            padding: 20px;
+            text-align: center;
+            background-color: #f8f9fa;
+            border-top: 1px solid #eef0f2;
+        }
+        
+        .card-footer p {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .card-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .card-footer a:hover {
+            text-decoration: underline;
+            color: var(--primary-dark);
+        }
+        
+        .loader {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s ease infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 576px) {
+            .card-body {
+                padding: 25px 20px;
+            }
+            
+            .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .forgot-password {
+                margin-top: 12px;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
         <div class="card">
-            <div class="card-header">Login</div>
+            <div class="card-header">
+                <img src="/static/f.png" alt="Mail Solutions Logo" class="company-logo">
+                <h1>Welcome Back</h1>
+                <p>Sign in to your Mail Solutions account</p>
+            </div>
             <div class="card-body">
-                <form method="POST">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-circle alert-icon"></i>
+                            {{ messages[0] }}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                
+                <form id="login-form" action="{{ url_for('login') }}" method="post" novalidate>
+                    <div class="input-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="you@example.com" required autocomplete="email" autofocus>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                    
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+                            <button type="button" class="password-toggle" id="toggle-password" aria-label="Toggle password visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" id="login-button">
+                        <span class="loader" id="spinner"></span>
+                        <span id="button-text">Sign In</span>
+                    </button>
+                    
+                    <div class="divider">
+                        <span>or</span>
+                    </div>
+                    
+                    <a href="{{ url_for('home') }}" class="btn btn-outline">
+                        <i class="fas fa-arrow-left"></i> Back to Home
+                    </a>
                 </form>
+            </div>
+            <div class="card-footer">
+                <p>Don't have an account? <a href="{{ url_for('home') }}">Contact us to get started</a></p>
             </div>
         </div>
     </div>
-</div>
-{% endblock %}
+    
+    <script>
+        // Password visibility toggle
+        const togglePassword = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('password');
+        
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('fa-eye');
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+        
+        // Form submission with loading state
+        const loginForm = document.getElementById('login-form');
+        const loginButton = document.getElementById('login-button');
+        const spinner = document.getElementById('spinner');
+        const buttonText = document.getElementById('button-text');
+        
+        loginForm.addEventListener('submit', function(e) {
+            if (this.checkValidity()) {
+                spinner.style.display = 'inline-block';
+                buttonText.textContent = 'Signing in...';
+                loginButton.disabled = true;
+            } else {
+                e.preventDefault();
+            }
+        });
+        
+        // Input validation styling
+        const inputs = document.querySelectorAll('.form-control');
+        
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.style.borderColor = '#f72585';
+                    this.style.backgroundColor = 'rgba(247, 37, 133, 0.05)';
+                } else {
+                    this.style.borderColor = '#dee2e6';
+                    this.style.backgroundColor = '#f8f9fa';
+                }
+            });
+            
+            input.addEventListener('focus', function() {
+                this.style.borderColor = var(--primary);
+                this.style.backgroundColor = var(--white);
+            });
+        });
+    </script>
+</body>
+</html>
